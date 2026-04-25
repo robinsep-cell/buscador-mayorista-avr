@@ -477,85 +477,19 @@ mark {
   background: #98ff39;
 }
 
+/* ── Tablet: ocultar logo, hero en una línea ── */
 @media (max-width: 980px) {
   .hero-card {
     grid-template-columns: 1fr;
-    padding: 16px;
+    padding: 14px 16px;
   }
 
-  .hero-brand {
-    max-width: 320px;
-  }
-}
-
-@media (max-width: 820px) {
-  .layout {
-    width: min(100% - 18px, 1000px);
-    padding-top: 18px;
-  }
-
-  .search-panel {
-    padding: 18px;
-  }
-
-  .search-panel-header,
-  .status-row,
-  .search-box {
-    grid-template-columns: 1fr;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .hero-topline {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .search-box {
-    display: grid;
-  }
-
-  .search-box button {
-    width: 100%;
-  }
-
-  .table-wrap {
-    overflow-x: auto;
-  }
-
-  table {
-    min-width: 980px;
-  }
-}
-
-@media (max-width: 600px) {
-  .layout {
-    width: min(100% - 12px, 100%);
-    padding: 10px 0 24px;
-  }
-
-  /* Hero compacto: ocultar logo, reducir padding */
+  /* Logo oculto desde tablet en adelante */
   .hero-brand {
     display: none;
   }
 
-  .hero-card {
-    padding: 12px 14px;
-    border-radius: 14px;
-    gap: 8px;
-  }
-
-  .hero-topline {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-  }
-
+  /* Hero en una sola línea compacta */
   .eyebrow {
     display: none;
   }
@@ -564,14 +498,50 @@ mark {
     display: none;
   }
 
-  .theme-toggle {
-    min-width: auto;
-    height: 34px;
-    padding: 0 10px;
-    font-size: 0.76rem;
+  .hero-topline {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
   }
 
-  /* Search panel más compacto */
+  h1 {
+    font-size: clamp(1.3rem, 4vw, 2rem);
+  }
+
+  .theme-toggle {
+    flex-shrink: 0;
+  }
+
+  .hero {
+    margin-bottom: 10px;
+  }
+}
+
+/* ── Móvil: todo más compacto ── */
+@media (max-width: 640px) {
+  .layout {
+    width: calc(100% - 16px);
+    padding: 8px 0 24px;
+  }
+
+  .hero-card {
+    padding: 10px 14px;
+    border-radius: 14px;
+  }
+
+  h1 {
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+  }
+
+  .theme-toggle {
+    min-width: auto;
+    height: 32px;
+    padding: 0 10px;
+    font-size: 0.75rem;
+  }
+
   .search-panel {
     padding: 12px 14px;
     border-radius: 16px;
@@ -589,32 +559,44 @@ mark {
     font-size: 1rem;
   }
 
+  .search-box {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
   .search-box input,
   .search-box button {
-    height: 46px;
+    height: 48px;
     border-radius: 12px;
+  }
+
+  .search-box button {
+    width: 100%;
   }
 
   .hint {
     font-size: 0.8rem;
   }
 
-  /* Status row */
   .status-row {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 6px;
-    margin: 8px 2px 6px;
+    margin: 6px 2px 6px;
   }
 
   .status,
   .counter {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     padding: 5px 10px;
   }
 
-  /* Hero margin */
-  .hero {
-    margin-bottom: 8px;
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 820px;
   }
 }
