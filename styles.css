@@ -527,3 +527,94 @@ mark {
     min-width: 980px;
   }
 }
+
+@media (max-width: 600px) {
+  .layout {
+    width: min(100% - 12px, 100%);
+    padding: 10px 0 24px;
+  }
+
+  /* Hero compacto: ocultar logo, reducir padding */
+  .hero-brand {
+    display: none;
+  }
+
+  .hero-card {
+    padding: 12px 14px;
+    border-radius: 14px;
+    gap: 8px;
+  }
+
+  .hero-topline {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .eyebrow {
+    display: none;
+  }
+
+  .subtitle {
+    display: none;
+  }
+
+  .theme-toggle {
+    min-width: auto;
+    height: 34px;
+    padding: 0 10px;
+    font-size: 0.76rem;
+  }
+
+  /* Search panel más compacto */
+  .search-panel {
+    padding: 12px 14px;
+    border-radius: 16px;
+  }
+
+  .search-panel-header {
+    margin-bottom: 8px;
+  }
+
+  .panel-kicker {
+    display: none;
+  }
+
+  .search-label {
+    font-size: 1rem;
+  }
+
+  .search-box input,
+  .search-box button {
+    height: 46px;
+    border-radius: 12px;
+  }
+
+  .hint {
+    font-size: 0.8rem;
+  }
+
+  /* Status row */
+  .status-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 2px 6px;
+  }
+
+  .status,
+  .counter {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+  }
+
+  /* Hero margin */
+  .hero {
+    margin-bottom: 8px;
+  }
+}
