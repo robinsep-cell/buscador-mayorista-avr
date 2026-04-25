@@ -1,0 +1,7 @@
+*.py
+*.csv
+*.gs
+*.md
+*.backup*
+__pycache__/
+*.pyc

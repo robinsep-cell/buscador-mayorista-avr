@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buscador Marketplace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <section class="hero">
+        <div class="hero-card">
+          <div class="hero-copy">
+            <p class="eyebrow">AutovidriosRobin</p>
+            <div class="hero-topline">
+              <h1>Buscador Mayorista</h1>
+              <button id="themeToggle" class="theme-toggle" type="button" aria-label="Cambiar tema">
+                <span class="theme-toggle-text">Modo claro</span>
+              </button>
+            </div>
+            <p class="subtitle">
+              Plataforma interna para encontrar parabrisas, lunetas, puertas,
+              aletas y laterales con velocidad de taller. Busca por marca,
+              sigla, año, medida o stock en la pestaña
+              <strong>MarcketPlace</strong>.
+            </p>
+          </div>
+          <div class="hero-brand">
+            <img
+              class="hero-logo"
+              src="./logo-autovidriosrobin.jpg"
+              alt="Logo de AutovidriosRobin"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="search-panel">
+        <div class="search-panel-header">
+          <div>
+            <p class="panel-kicker">Buscador tecnico</p>
+            <label class="search-label" for="searchInput">Buscar producto</label>
+          </div>
+          <div class="panel-note">AVR Search</div>
+        </div>
+        <div class="search-box">
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Ej: pbs audi 2018 o pdd toyota 2013"
+            autocomplete="off"
+          />
+          <button id="reloadButton" type="button">Actualizar</button>
+        </div>
+        <p class="hint">
+          Busca sobre las columnas visibles: <strong>Nombre</strong>,
+          <strong>Siglas</strong>, <strong>Años</strong>, <strong>Medida</strong>,
+          <strong>Costo</strong>, <strong>Sin Instalación</strong>,
+          <strong>Con instalación</strong> y <strong>Unidades</strong>.
+        </p>
+      </section>
+
+      <section class="status-row">
+        <div id="status" class="status">Cargando datos...</div>
+        <div id="counter" class="counter"></div>
+      </section>
+
+      <section class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre (B)</th>
+              <th>Siglas</th>
+              <th>Años</th>
+              <th>Medida</th>
+              <th>Costo</th>
+              <th>Sin Instalación</th>
+              <th>Con Instalación</th>
+              <th>Unidades</th>
+            </tr>
+          </thead>
+          <tbody id="resultsBody">
+            <tr>
+              <td colspan="8" class="empty-cell">Cargando productos...</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+  </html>
