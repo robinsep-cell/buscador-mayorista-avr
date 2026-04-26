@@ -430,11 +430,28 @@ html[data-theme="light"] .years-cell {
 .stock-cell {
   min-width: 110px;
   font-weight: 700;
-  color: #dfffcf;
+  text-align: center;
 }
 
-html[data-theme="light"] .stock-cell {
-  color: #244100;
+.stock-cell.stock-pos {
+  color: #7cf08a;
+  background: rgba(124, 240, 138, 0.08);
+}
+
+.stock-cell.stock-zero {
+  color: #ff7e7e;
+  background: rgba(255, 126, 126, 0.06);
+  opacity: 0.7;
+}
+
+html[data-theme="light"] .stock-cell.stock-pos {
+  color: #1a6b25;
+  background: rgba(26, 107, 37, 0.08);
+}
+
+html[data-theme="light"] .stock-cell.stock-zero {
+  color: #a52323;
+  background: rgba(165, 35, 35, 0.05);
 }
 
 .sigla-badge {

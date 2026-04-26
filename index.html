@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Buscador Marketplace</title>
+    <title>Buscador Mayorista</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -25,10 +25,8 @@
               </button>
             </div>
             <p class="subtitle">
-              Plataforma interna para encontrar parabrisas, lunetas, puertas,
-              aletas y laterales con velocidad de taller. Busca por marca,
-              sigla, año, medida o stock en la pestaña
-              <strong>MarcketPlace</strong>.
+              Inventario unificado: importadora cero + AutovidriosRobin. Busca por
+              marca, modelo, sigla, año, medida o código antiguo.
             </p>
           </div>
           <div class="hero-brand">
@@ -53,16 +51,15 @@
           <input
             id="searchInput"
             type="search"
-            placeholder="Ej: pbs audi 2018 o pdd toyota 2013"
+            placeholder="Ej: parabrisas audi 2018 o pdd toyota 2013 o PBS141"
             autocomplete="off"
           />
           <button id="reloadButton" type="button">Actualizar</button>
         </div>
         <p class="hint">
-          Busca sobre las columnas visibles: <strong>Nombre</strong>,
-          <strong>Siglas</strong>, <strong>Años</strong>, <strong>Medida</strong>,
-          <strong>Costo</strong>, <strong>Sin Instalación</strong>,
-          <strong>Con instalación</strong> y <strong>Unidades</strong>.
+          Búsqueda sobre <strong>Producto</strong>, <strong>Siglas</strong>,
+          <strong>Códigos antiguos</strong>, <strong>Años</strong>,
+          <strong>Medida</strong> y <strong>Color</strong>.
         </p>
       </section>
 
@@ -75,14 +72,14 @@
         <table>
           <thead>
             <tr>
-              <th>Nombre (B)</th>
+              <th>Producto</th>
               <th>Siglas</th>
+              <th>Cód. Antiguo</th>
               <th>Años</th>
               <th>Medida</th>
-              <th>Costo</th>
-              <th>Sin Instalación</th>
-              <th>Con Instalación</th>
-              <th>Unidades</th>
+              <th>Color</th>
+              <th>Stock Importadora</th>
+              <th>Stock AVR</th>
             </tr>
           </thead>
           <tbody id="resultsBody">
