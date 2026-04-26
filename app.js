@@ -1,6 +1,6 @@
 const SHEET_ID = "1h7VNeNZHI4zvJR9WTBXXM0BhsKu22u-GJNpT1TIh9YU";
-const URL_IMPORTADORA = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=142068239`;
-const URL_AVR = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=1924278073`;
+const URL_IMPORTADORA = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=795430851`;
+const URL_AVR = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=142068239`;
 
 // Positional column indexes (0-based, same layout in both sheets)
 const COL_STOCK   = 13; // N
