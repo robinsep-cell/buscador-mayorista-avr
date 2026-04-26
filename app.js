@@ -2,6 +2,13 @@ const SHEET_ID = "1h7VNeNZHI4zvJR9WTBXXM0BhsKu22u-GJNpT1TIh9YU";
 const URL_IMPORTADORA = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=142068239`;
 const URL_AVR = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=1924278073`;
 
+// Positional column indexes (0-based, same layout in both sheets)
+const COL_STOCK   = 13; // N
+const COL_COSTO   = 35; // AJ
+const COL_VSIN    = 36; // AK – Venta sin instalación
+const COL_VCON    = 37; // AL – Venta con instalación
+const COL_SIGLA   = 41; // AP
+
 const searchInput = document.querySelector("#searchInput");
 const reloadButton = document.querySelector("#reloadButton");
 const themeToggle = document.querySelector("#themeToggle");
@@ -10,7 +17,7 @@ const statusNode = document.querySelector("#status");
 const counterNode = document.querySelector("#counter");
 const resultsBody = document.querySelector("#resultsBody");
 
-const COLSPAN = 8;
+const COLSPAN = 11;
 let products = [];
 
 const THEME_STORAGE_KEY = "avr-marketplace-theme";
@@ -31,7 +38,7 @@ function initializeTheme() {
 function normalizeText(value) {
   return String(value ?? "")
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[̀-ͯ]/g, "")
     .toLowerCase()
     .trim();
 }
@@ -54,7 +61,7 @@ function parseCsv(text) {
   let cur = "";
   let row = [];
   let inQuotes = false;
-  const t = text.replace(/^\uFEFF/, "");
+  const t = text.replace(/^﻿/, "");
   for (let i = 0; i < t.length; i++) {
     const c = t[i];
     if (inQuotes) {
@@ -85,6 +92,10 @@ function getCell(row, headerMap, ...names) {
     if (i !== undefined) return (row[i] ?? "").toString().trim();
   }
   return "";
+}
+
+function getByIndex(row, idx) {
+  return (row[idx] ?? "").toString().trim();
 }
 
 function buildYearLabel(d, h) {
@@ -142,6 +153,12 @@ function siglasFromNombre(nombre) {
   return sig;
 }
 
+function formatPrice(value) {
+  const n = parseInt(String(value ?? "").trim(), 10);
+  if (!Number.isInteger(n) || n <= 0) return "-";
+  return "$ " + n.toLocaleString("es-CL");
+}
+
 function buildImportadora(row, hm) {
   return {
     cp: getCell(row, hm, "CodigoProveedor").toUpperCase(),
@@ -154,7 +171,11 @@ function buildImportadora(row, hm) {
     anioHasta: getCell(row, hm, "AnioHasta"),
     color: getCell(row, hm, "Color"),
     medida: getCell(row, hm, "Medida"),
-    stock: getCell(row, hm, "Stock"),
+    stock: getByIndex(row, COL_STOCK),
+    costo: getByIndex(row, COL_COSTO),
+    ventaSin: getByIndex(row, COL_VSIN),
+    ventaCon: getByIndex(row, COL_VCON),
+    sigla: getByIndex(row, COL_SIGLA),
   };
 }
 
@@ -171,7 +192,11 @@ function buildAvr(row, hm) {
     anioHasta: getCell(row, hm, "AnioHasta"),
     color: getCell(row, hm, "Color"),
     medida: getCell(row, hm, "Medida"),
-    stock: getCell(row, hm, "Stock"),
+    stock: getByIndex(row, COL_STOCK),
+    costo: getByIndex(row, COL_COSTO),
+    ventaSin: getByIndex(row, COL_VSIN),
+    ventaCon: getByIndex(row, COL_VCON),
+    sigla: getByIndex(row, COL_SIGLA),
   };
 }
 
@@ -180,13 +205,13 @@ function pickField(impVal, avrVal) {
 }
 
 function mergeRows(imp, avr) {
-  // Importadora prioritized for descriptive fields; AVR fills gaps.
-  // Stock is shown separately.
   const codigoAntiguoList = avr ? siglasFromCodigoAntiguo(avr.codigoAntiguo) : [];
   const nombre = pickField(imp?.nombre, avr?.nombre);
-  const sigAuto = siglasFromNombre(nombre);
+  const siglaSheet = pickField(imp?.sigla, avr?.sigla);
+  const sigAuto = siglaSheet ? [] : siglasFromNombre(nombre);
   return {
     nombre,
+    siglaSheet,
     siglasAuto: sigAuto,
     codigoAntiguo: codigoAntiguoList,
     marca: pickField(imp?.marca, avr?.marca),
@@ -197,6 +222,9 @@ function mergeRows(imp, avr) {
     medida: pickField(imp?.medida, avr?.medida),
     stockImp: imp ? imp.stock : "",
     stockAvr: avr ? avr.stock : "",
+    costo: pickField(imp?.costo, avr?.costo),
+    ventaSin: pickField(imp?.ventaSin, avr?.ventaSin),
+    ventaCon: pickField(imp?.ventaCon, avr?.ventaCon),
     cp: (imp?.cp || avr?.cp || ""),
   };
 }
@@ -204,6 +232,7 @@ function mergeRows(imp, avr) {
 function buildSearchIndex(p) {
   return normalizeText([
     p.nombre,
+    p.siglaSheet,
     p.siglasAuto.join(" "),
     p.codigoAntiguo.join(" "),
     p.marca,
@@ -247,6 +276,13 @@ function renderBadges(items, tokens) {
   return items.map(s => `<span class="sigla-badge">${highlight(s, tokens)}</span>`).join(" ");
 }
 
+function renderSiglas(p, tokens) {
+  if (p.siglaSheet) {
+    return `<span class="sigla-badge">${highlight(p.siglaSheet, tokens)}</span>`;
+  }
+  return renderBadges(p.siglasAuto, tokens);
+}
+
 function stockClass(value) {
   const n = parseInt(String(value ?? "").trim(), 10);
   if (Number.isInteger(n) && n > 0) return "stock-cell stock-pos";
@@ -261,13 +297,16 @@ function renderRows(items, tokens) {
   resultsBody.innerHTML = items.map(p => `
     <tr>
       <td class="name-cell">${highlight(p.nombre, tokens)}</td>
-      <td class="siglas-cell">${renderBadges(p.siglasAuto, tokens)}</td>
+      <td class="siglas-cell">${renderSiglas(p, tokens)}</td>
       <td class="siglas-cell">${renderBadges(p.codigoAntiguo, tokens)}</td>
       <td class="years-cell">${highlight(buildYearLabel(p.anioDesde, p.anioHasta), tokens)}</td>
       <td>${highlight(p.medida, tokens)}</td>
       <td>${highlight(p.color, tokens)}</td>
       <td class="${stockClass(p.stockImp)}">${highlight(p.stockImp || "0", tokens)}</td>
       <td class="${stockClass(p.stockAvr)}">${highlight(p.stockAvr || "0", tokens)}</td>
+      <td class="price-cell">${formatPrice(p.costo)}</td>
+      <td class="price-cell">${formatPrice(p.ventaSin)}</td>
+      <td class="price-cell">${formatPrice(p.ventaCon)}</td>
     </tr>
   `).join("");
 }
