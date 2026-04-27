@@ -365,20 +365,22 @@ html[data-theme="light"] .counter {
 }
 
 .table-wrap {
-  overflow: hidden;
+  overflow-x: auto;
 }
 
 table {
   width: 100%;
+  min-width: 1100px;
   border-collapse: collapse;
 }
 
 thead th {
-  padding: 14px 16px;
+  padding: 10px 10px;
   text-align: left;
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  white-space: nowrap;
   color: #daffcb;
   background:
     linear-gradient(180deg, rgba(33, 38, 46, 0.98), rgba(23, 27, 34, 0.98));
@@ -391,10 +393,11 @@ html[data-theme="light"] thead th {
 }
 
 tbody td {
-  padding: 14px 16px;
+  padding: 10px 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   vertical-align: top;
   color: #eef5ef;
+  font-size: 0.9rem;
 }
 
 html[data-theme="light"] tbody td {
@@ -403,12 +406,12 @@ html[data-theme="light"] tbody td {
 }
 
 .name-cell {
-  min-width: 360px;
+  min-width: 220px;
   font-weight: 500;
 }
 
 .siglas-cell {
-  min-width: 120px;
+  min-width: 80px;
 }
 
 .provider-code-cell {
@@ -428,7 +431,7 @@ html[data-theme="light"] .years-cell {
 }
 
 .stock-cell {
-  min-width: 110px;
+  min-width: 70px;
   font-weight: 700;
   text-align: center;
 }
@@ -455,7 +458,7 @@ html[data-theme="light"] .stock-cell.stock-zero {
 }
 
 .price-cell {
-  min-width: 110px;
+  min-width: 90px;
   text-align: right;
   font-variant-numeric: tabular-nums;
   color: var(--muted);
