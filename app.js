@@ -154,9 +154,11 @@ function siglasFromNombre(nombre) {
 }
 
 function formatPrice(value) {
-  const n = parseInt(String(value ?? "").trim(), 10);
+  const s = String(value ?? "").trim();
+  if (!s) return "-";
+  const n = parseInt(s.replace(/\./g, ""), 10);
   if (!Number.isInteger(n) || n <= 0) return "-";
-  return "$ " + n.toLocaleString("es-CL");
+  return "$ " + n.toLocaleString("es-CL");
 }
 
 function buildImportadora(row, hm) {
