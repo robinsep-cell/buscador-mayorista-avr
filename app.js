@@ -417,15 +417,21 @@ async function loadPricingFactors() {
     rows.forEach(row => {
       const producto = (row[0] ?? "").trim();
       if (!producto) return;
-      const num = (col) => {
+      const factor = (col) => {
         const v = String(row[col] ?? "").trim().replace(",", ".");
         const n = parseFloat(v);
         return Number.isFinite(n) ? n : 0;
       };
+      const minPrice = (col) => {
+        // valores como "55.600" usan punto como separador de miles → quitar puntos
+        const v = String(row[col] ?? "").trim().replace(/\./g, "").replace(",", ".");
+        const n = parseInt(v, 10);
+        return Number.isInteger(n) && n > 0 ? n : 0;
+      };
       pricingFactors[producto] = {
-        C: num(2), D: num(3), E: num(4), F: num(5),
-        G: num(6), H: num(7), I: num(8), J: num(9),
-        K: num(10), minSin: num(14), minCon: num(15),
+        C: factor(2), D: factor(3), E: factor(4), F: factor(5),
+        G: factor(6), H: factor(7), I: factor(8), J: factor(9),
+        K: factor(10), minSin: minPrice(14), minCon: minPrice(15),
       };
     });
   } catch (e) {
