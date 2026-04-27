@@ -23,24 +23,18 @@
         <h1 class="auth-title">Buscador Mayorista</h1>
         <p class="auth-subtitle">Acceso exclusivo para clientes autorizados.</p>
 
-        <!-- Paso 1: ingresar correo -->
+        <!-- Login: correo + contraseña -->
         <div id="authStep1" class="auth-step">
           <div class="auth-field">
             <label class="auth-label" for="authEmail">Correo electrónico</label>
             <input id="authEmail" class="auth-input" type="email" placeholder="tu@correo.com" autocomplete="email" />
           </div>
-          <button id="authSendBtn" class="auth-btn" type="button">Enviar enlace</button>
-          <p id="authError1" class="auth-error"></p>
-        </div>
-
-        <!-- Paso 2: enlace enviado -->
-        <div id="authStep2" class="auth-step" hidden>
-          <div class="auth-link-sent">
-            <div class="auth-link-icon">📧</div>
-            <p class="auth-info">Enlace enviado a <strong id="authEmailDisplay"></strong></p>
-            <p class="auth-info auth-info--muted">Revisa tu correo y haz clic en el enlace para ingresar. Puede tardar unos segundos.</p>
+          <div class="auth-field">
+            <label class="auth-label" for="authPassword">Contraseña</label>
+            <input id="authPassword" class="auth-input" type="password" placeholder="••••••••" autocomplete="current-password" />
           </div>
-          <button id="authBackBtn" class="auth-btn auth-btn--ghost" type="button">Cambiar correo</button>
+          <button id="authSendBtn" class="auth-btn" type="button">Entrar</button>
+          <p id="authError1" class="auth-error"></p>
         </div>
       </div>
     </div>

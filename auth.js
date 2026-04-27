@@ -5,26 +5,22 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 window._sb = sb;
 
 // ── DOM refs ──────────────────────────────────────────────────────────────────
-const authScreen    = document.getElementById("authScreen");
-const appContent    = document.getElementById("appContent");
-const authStep1     = document.getElementById("authStep1");
-const authStep2     = document.getElementById("authStep2");
-const authEmail     = document.getElementById("authEmail");
-const authSendBtn   = document.getElementById("authSendBtn");
-const authBackBtn   = document.getElementById("authBackBtn");
-const authError1    = document.getElementById("authError1");
-const authEmailDisp = document.getElementById("authEmailDisplay");
-const logoutBtn     = document.getElementById("logoutBtn");
-const adminBtn      = document.getElementById("adminBtn");
+const authScreen  = document.getElementById("authScreen");
+const appContent  = document.getElementById("appContent");
+const authEmail   = document.getElementById("authEmail");
+const authPass    = document.getElementById("authPassword");
+const authSendBtn = document.getElementById("authSendBtn");
+const authError1  = document.getElementById("authError1");
+const logoutBtn   = document.getElementById("logoutBtn");
+const adminBtn    = document.getElementById("adminBtn");
 
 // ── Mostrar/ocultar pantallas ─────────────────────────────────────────────────
 function showAuth() {
   authScreen.hidden = false;
   appContent.hidden = true;
-  authStep1.hidden  = false;
-  authStep2.hidden  = true;
   authError1.textContent = "";
   authEmail.value = "";
+  authPass.value  = "";
   window.currentUser = null;
 }
 
@@ -58,14 +54,21 @@ sb.auth.onAuthStateChange((_event, session) => {
   else showAuth();
 });
 
-// ── Paso 1: enviar enlace mágico ──────────────────────────────────────────────
+// ── Login con correo y contraseña ─────────────────────────────────────────────
 authSendBtn.addEventListener("click", async () => {
-  const email = authEmail.value.trim().toLowerCase();
+  const email    = authEmail.value.trim().toLowerCase();
+  const password = authPass.value;
   authError1.textContent = "";
+
   if (!email || !email.includes("@")) {
     authError1.textContent = "Ingresa un correo válido.";
     return;
   }
+  if (!password || password.length < 6) {
+    authError1.textContent = "La contraseña debe tener al menos 6 caracteres.";
+    return;
+  }
+
   authSendBtn.disabled = true;
   authSendBtn.textContent = "Verificando...";
 
@@ -79,40 +82,49 @@ authSendBtn.addEventListener("click", async () => {
   if (error || !data) {
     authError1.textContent = "Correo no autorizado. Contacta al administrador.";
     authSendBtn.disabled = false;
-    authSendBtn.textContent = "Enviar enlace";
+    authSendBtn.textContent = "Entrar";
     return;
   }
 
-  authSendBtn.textContent = "Enviando...";
-  const { error: otpErr } = await sb.auth.signInWithOtp({
-    email,
-    options: {
-      shouldCreateUser: true,
-      emailRedirectTo: "https://robinsep-cell.github.io/buscador-mayorista-avr/",
-    },
-  });
+  // Intentar iniciar sesión
+  const { error: signInErr } = await sb.auth.signInWithPassword({ email, password });
+
+  if (!signInErr) {
+    // Éxito — onAuthStateChange maneja el resto
+    authSendBtn.disabled = false;
+    authSendBtn.textContent = "Entrar";
+    return;
+  }
+
+  // Credenciales inválidas: puede ser primera vez (crear cuenta) o clave incorrecta
+  if (signInErr.message === "Invalid login credentials") {
+    const { error: signUpErr } = await sb.auth.signUp({ email, password });
+
+    if (!signUpErr) {
+      // Primera vez: cuenta creada. onAuthStateChange dispara si email confirm está desactivado.
+      authSendBtn.disabled = false;
+      authSendBtn.textContent = "Entrar";
+      return;
+    }
+
+    if (signUpErr.message.toLowerCase().includes("already registered")) {
+      authError1.textContent = "Contraseña incorrecta.";
+    } else {
+      authError1.textContent = "Error al crear cuenta. Intenta de nuevo.";
+    }
+    authSendBtn.disabled = false;
+    authSendBtn.textContent = "Entrar";
+    return;
+  }
+
+  authError1.textContent = "Error al iniciar sesión. Intenta de nuevo.";
   authSendBtn.disabled = false;
-  authSendBtn.textContent = "Enviar enlace";
-
-  if (otpErr) {
-    authError1.textContent = "Error al enviar el correo. Intenta de nuevo.";
-    return;
-  }
-
-  authEmailDisp.textContent = email;
-  authStep1.hidden = true;
-  authStep2.hidden = false;
+  authSendBtn.textContent = "Entrar";
 });
 
-authEmail.addEventListener("keydown", e => { if (e.key === "Enter") authSendBtn.click(); });
-
-// ── Volver ────────────────────────────────────────────────────────────────────
-authBackBtn.addEventListener("click", () => {
-  authStep2.hidden = true;
-  authStep1.hidden = false;
-  authError1.textContent = "";
-  authEmail.focus();
-});
+["keydown"].forEach(ev =>
+  authPass.addEventListener(ev, e => { if (e.key === "Enter") authSendBtn.click(); })
+);
 
 // ── Cerrar sesión ─────────────────────────────────────────────────────────────
 logoutBtn.addEventListener("click", () => sb.auth.signOut());
