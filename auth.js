@@ -86,7 +86,10 @@ authSendBtn.addEventListener("click", async () => {
   authSendBtn.textContent = "Enviando...";
   const { error: otpErr } = await sb.auth.signInWithOtp({
     email,
-    options: { shouldCreateUser: true },
+    options: {
+      shouldCreateUser: true,
+      emailRedirectTo: "https://robinsep-cell.github.io/buscador-mayorista-avr/",
+    },
   });
   authSendBtn.disabled = false;
   authSendBtn.textContent = "Enviar enlace";
