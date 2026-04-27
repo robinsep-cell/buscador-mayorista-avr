@@ -527,7 +527,8 @@ function calcPrices() {
   if (traits.encapsulada && chkEncapsulada.checked) conFactor += f.J;
   if (traits.laminada    && chkLaminada.checked)    conFactor += f.K;
 
-  const conFinal = Math.max(costo * conFactor, f.minCon);
+  const MIN_SOLO = 24500;
+  const conFinal = Math.max(costo * conFactor, f.minCon, sinFinal + MIN_SOLO);
   const soloInst = conFinal - sinFinal;
 
   const fmt = n => "$ " + Math.round(n).toLocaleString("es-CL");
