@@ -49,6 +49,9 @@
 
     <!-- ── Contenido principal (protegido) ── -->
     <div id="appContent" hidden>
+
+      <!-- Vista principal del buscador -->
+      <div id="mainView">
       <main class="layout">
         <section class="hero">
           <div class="hero-card">
@@ -60,6 +63,7 @@
                   <button id="themeToggle" class="theme-toggle" type="button" aria-label="Cambiar tema">
                     <span class="theme-toggle-text">Modo claro</span>
                   </button>
+                  <button id="adminBtn" class="admin-hero-btn" type="button" hidden>Usuarios</button>
                   <button id="logoutBtn" class="logout-btn" type="button">Salir</button>
                 </div>
               </div>
@@ -231,9 +235,53 @@
           </div>
         </div>
       </dialog>
+      </div><!-- /#mainView -->
+
+      <!-- ── Panel de administración ── -->
+      <div id="adminView" hidden>
+        <div class="admin-layout">
+          <div class="admin-topbar">
+            <button id="adminBack" class="admin-back-btn" type="button">← Volver al buscador</button>
+            <div class="admin-topbar-title">
+              <p class="panel-kicker">AutovidriosRobin</p>
+              <h2>Usuarios Autorizados</h2>
+            </div>
+          </div>
+
+          <!-- Formulario agregar usuario -->
+          <div class="admin-add-card">
+            <p class="admin-section-label">Agregar nuevo usuario</p>
+            <form id="adminForm" class="admin-add-form" onsubmit="return false">
+              <input id="adminNombre" class="admin-input" type="text" placeholder="Nombre completo" autocomplete="off" />
+              <input id="adminNewEmail" class="admin-input" type="email" placeholder="correo@ejemplo.com" autocomplete="off" />
+              <button id="adminAddBtn" class="admin-add-submit" type="button">Agregar</button>
+            </form>
+            <p id="adminMsg" class="admin-msg"></p>
+          </div>
+
+          <!-- Tabla de usuarios -->
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Usuario</th>
+                  <th>Rol</th>
+                  <th>Fecha</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="adminList">
+                <tr><td colspan="4" class="admin-empty">Cargando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div><!-- /#adminView -->
+
     </div><!-- /#appContent -->
 
     <script src="./auth.js"></script>
+    <script src="./admin.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>
