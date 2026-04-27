@@ -365,7 +365,12 @@ html[data-theme="light"] .counter {
 }
 
 .table-wrap {
+  overflow: hidden;
+}
+
+.table-scroll {
   overflow-x: auto;
+  width: 100%;
 }
 
 table {
