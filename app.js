@@ -446,30 +446,41 @@ const chkLaminada  = document.querySelector("#chkLaminada");
 const calcResSin   = document.querySelector("#calcResSin");
 const calcResCon   = document.querySelector("#calcResCon");
 const calcResSolo  = document.querySelector("#calcResSolo");
+const calcStatus   = document.querySelector("#calcStatus");
 
-function openCalcModal() {
-  calcModal.removeAttribute("aria-hidden");
-  calcModal.classList.add("is-open");
-  calcCosto.focus();
+function setPillState(input) {
+  const pill = input.closest(".calc-pill");
+  if (!pill) return;
+  if (input.type === "radio") {
+    document.querySelectorAll(`input[name="${input.name}"]`).forEach(r => {
+      r.closest(".calc-pill")?.classList.toggle("is-checked", r.checked);
+    });
+  } else {
+    pill.classList.toggle("is-checked", input.checked);
+  }
 }
 
-function closeCalcModal() {
-  calcModal.setAttribute("aria-hidden", "true");
-  calcModal.classList.remove("is-open");
+function resetPill(checkboxEl) {
+  checkboxEl.checked = false;
+  checkboxEl.closest(".calc-pill")?.classList.remove("is-checked");
 }
 
 function updateCalcVisibility() {
   const traits = PRODUCT_TRAITS[calcProducto.value] || {};
-  document.querySelector("#chkSensorWrap").hidden     = !traits.sensor;
-  document.querySelector("#chkAdasWrap").hidden       = !traits.adas;
-  document.querySelector("#chkCamWrap").hidden        = !traits.camara;
+  document.querySelector("#chkSensorWrap").hidden      = !traits.sensor;
+  document.querySelector("#chkAdasWrap").hidden        = !traits.adas;
+  document.querySelector("#chkCamWrap").hidden         = !traits.camara;
   document.querySelector("#chkEncapsuladaWrap").hidden = !traits.encapsulada;
-  document.querySelector("#chkLaminadaWrap").hidden   = !traits.laminada;
-  if (!traits.sensor) chkSensor.checked = false;
-  if (!traits.adas)   chkAdas.checked   = false;
-  if (!traits.encapsulada) chkEncapsulada.checked = false;
-  if (!traits.laminada)    chkLaminada.checked    = false;
-  if (!traits.camara) document.querySelector("#chkNoCam").checked = true;
+  document.querySelector("#chkLaminadaWrap").hidden    = !traits.laminada;
+  if (!traits.sensor) resetPill(chkSensor);
+  if (!traits.adas)   resetPill(chkAdas);
+  if (!traits.encapsulada) resetPill(chkEncapsulada);
+  if (!traits.laminada)    resetPill(chkLaminada);
+  if (!traits.camara) {
+    const noCam = document.querySelector("#chkNoCam");
+    noCam.checked = true;
+    setPillState(noCam);
+  }
   calcPrices();
 }
 
@@ -477,12 +488,21 @@ function calcPrices() {
   const costo = parseFloat(calcCosto.value);
   const producto = calcProducto.value;
 
-  if (!costo || costo <= 0 || !producto || !pricingFactors?.[producto]) {
-    calcResSin.textContent = "—";
-    calcResCon.textContent = "—";
-    calcResSolo.textContent = "—";
+  if (!costo || costo <= 0 || !producto) {
+    calcResSin.textContent = "—"; calcResCon.textContent = "—"; calcResSolo.textContent = "—";
     return;
   }
+  if (!pricingFactors) {
+    calcStatus.textContent = "Cargando factores...";
+    calcResSin.textContent = "—"; calcResCon.textContent = "—"; calcResSolo.textContent = "—";
+    return;
+  }
+  if (!pricingFactors[producto]) {
+    calcStatus.textContent = `Sin factores para "${producto}"`;
+    calcResSin.textContent = "—"; calcResCon.textContent = "—"; calcResSolo.textContent = "—";
+    return;
+  }
+  calcStatus.textContent = "";
 
   const f = pricingFactors[producto];
   const traits = PRODUCT_TRAITS[producto] || {};
@@ -501,25 +521,30 @@ function calcPrices() {
   if (traits.encapsulada && chkEncapsulada.checked) conFactor += f.J;
   if (traits.laminada    && chkLaminada.checked)    conFactor += f.K;
 
-  const conFinal  = Math.max(costo * conFactor, f.minCon);
-  const soloInst  = conFinal - sinFinal;
+  const conFinal = Math.max(costo * conFactor, f.minCon);
+  const soloInst = conFinal - sinFinal;
 
   const fmt = n => "$ " + Math.round(n).toLocaleString("es-CL");
   calcResSin.textContent  = fmt(sinFinal);
   calcResCon.textContent  = fmt(conFinal);
-  calcResSolo.textContent = soloInst > 0 ? fmt(soloInst) : "—";
+  calcResSolo.textContent = soloInst > 0 ? fmt(soloInst) : "$ 0";
 }
 
-calcOpenBtn?.addEventListener("click", openCalcModal);
-calcClose?.addEventListener("click", closeCalcModal);
-calcModal?.addEventListener("click", e => { if (e.target === calcModal) closeCalcModal(); });
-document.addEventListener("keydown", e => { if (e.key === "Escape") closeCalcModal(); });
+// Abrir / cerrar con native dialog
+calcOpenBtn?.addEventListener("click", () => {
+  calcModal.showModal();
+  setTimeout(() => calcCosto.focus(), 50);
+});
+calcClose?.addEventListener("click", () => calcModal.close());
+calcModal?.addEventListener("click", e => { if (e.target === calcModal) calcModal.close(); });
 
+// Inputs → recalcular
 calcCosto.addEventListener("input", calcPrices);
 calcProducto.addEventListener("change", updateCalcVisibility);
-chkAltaGama.addEventListener("change", calcPrices);
-chkSensor.addEventListener("change", calcPrices);
-chkAdas.addEventListener("change", calcPrices);
-chkEncapsulada.addEventListener("change", calcPrices);
-chkLaminada.addEventListener("change", calcPrices);
-document.querySelectorAll('input[name="camara"]').forEach(r => r.addEventListener("change", calcPrices));
+
+[chkAltaGama, chkSensor, chkAdas, chkEncapsulada, chkLaminada].forEach(el => {
+  el.addEventListener("change", () => { setPillState(el); calcPrices(); });
+});
+document.querySelectorAll('input[name="camara"]').forEach(r => {
+  r.addEventListener("change", () => { setPillState(r); calcPrices(); });
+});

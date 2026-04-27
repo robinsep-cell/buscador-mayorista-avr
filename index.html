@@ -115,114 +115,113 @@
     </main>
 
     <!-- Modal Calculadora -->
-    <div id="calcModal" class="calc-modal" aria-hidden="true">
-      <div class="calc-dialog" role="dialog" aria-labelledby="calcTitle">
-        <div class="calc-header">
-          <div>
-            <p class="panel-kicker">Herramienta de precios</p>
-            <h2 id="calcTitle">Calculadora de Precios</h2>
-          </div>
-          <button id="calcClose" class="calc-close" type="button" aria-label="Cerrar">✕</button>
+    <dialog id="calcModal" class="calc-dialog">
+      <div class="calc-header">
+        <div>
+          <p class="calc-kicker">Herramienta de precios</p>
+          <h2 class="calc-title">Calculadora</h2>
         </div>
+        <button id="calcClose" class="calc-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
 
-        <div class="calc-body">
-          <div class="calc-form">
+      <div class="calc-body">
+        <div class="calc-form">
 
-            <div class="calc-field">
-              <label for="calcCosto">Costo de compra (CLP)</label>
-              <input id="calcCosto" type="number" placeholder="Ej: 25000" min="0" step="100" />
-            </div>
+          <div class="calc-field">
+            <label class="calc-label" for="calcCosto">Costo de compra (CLP)</label>
+            <input id="calcCosto" class="calc-input" type="number" placeholder="Ej: 25000" min="0" step="100" />
+          </div>
 
-            <div class="calc-field">
-              <label for="calcProducto">Tipo de producto</label>
-              <select id="calcProducto">
-                <option value="">Seleccionar...</option>
-                <option value="Parabrisas">Parabrisas</option>
-                <option value="Vidrio Aleta">Vidrio Aleta</option>
-                <option value="Vidrio de Puerta">Vidrio de Puerta</option>
-                <option value="Vidrio Lateral">Vidrio Lateral</option>
-                <option value="Luneta Portalón">Luneta Portalón</option>
-              </select>
-            </div>
+          <div class="calc-field">
+            <label class="calc-label" for="calcProducto">Tipo de producto</label>
+            <select id="calcProducto" class="calc-input">
+              <option value="">Seleccionar...</option>
+              <option value="Parabrisas">Parabrisas</option>
+              <option value="Vidrio Aleta">Vidrio Aleta</option>
+              <option value="Vidrio de Puerta">Vidrio de Puerta</option>
+              <option value="Vidrio Lateral">Vidrio Lateral</option>
+              <option value="Luneta Portalón">Luneta Portalón</option>
+            </select>
+          </div>
 
-            <div class="calc-field">
-              <label>Categoría</label>
-              <div class="calc-checks">
-                <label class="calc-check">
-                  <input type="checkbox" id="chkAltaGama" />
-                  <span>Alta Gama</span>
-                </label>
-              </div>
-            </div>
-
-            <div id="chkSensorWrap" class="calc-field" hidden>
-              <label>Sensor de lluvia</label>
-              <div class="calc-checks">
-                <label class="calc-check">
-                  <input type="checkbox" id="chkSensor" />
-                  <span>Con sensor</span>
-                </label>
-              </div>
-            </div>
-
-            <div id="chkAdasWrap" class="calc-field" hidden>
-              <label>ADAS</label>
-              <div class="calc-checks">
-                <label class="calc-check">
-                  <input type="checkbox" id="chkAdas" />
-                  <span>Con ADAS</span>
-                </label>
-              </div>
-            </div>
-
-            <div id="chkCamWrap" class="calc-field" hidden>
-              <label>Cámara trasera</label>
-              <div class="calc-checks">
-                <label class="calc-check"><input type="radio" name="camara" id="chkNoCam" value="" checked /><span>Sin cámara</span></label>
-                <label class="calc-check"><input type="radio" name="camara" id="chk1Cam" value="1" /><span>1 Cámara</span></label>
-                <label class="calc-check"><input type="radio" name="camara" id="chk2Cam" value="2" /><span>2 Cámaras</span></label>
-              </div>
-            </div>
-
-            <div id="chkEncapsuladaWrap" class="calc-field" hidden>
-              <label>Encapsulada</label>
-              <div class="calc-checks">
-                <label class="calc-check">
-                  <input type="checkbox" id="chkEncapsulada" />
-                  <span>Es encapsulada</span>
-                </label>
-              </div>
-            </div>
-
-            <div id="chkLaminadaWrap" class="calc-field" hidden>
-              <label>Laminada</label>
-              <div class="calc-checks">
-                <label class="calc-check">
-                  <input type="checkbox" id="chkLaminada" />
-                  <span>Es laminada</span>
-                </label>
-              </div>
-            </div>
-
-          </div><!-- /.calc-form -->
-
-          <div class="calc-results">
-            <div class="calc-result-row">
-              <span class="calc-result-label">Sin Instalación</span>
-              <span id="calcResSin" class="calc-result-value">—</span>
-            </div>
-            <div class="calc-result-row calc-result-row--main">
-              <span class="calc-result-label">Con Instalación</span>
-              <span id="calcResCon" class="calc-result-value">—</span>
-            </div>
-            <div class="calc-result-row calc-result-row--muted">
-              <span class="calc-result-label">Solo Instalación</span>
-              <span id="calcResSolo" class="calc-result-value">—</span>
+          <div class="calc-field">
+            <span class="calc-label">Categoría</span>
+            <div class="calc-pills">
+              <label class="calc-pill" id="pillAltaGama">
+                <input type="checkbox" id="chkAltaGama" />
+                <span>Alta Gama</span>
+              </label>
             </div>
           </div>
-        </div><!-- /.calc-body -->
-      </div><!-- /.calc-dialog -->
-    </div><!-- /#calcModal -->
+
+          <div id="chkSensorWrap" class="calc-field" hidden>
+            <span class="calc-label">Sensor de lluvia</span>
+            <div class="calc-pills">
+              <label class="calc-pill" id="pillSensor">
+                <input type="checkbox" id="chkSensor" />
+                <span>Con sensor</span>
+              </label>
+            </div>
+          </div>
+
+          <div id="chkAdasWrap" class="calc-field" hidden>
+            <span class="calc-label">ADAS</span>
+            <div class="calc-pills">
+              <label class="calc-pill" id="pillAdas">
+                <input type="checkbox" id="chkAdas" />
+                <span>Con ADAS</span>
+              </label>
+            </div>
+          </div>
+
+          <div id="chkCamWrap" class="calc-field" hidden>
+            <span class="calc-label">Cámara trasera</span>
+            <div class="calc-pills">
+              <label class="calc-pill is-checked" id="pillNoCam"><input type="radio" name="camara" id="chkNoCam" value="" checked /><span>Sin cámara</span></label>
+              <label class="calc-pill" id="pill1Cam"><input type="radio" name="camara" id="chk1Cam" value="1" /><span>1 Cámara</span></label>
+              <label class="calc-pill" id="pill2Cam"><input type="radio" name="camara" id="chk2Cam" value="2" /><span>2 Cámaras</span></label>
+            </div>
+          </div>
+
+          <div id="chkEncapsuladaWrap" class="calc-field" hidden>
+            <span class="calc-label">Encapsulada</span>
+            <div class="calc-pills">
+              <label class="calc-pill" id="pillEncapsulada">
+                <input type="checkbox" id="chkEncapsulada" />
+                <span>Es encapsulada</span>
+              </label>
+            </div>
+          </div>
+
+          <div id="chkLaminadaWrap" class="calc-field" hidden>
+            <span class="calc-label">Laminada</span>
+            <div class="calc-pills">
+              <label class="calc-pill" id="pillLaminada">
+                <input type="checkbox" id="chkLaminada" />
+                <span>Es laminada</span>
+              </label>
+            </div>
+          </div>
+
+        </div><!-- /.calc-form -->
+
+        <div class="calc-results">
+          <p id="calcStatus" class="calc-status"></p>
+          <div class="calc-result-row">
+            <span class="calc-result-label">Sin Instalación</span>
+            <span id="calcResSin" class="calc-result-value">—</span>
+          </div>
+          <div class="calc-result-row calc-result-row--main">
+            <span class="calc-result-label">Con Instalación</span>
+            <span id="calcResCon" class="calc-result-value">—</span>
+          </div>
+          <div class="calc-result-row calc-result-row--muted">
+            <span class="calc-result-label">Solo Instalación</span>
+            <span id="calcResSolo" class="calc-result-value">—</span>
+          </div>
+        </div>
+      </div><!-- /.calc-body -->
+    </dialog><!-- /#calcModal -->
 
     <script src="./app.js"></script>
   </body>
