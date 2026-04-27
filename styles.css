@@ -325,6 +325,82 @@ html[data-theme="light"] .search-box input::placeholder {
   line-height: 1.45;
 }
 
+.glossary-wrap {
+  position: relative;
+  display: inline-block;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.glossary-icon {
+  cursor: default;
+  font-size: 1rem;
+  user-select: none;
+  opacity: 0.75;
+  transition: opacity 0.15s;
+}
+
+.glossary-wrap:hover .glossary-icon {
+  opacity: 1;
+}
+
+.glossary-tooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(20, 24, 30, 0.97);
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  padding: 14px 18px;
+  min-width: 230px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+  z-index: 100;
+  pointer-events: none;
+}
+
+.glossary-wrap:hover .glossary-tooltip {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.glossary-tooltip strong {
+  color: var(--primary);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.glossary-item {
+  font-size: 0.84rem;
+  color: #eef5ef;
+  display: flex;
+  gap: 8px;
+}
+
+.glossary-item b {
+  color: #daffcb;
+  min-width: 70px;
+  flex-shrink: 0;
+}
+
+html[data-theme="light"] .glossary-tooltip {
+  background: rgba(255,255,255,0.98);
+  border-color: var(--line-strong);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+
+html[data-theme="light"] .glossary-item {
+  color: #1f2c21;
+}
+
+html[data-theme="light"] .glossary-item b {
+  color: #355220;
+}
+
 .status-row {
   display: flex;
   justify-content: space-between;
