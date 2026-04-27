@@ -1,6 +1,7 @@
 const SHEET_ID = "1h7VNeNZHI4zvJR9WTBXXM0BhsKu22u-GJNpT1TIh9YU";
 const URL_IMPORTADORA = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=142068239`;
 const URL_AVR = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=795430851`;
+const URL_PRECIOS = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=873306319`;
 
 // Positional column indexes (0-based, same layout in both sheets)
 const COL_STOCK   = 13; // N
@@ -8,6 +9,17 @@ const COL_COSTO   = 35; // AJ
 const COL_VSIN    = 36; // AK – Venta sin instalación
 const COL_VCON    = 37; // AL – Venta con instalación
 const COL_SIGLA   = 41; // AP
+
+// ── Calculator state ──────────────────────────────────────────────────────────
+let pricingFactors = null;
+
+const PRODUCT_TRAITS = {
+  "Parabrisas":      { sensor: true,  adas: true,  camara: true,  encapsulada: false, laminada: false },
+  "Vidrio Aleta":    { sensor: false, adas: false, camara: false, encapsulada: true,  laminada: false },
+  "Vidrio de Puerta":{ sensor: false, adas: false, camara: false, encapsulada: false, laminada: true  },
+  "Vidrio Lateral":  { sensor: false, adas: false, camara: false, encapsulada: true,  laminada: false },
+  "Luneta Portalón": { sensor: false, adas: false, camara: false, encapsulada: true,  laminada: false },
+};
 
 const searchInput = document.querySelector("#searchInput");
 const reloadButton = document.querySelector("#reloadButton");
@@ -395,3 +407,119 @@ themeToggle?.addEventListener("click", () => {
 
 initializeTheme();
 loadProducts();
+loadPricingFactors();
+
+// ── Calculator ────────────────────────────────────────────────────────────────
+async function loadPricingFactors() {
+  try {
+    const { rows } = await fetchSheet(URL_PRECIOS);
+    pricingFactors = {};
+    rows.forEach(row => {
+      const producto = (row[0] ?? "").trim();
+      if (!producto) return;
+      const num = (col) => {
+        const v = String(row[col] ?? "").trim().replace(",", ".");
+        const n = parseFloat(v);
+        return Number.isFinite(n) ? n : 0;
+      };
+      pricingFactors[producto] = {
+        C: num(2), D: num(3), E: num(4), F: num(5),
+        G: num(6), H: num(7), I: num(8), J: num(9),
+        K: num(10), minSin: num(14), minCon: num(15),
+      };
+    });
+  } catch (e) {
+    console.warn("No se pudo cargar tabla de precios:", e);
+  }
+}
+
+const calcModal    = document.querySelector("#calcModal");
+const calcClose    = document.querySelector("#calcClose");
+const calcOpenBtn  = document.querySelector("#calcOpenBtn");
+const calcCosto    = document.querySelector("#calcCosto");
+const calcProducto = document.querySelector("#calcProducto");
+const chkAltaGama  = document.querySelector("#chkAltaGama");
+const chkSensor    = document.querySelector("#chkSensor");
+const chkAdas      = document.querySelector("#chkAdas");
+const chkEncapsulada = document.querySelector("#chkEncapsulada");
+const chkLaminada  = document.querySelector("#chkLaminada");
+const calcResSin   = document.querySelector("#calcResSin");
+const calcResCon   = document.querySelector("#calcResCon");
+const calcResSolo  = document.querySelector("#calcResSolo");
+
+function openCalcModal() {
+  calcModal.removeAttribute("aria-hidden");
+  calcModal.classList.add("is-open");
+  calcCosto.focus();
+}
+
+function closeCalcModal() {
+  calcModal.setAttribute("aria-hidden", "true");
+  calcModal.classList.remove("is-open");
+}
+
+function updateCalcVisibility() {
+  const traits = PRODUCT_TRAITS[calcProducto.value] || {};
+  document.querySelector("#chkSensorWrap").hidden     = !traits.sensor;
+  document.querySelector("#chkAdasWrap").hidden       = !traits.adas;
+  document.querySelector("#chkCamWrap").hidden        = !traits.camara;
+  document.querySelector("#chkEncapsuladaWrap").hidden = !traits.encapsulada;
+  document.querySelector("#chkLaminadaWrap").hidden   = !traits.laminada;
+  if (!traits.sensor) chkSensor.checked = false;
+  if (!traits.adas)   chkAdas.checked   = false;
+  if (!traits.encapsulada) chkEncapsulada.checked = false;
+  if (!traits.laminada)    chkLaminada.checked    = false;
+  if (!traits.camara) document.querySelector("#chkNoCam").checked = true;
+  calcPrices();
+}
+
+function calcPrices() {
+  const costo = parseFloat(calcCosto.value);
+  const producto = calcProducto.value;
+
+  if (!costo || costo <= 0 || !producto || !pricingFactors?.[producto]) {
+    calcResSin.textContent = "—";
+    calcResCon.textContent = "—";
+    calcResSolo.textContent = "—";
+    return;
+  }
+
+  const f = pricingFactors[producto];
+  const traits = PRODUCT_TRAITS[producto] || {};
+
+  const sinFinal = Math.max(costo * f.C, f.minSin);
+
+  let conFactor = f.C + f.D;
+  if (chkAltaGama.checked) conFactor += f.E;
+  if (traits.sensor && chkSensor.checked) conFactor += f.F;
+  if (traits.adas   && chkAdas.checked)   conFactor += f.G;
+  if (traits.camara) {
+    const camVal = document.querySelector('input[name="camara"]:checked')?.value;
+    if (camVal === "1") conFactor += f.H;
+    else if (camVal === "2") conFactor += f.I;
+  }
+  if (traits.encapsulada && chkEncapsulada.checked) conFactor += f.J;
+  if (traits.laminada    && chkLaminada.checked)    conFactor += f.K;
+
+  const conFinal  = Math.max(costo * conFactor, f.minCon);
+  const soloInst  = conFinal - sinFinal;
+
+  const fmt = n => "$ " + Math.round(n).toLocaleString("es-CL");
+  calcResSin.textContent  = fmt(sinFinal);
+  calcResCon.textContent  = fmt(conFinal);
+  calcResSolo.textContent = soloInst > 0 ? fmt(soloInst) : "—";
+}
+
+calcOpenBtn?.addEventListener("click", openCalcModal);
+calcClose?.addEventListener("click", closeCalcModal);
+calcModal?.addEventListener("click", e => { if (e.target === calcModal) closeCalcModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeCalcModal(); });
+
+calcCosto.addEventListener("input", calcPrices);
+calcProducto.addEventListener("change", updateCalcVisibility);
+chkAltaGama.addEventListener("change", calcPrices);
+chkSensor.addEventListener("change", calcPrices);
+chkAdas.addEventListener("change", calcPrices);
+chkEncapsulada.addEventListener("change", calcPrices);
+chkLaminada.addEventListener("change", calcPrices);
+document.querySelectorAll('input[name="camara"]').forEach(r => r.addEventListener("change", calcPrices));
