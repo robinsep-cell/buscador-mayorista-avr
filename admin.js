@@ -1,6 +1,5 @@
 // Panel de administración — solo visible para is_admin = true
 
-const adminBtn    = document.getElementById("adminBtn");
 const mainView    = document.getElementById("mainView");
 const adminView   = document.getElementById("adminView");
 const adminBack   = document.getElementById("adminBack");
