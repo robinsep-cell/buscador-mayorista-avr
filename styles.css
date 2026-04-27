@@ -1574,6 +1574,28 @@ html[data-theme="light"] .admin-del-btn {
 }
 
 @media (max-width: 640px) {
+  .admin-layout {
+    width: 100%;
+    padding: 12px 12px 60px;
+    gap: 12px;
+  }
+
+  .admin-topbar {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 14px;
+  }
+
+  .admin-topbar-title h2 {
+    font-size: 1.05rem;
+  }
+
+  .admin-add-card {
+    padding: 16px 14px;
+    border-radius: 14px;
+  }
+
   .admin-add-form {
     grid-template-columns: 1fr;
   }
@@ -1582,8 +1604,30 @@ html[data-theme="light"] .admin-del-btn {
     width: 100%;
   }
 
+  .admin-table-wrap {
+    border-radius: 14px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin-table {
+    min-width: 480px;
+  }
+
   .admin-td {
-    padding: 10px 14px;
+    padding: 10px 10px;
+  }
+
+  .admin-reset-btn,
+  .admin-del-btn {
+    font-size: 0.68rem;
+    padding: 0 8px;
+    height: 28px;
+    display: block;
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 4px;
+    text-align: center;
   }
 }
 
