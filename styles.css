@@ -779,6 +779,41 @@ html[data-theme="light"] .calc-input {
   box-shadow: 0 0 0 3px rgba(99, 221, 0, 0.12);
 }
 
+.calc-options-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+}
+
+html[data-theme="light"] .calc-options-wrap {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(24, 32, 24, 0.1);
+}
+
+.calc-cam-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+html[data-theme="light"] .calc-cam-group {
+  border-top-color: rgba(24, 32, 24, 0.08);
+}
+
+.calc-label-mini {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6a7a6e;
+}
+
 .calc-pills {
   display: flex;
   flex-wrap: wrap;

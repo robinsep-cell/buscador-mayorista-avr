@@ -144,62 +144,33 @@
             </select>
           </div>
 
-          <div class="calc-field">
-            <span class="calc-label">Categoría</span>
+          <!-- Bloque de características: aparece solo al elegir producto -->
+          <div id="calcOptions" class="calc-options-wrap" hidden>
+            <span class="calc-label">Características</span>
             <div class="calc-pills">
               <label class="calc-pill" id="pillAltaGama">
-                <input type="checkbox" id="chkAltaGama" />
-                <span>Alta Gama</span>
+                <input type="checkbox" id="chkAltaGama" /><span>Alta Gama</span>
+              </label>
+              <label class="calc-pill" id="pillSensor" hidden>
+                <input type="checkbox" id="chkSensor" /><span>Sensor lluvia</span>
+              </label>
+              <label class="calc-pill" id="pillAdas" hidden>
+                <input type="checkbox" id="chkAdas" /><span>ADAS</span>
+              </label>
+              <label class="calc-pill" id="pillEncapsulada" hidden>
+                <input type="checkbox" id="chkEncapsulada" /><span>Encapsulada</span>
+              </label>
+              <label class="calc-pill" id="pillLaminada" hidden>
+                <input type="checkbox" id="chkLaminada" /><span>Laminada</span>
               </label>
             </div>
-          </div>
-
-          <div id="chkSensorWrap" class="calc-field" hidden>
-            <span class="calc-label">Sensor de lluvia</span>
-            <div class="calc-pills">
-              <label class="calc-pill" id="pillSensor">
-                <input type="checkbox" id="chkSensor" />
-                <span>Con sensor</span>
-              </label>
-            </div>
-          </div>
-
-          <div id="chkAdasWrap" class="calc-field" hidden>
-            <span class="calc-label">ADAS</span>
-            <div class="calc-pills">
-              <label class="calc-pill" id="pillAdas">
-                <input type="checkbox" id="chkAdas" />
-                <span>Con ADAS</span>
-              </label>
-            </div>
-          </div>
-
-          <div id="chkCamWrap" class="calc-field" hidden>
-            <span class="calc-label">Cámara trasera</span>
-            <div class="calc-pills">
-              <label class="calc-pill is-checked" id="pillNoCam"><input type="radio" name="camara" id="chkNoCam" value="" checked /><span>Sin cámara</span></label>
-              <label class="calc-pill" id="pill1Cam"><input type="radio" name="camara" id="chk1Cam" value="1" /><span>1 Cámara</span></label>
-              <label class="calc-pill" id="pill2Cam"><input type="radio" name="camara" id="chk2Cam" value="2" /><span>2 Cámaras</span></label>
-            </div>
-          </div>
-
-          <div id="chkEncapsuladaWrap" class="calc-field" hidden>
-            <span class="calc-label">Encapsulada</span>
-            <div class="calc-pills">
-              <label class="calc-pill" id="pillEncapsulada">
-                <input type="checkbox" id="chkEncapsulada" />
-                <span>Es encapsulada</span>
-              </label>
-            </div>
-          </div>
-
-          <div id="chkLaminadaWrap" class="calc-field" hidden>
-            <span class="calc-label">Laminada</span>
-            <div class="calc-pills">
-              <label class="calc-pill" id="pillLaminada">
-                <input type="checkbox" id="chkLaminada" />
-                <span>Es laminada</span>
-              </label>
+            <div id="camaraGroup" class="calc-cam-group" hidden>
+              <span class="calc-label-mini">Cámara trasera</span>
+              <div class="calc-pills">
+                <label class="calc-pill is-checked" id="pillNoCam"><input type="radio" name="camara" id="chkNoCam" value="" checked /><span>Sin cámara</span></label>
+                <label class="calc-pill" id="pill1Cam"><input type="radio" name="camara" id="chk1Cam" value="1" /><span>1 Cámara</span></label>
+                <label class="calc-pill" id="pill2Cam"><input type="radio" name="camara" id="chk2Cam" value="2" /><span>2 Cámaras</span></label>
+              </div>
             </div>
           </div>
 

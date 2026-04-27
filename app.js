@@ -472,16 +472,25 @@ function resetPill(checkboxEl) {
 }
 
 function updateCalcVisibility() {
-  const traits = PRODUCT_TRAITS[calcProducto.value] || {};
-  document.querySelector("#chkSensorWrap").hidden      = !traits.sensor;
-  document.querySelector("#chkAdasWrap").hidden        = !traits.adas;
-  document.querySelector("#chkCamWrap").hidden         = !traits.camara;
-  document.querySelector("#chkEncapsuladaWrap").hidden = !traits.encapsulada;
-  document.querySelector("#chkLaminadaWrap").hidden    = !traits.laminada;
-  if (!traits.sensor) resetPill(chkSensor);
-  if (!traits.adas)   resetPill(chkAdas);
+  const producto = calcProducto.value;
+  const traits = PRODUCT_TRAITS[producto] || {};
+
+  // Mostrar bloque entero solo si hay producto seleccionado
+  document.querySelector("#calcOptions").hidden = !producto;
+
+  // Pills individuales dentro del bloque
+  document.querySelector("#pillSensor").hidden     = !traits.sensor;
+  document.querySelector("#pillAdas").hidden       = !traits.adas;
+  document.querySelector("#pillEncapsulada").hidden = !traits.encapsulada;
+  document.querySelector("#pillLaminada").hidden   = !traits.laminada;
+  document.querySelector("#camaraGroup").hidden    = !traits.camara;
+
+  // Resetear opciones no disponibles para este producto
+  if (!traits.sensor)      resetPill(chkSensor);
+  if (!traits.adas)        resetPill(chkAdas);
   if (!traits.encapsulada) resetPill(chkEncapsulada);
   if (!traits.laminada)    resetPill(chkLaminada);
+  resetPill(chkAltaGama);
   if (!traits.camara) {
     const noCam = document.querySelector("#chkNoCam");
     noCam.checked = true;
