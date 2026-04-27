@@ -29,20 +29,18 @@
             <label class="auth-label" for="authEmail">Correo electrónico</label>
             <input id="authEmail" class="auth-input" type="email" placeholder="tu@correo.com" autocomplete="email" />
           </div>
-          <button id="authSendBtn" class="auth-btn" type="button">Enviar código</button>
+          <button id="authSendBtn" class="auth-btn" type="button">Enviar enlace</button>
           <p id="authError1" class="auth-error"></p>
         </div>
 
-        <!-- Paso 2: ingresar código -->
+        <!-- Paso 2: enlace enviado -->
         <div id="authStep2" class="auth-step" hidden>
-          <p class="auth-info">Código enviado a <strong id="authEmailDisplay"></strong></p>
-          <div class="auth-field">
-            <label class="auth-label" for="authCode">Código de 6 dígitos</label>
-            <input id="authCode" class="auth-input auth-input--code" type="text" inputmode="numeric" maxlength="6" placeholder="000000" autocomplete="one-time-code" />
+          <div class="auth-link-sent">
+            <div class="auth-link-icon">📧</div>
+            <p class="auth-info">Enlace enviado a <strong id="authEmailDisplay"></strong></p>
+            <p class="auth-info auth-info--muted">Revisa tu correo y haz clic en el enlace para ingresar. Puede tardar unos segundos.</p>
           </div>
-          <button id="authVerifyBtn" class="auth-btn" type="button">Acceder</button>
           <button id="authBackBtn" class="auth-btn auth-btn--ghost" type="button">Cambiar correo</button>
-          <p id="authError2" class="auth-error"></p>
         </div>
       </div>
     </div>
