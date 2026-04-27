@@ -11,189 +11,229 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   </head>
   <body>
-    <main class="layout">
-      <section class="hero">
-        <div class="hero-card">
-          <div class="hero-copy">
-            <p class="eyebrow">AutovidriosRobin</p>
-            <div class="hero-topline">
-              <h1>Buscador Mayorista</h1>
-              <button id="themeToggle" class="theme-toggle" type="button" aria-label="Cambiar tema">
-                <span class="theme-toggle-text">Modo claro</span>
-              </button>
-            </div>
-            <p class="subtitle">
-              Inventario unificado: importadora cero + AutovidriosRobin. Busca por
-              marca, modelo, sigla, año, medida o código antiguo.
-            </p>
-          </div>
-          <div class="hero-brand">
-            <img
-              class="hero-logo"
-              src="./logo-autovidriosrobin.jpg"
-              alt="Logo de AutovidriosRobin"
-            />
-          </div>
-        </div>
-      </section>
 
-      <section class="search-panel">
-        <div class="search-panel-header">
-          <div>
-            <p class="panel-kicker">Buscador tecnico</p>
-            <label class="search-label" for="searchInput">Buscar producto</label>
+    <!-- ── Pantalla de login ── -->
+    <div id="authScreen" class="auth-screen">
+      <div class="auth-card">
+        <img class="auth-logo" src="./logo-autovidriosrobin.jpg" alt="AutovidriosRobin" />
+        <p class="auth-eyebrow">AutovidriosRobin</p>
+        <h1 class="auth-title">Buscador Mayorista</h1>
+        <p class="auth-subtitle">Acceso exclusivo para clientes autorizados.</p>
+
+        <!-- Paso 1: ingresar correo -->
+        <div id="authStep1" class="auth-step">
+          <div class="auth-field">
+            <label class="auth-label" for="authEmail">Correo electrónico</label>
+            <input id="authEmail" class="auth-input" type="email" placeholder="tu@correo.com" autocomplete="email" />
           </div>
-          <div class="panel-header-right">
-            <div class="panel-note">AVR Search</div>
-            <button id="calcOpenBtn" class="calc-open-btn" type="button">Calculadora</button>
+          <button id="authSendBtn" class="auth-btn" type="button">Enviar código</button>
+          <p id="authError1" class="auth-error"></p>
+        </div>
+
+        <!-- Paso 2: ingresar código -->
+        <div id="authStep2" class="auth-step" hidden>
+          <p class="auth-info">Código enviado a <strong id="authEmailDisplay"></strong></p>
+          <div class="auth-field">
+            <label class="auth-label" for="authCode">Código de 6 dígitos</label>
+            <input id="authCode" class="auth-input auth-input--code" type="text" inputmode="numeric" maxlength="6" placeholder="000000" autocomplete="one-time-code" />
           </div>
+          <button id="authVerifyBtn" class="auth-btn" type="button">Acceder</button>
+          <button id="authBackBtn" class="auth-btn auth-btn--ghost" type="button">Cambiar correo</button>
+          <p id="authError2" class="auth-error"></p>
         </div>
-        <div class="search-box">
-          <input
-            id="searchInput"
-            type="search"
-            placeholder="Ej: parabrisas audi 2018 o pdd toyota 2013 o PBS141"
-            autocomplete="off"
-          />
-          <button id="reloadButton" type="button">Actualizar</button>
-        </div>
-        <p class="hint">
-          Búsqueda sobre <strong>Producto</strong>, <strong>Siglas</strong>,
-          <strong>Códigos antiguos</strong>, <strong>Años</strong>,
-          <strong>Medida</strong> y <strong>Color</strong>.
-          <span class="glossary-wrap">
-            <span class="glossary-icon" aria-label="Glosario de siglas">📖</span>
-            <span class="glossary-tooltip" role="tooltip">
-              <strong>Glosario de siglas</strong>
-              <span class="glossary-item"><b>C/C</b> Con Caluga</span>
-              <span class="glossary-item"><b>C/CAM</b> Con Cámara</span>
-              <span class="glossary-item"><b>C/2CAM</b> Con 2 Cámaras</span>
-              <span class="glossary-item"><b>C/SEN</b> Con Sensor de lluvia</span>
-              <span class="glossary-item"><b>C/M</b> Con Moldura</span>
-              <span class="glossary-item"><b>C/SOP</b> Con Soporte</span>
-              <span class="glossary-item"><b>DEG</b> Con Degradé</span>
-              <span class="glossary-item"><b>VDE</b> Verde / Solex</span>
-              <span class="glossary-item"><b>Privado</b> Oscuro</span>
-            </span>
-          </span>
-        </p>
-      </section>
-
-      <section class="status-row">
-        <div id="status" class="status">Cargando datos...</div>
-        <div id="counter" class="counter"></div>
-      </section>
-
-      <section class="table-wrap">
-        <div class="table-scroll">
-        <table>
-          <thead>
-            <tr>
-              <th>Producto</th>
-              <th>Siglas</th>
-              <th>Cód. Antiguo</th>
-              <th>Años</th>
-              <th>Medida</th>
-              <th>Color</th>
-              <th>Stock Importadora</th>
-              <th>Stock AVR</th>
-              <th>Costo</th>
-              <th>Venta sin inst.</th>
-              <th>Venta con inst.</th>
-            </tr>
-          </thead>
-          <tbody id="resultsBody">
-            <tr>
-              <td colspan="8" class="empty-cell">Cargando productos...</td>
-            </tr>
-          </tbody>
-        </table>
-        </div>
-      </section>
-    </main>
-
-    <!-- Modal Calculadora -->
-    <dialog id="calcModal" class="calc-dialog">
-      <div class="calc-header">
-        <div>
-          <p class="calc-kicker">Herramienta de precios</p>
-          <h2 class="calc-title">Calculadora</h2>
-        </div>
-        <button id="calcClose" class="calc-close" type="button" aria-label="Cerrar">✕</button>
       </div>
+    </div>
 
-      <div class="calc-body">
-        <div class="calc-form">
-
-          <div class="calc-field">
-            <label class="calc-label" for="calcCosto">Costo de compra (CLP)</label>
-            <input id="calcCosto" class="calc-input" type="number" placeholder="Ej: 25000" min="0" step="100" />
-          </div>
-
-          <div class="calc-field">
-            <label class="calc-label" for="calcProducto">Tipo de producto</label>
-            <select id="calcProducto" class="calc-input">
-              <option value="">Seleccionar...</option>
-              <option value="Parabrisas">Parabrisas</option>
-              <option value="Vidrio Aleta">Vidrio Aleta</option>
-              <option value="Vidrio de Puerta">Vidrio de Puerta</option>
-              <option value="Vidrio Lateral">Vidrio Lateral</option>
-              <option value="Luneta Portalón">Luneta Portalón</option>
-            </select>
-          </div>
-
-          <!-- Bloque de características: aparece solo al elegir producto -->
-          <div id="calcOptions" class="calc-options-wrap" hidden>
-            <span class="calc-label">Características</span>
-            <div class="calc-pills">
-              <label class="calc-pill" id="pillAltaGama">
-                <input type="checkbox" id="chkAltaGama" /><span>Alta Gama</span>
-              </label>
-              <label class="calc-pill" id="pillSensor" hidden>
-                <input type="checkbox" id="chkSensor" /><span>Sensor lluvia</span>
-              </label>
-              <label class="calc-pill" id="pillAdas" hidden>
-                <input type="checkbox" id="chkAdas" /><span>ADAS</span>
-              </label>
-              <label class="calc-pill" id="pillEncapsulada" hidden>
-                <input type="checkbox" id="chkEncapsulada" /><span>Encapsulada</span>
-              </label>
-              <label class="calc-pill" id="pillLaminada" hidden>
-                <input type="checkbox" id="chkLaminada" /><span>Laminada</span>
-              </label>
+    <!-- ── Contenido principal (protegido) ── -->
+    <div id="appContent" hidden>
+      <main class="layout">
+        <section class="hero">
+          <div class="hero-card">
+            <div class="hero-copy">
+              <p class="eyebrow">AutovidriosRobin</p>
+              <div class="hero-topline">
+                <h1>Buscador Mayorista</h1>
+                <div class="hero-actions">
+                  <button id="themeToggle" class="theme-toggle" type="button" aria-label="Cambiar tema">
+                    <span class="theme-toggle-text">Modo claro</span>
+                  </button>
+                  <button id="logoutBtn" class="logout-btn" type="button">Salir</button>
+                </div>
+              </div>
+              <p class="subtitle">
+                Inventario unificado: importadora cero + AutovidriosRobin. Busca por
+                marca, modelo, sigla, año, medida o código antiguo.
+              </p>
             </div>
-            <div id="camaraGroup" class="calc-cam-group" hidden>
-              <span class="calc-label-mini">Cámara trasera</span>
+            <div class="hero-brand">
+              <img
+                class="hero-logo"
+                src="./logo-autovidriosrobin.jpg"
+                alt="Logo de AutovidriosRobin"
+              />
+            </div>
+          </div>
+        </section>
+
+        <section class="search-panel">
+          <div class="search-panel-header">
+            <div>
+              <p class="panel-kicker">Buscador tecnico</p>
+              <label class="search-label" for="searchInput">Buscar producto</label>
+            </div>
+            <div class="panel-header-right">
+              <div class="panel-note">AVR Search</div>
+              <button id="calcOpenBtn" class="calc-open-btn" type="button">Calculadora</button>
+            </div>
+          </div>
+          <div class="search-box">
+            <input
+              id="searchInput"
+              type="search"
+              placeholder="Ej: parabrisas audi 2018 o pdd toyota 2013 o PBS141"
+              autocomplete="off"
+            />
+            <button id="reloadButton" type="button">Actualizar</button>
+          </div>
+          <p class="hint">
+            Búsqueda sobre <strong>Producto</strong>, <strong>Siglas</strong>,
+            <strong>Códigos antiguos</strong>, <strong>Años</strong>,
+            <strong>Medida</strong> y <strong>Color</strong>.
+            <span class="glossary-wrap">
+              <span class="glossary-icon" aria-label="Glosario de siglas">📖</span>
+              <span class="glossary-tooltip" role="tooltip">
+                <strong>Glosario de siglas</strong>
+                <span class="glossary-item"><b>C/C</b> Con Caluga</span>
+                <span class="glossary-item"><b>C/CAM</b> Con Cámara</span>
+                <span class="glossary-item"><b>C/2CAM</b> Con 2 Cámaras</span>
+                <span class="glossary-item"><b>C/SEN</b> Con Sensor de lluvia</span>
+                <span class="glossary-item"><b>C/M</b> Con Moldura</span>
+                <span class="glossary-item"><b>C/SOP</b> Con Soporte</span>
+                <span class="glossary-item"><b>DEG</b> Con Degradé</span>
+                <span class="glossary-item"><b>VDE</b> Verde / Solex</span>
+                <span class="glossary-item"><b>Privado</b> Oscuro</span>
+              </span>
+            </span>
+          </p>
+        </section>
+
+        <section class="status-row">
+          <div id="status" class="status">Cargando datos...</div>
+          <div id="counter" class="counter"></div>
+        </section>
+
+        <section class="table-wrap">
+          <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Siglas</th>
+                <th>Cód. Antiguo</th>
+                <th>Años</th>
+                <th>Medida</th>
+                <th>Color</th>
+                <th>Stock Importadora</th>
+                <th>Stock AVR</th>
+                <th>Costo</th>
+                <th>Venta sin inst.</th>
+                <th>Venta con inst.</th>
+              </tr>
+            </thead>
+            <tbody id="resultsBody">
+              <tr>
+                <td colspan="8" class="empty-cell">Cargando productos...</td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </section>
+      </main>
+
+      <!-- Modal Calculadora -->
+      <dialog id="calcModal" class="calc-dialog">
+        <div class="calc-header">
+          <div>
+            <p class="calc-kicker">Herramienta de precios</p>
+            <h2 class="calc-title">Calculadora</h2>
+          </div>
+          <button id="calcClose" class="calc-close" type="button" aria-label="Cerrar">✕</button>
+        </div>
+
+        <div class="calc-body">
+          <div class="calc-form">
+
+            <div class="calc-field">
+              <label class="calc-label" for="calcCosto">Costo de compra (CLP)</label>
+              <input id="calcCosto" class="calc-input" type="number" placeholder="Ej: 25000" min="0" step="100" />
+            </div>
+
+            <div class="calc-field">
+              <label class="calc-label" for="calcProducto">Tipo de producto</label>
+              <select id="calcProducto" class="calc-input">
+                <option value="">Seleccionar...</option>
+                <option value="Parabrisas">Parabrisas</option>
+                <option value="Vidrio Aleta">Vidrio Aleta</option>
+                <option value="Vidrio de Puerta">Vidrio de Puerta</option>
+                <option value="Vidrio Lateral">Vidrio Lateral</option>
+                <option value="Luneta Portalón">Luneta Portalón</option>
+              </select>
+            </div>
+
+            <div id="calcOptions" class="calc-options-wrap" hidden>
+              <span class="calc-label">Características</span>
               <div class="calc-pills">
-                <label class="calc-pill is-checked" id="pillNoCam"><input type="radio" name="camara" id="chkNoCam" value="" checked /><span>Sin cámara</span></label>
-                <label class="calc-pill" id="pill1Cam"><input type="radio" name="camara" id="chk1Cam" value="1" /><span>1 Cámara</span></label>
-                <label class="calc-pill" id="pill2Cam"><input type="radio" name="camara" id="chk2Cam" value="2" /><span>2 Cámaras</span></label>
+                <label class="calc-pill" id="pillAltaGama">
+                  <input type="checkbox" id="chkAltaGama" /><span>Alta Gama</span>
+                </label>
+                <label class="calc-pill" id="pillSensor" hidden>
+                  <input type="checkbox" id="chkSensor" /><span>Sensor lluvia</span>
+                </label>
+                <label class="calc-pill" id="pillAdas" hidden>
+                  <input type="checkbox" id="chkAdas" /><span>ADAS</span>
+                </label>
+                <label class="calc-pill" id="pillEncapsulada" hidden>
+                  <input type="checkbox" id="chkEncapsulada" /><span>Encapsulada</span>
+                </label>
+                <label class="calc-pill" id="pillLaminada" hidden>
+                  <input type="checkbox" id="chkLaminada" /><span>Laminada</span>
+                </label>
+              </div>
+              <div id="camaraGroup" class="calc-cam-group" hidden>
+                <span class="calc-label-mini">Cámara trasera</span>
+                <div class="calc-pills">
+                  <label class="calc-pill is-checked" id="pillNoCam"><input type="radio" name="camara" id="chkNoCam" value="" checked /><span>Sin cámara</span></label>
+                  <label class="calc-pill" id="pill1Cam"><input type="radio" name="camara" id="chk1Cam" value="1" /><span>1 Cámara</span></label>
+                  <label class="calc-pill" id="pill2Cam"><input type="radio" name="camara" id="chk2Cam" value="2" /><span>2 Cámaras</span></label>
+                </div>
               </div>
             </div>
+
           </div>
 
-        </div><!-- /.calc-form -->
-
-        <div class="calc-results">
-          <p id="calcStatus" class="calc-status"></p>
-          <div class="calc-result-row">
-            <span class="calc-result-label">Sin Instalación</span>
-            <span id="calcResSin" class="calc-result-value">—</span>
-          </div>
-          <div class="calc-result-row calc-result-row--main">
-            <span class="calc-result-label">Con Instalación</span>
-            <span id="calcResCon" class="calc-result-value">—</span>
-          </div>
-          <div class="calc-result-row calc-result-row--muted">
-            <span class="calc-result-label">Solo Instalación</span>
-            <span id="calcResSolo" class="calc-result-value">—</span>
+          <div class="calc-results">
+            <p id="calcStatus" class="calc-status"></p>
+            <div class="calc-result-row">
+              <span class="calc-result-label">Sin Instalación</span>
+              <span id="calcResSin" class="calc-result-value">—</span>
+            </div>
+            <div class="calc-result-row calc-result-row--main">
+              <span class="calc-result-label">Con Instalación</span>
+              <span id="calcResCon" class="calc-result-value">—</span>
+            </div>
+            <div class="calc-result-row calc-result-row--muted">
+              <span class="calc-result-label">Solo Instalación</span>
+              <span id="calcResSolo" class="calc-result-value">—</span>
+            </div>
           </div>
         </div>
-      </div><!-- /.calc-body -->
-    </dialog><!-- /#calcModal -->
+      </dialog>
+    </div><!-- /#appContent -->
 
+    <script src="./auth.js"></script>
     <script src="./app.js"></script>
   </body>
-  </html>
+</html>
