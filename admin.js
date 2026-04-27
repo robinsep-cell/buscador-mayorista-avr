@@ -1,17 +1,18 @@
 // Panel de administración — solo visible para is_admin = true
 
-const mainView    = document.getElementById("mainView");
-const adminView   = document.getElementById("adminView");
-const adminBack   = document.getElementById("adminBack");
-const adminList   = document.getElementById("adminList");
-const adminForm   = document.getElementById("adminForm");
-const adminNombre = document.getElementById("adminNombre");
-const adminEmail  = document.getElementById("adminNewEmail");
-const adminAddBtn = document.getElementById("adminAddBtn");
-const adminMsg    = document.getElementById("adminMsg");
+const mainView      = document.getElementById("mainView");
+const adminView     = document.getElementById("adminView");
+const adminBack     = document.getElementById("adminBack");
+const adminList     = document.getElementById("adminList");
+const adminForm     = document.getElementById("adminForm");
+const adminNombre   = document.getElementById("adminNombre");
+const adminEmail    = document.getElementById("adminNewEmail");
+const adminAddBtn   = document.getElementById("adminAddBtn");
+const adminMsg      = document.getElementById("adminMsg");
+const adminBtnLocal = document.getElementById("adminBtn");
 
 // Abrir/cerrar panel
-adminBtn?.addEventListener("click", () => {
+adminBtnLocal?.addEventListener("click", () => {
   mainView.hidden = true;
   adminView.hidden = false;
   loadUsers();
