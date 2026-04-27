@@ -55,14 +55,19 @@ async function loadUsers() {
         </td>
         <td class="admin-td admin-td--muted">${fecha}</td>
         <td class="admin-td admin-td--center">
-          ${isSelf ? "" : `<button class="admin-del-btn" data-email="${escHtml(u.email)}">Eliminar</button>`}
+          ${isSelf ? "" : `
+            <button class="admin-reset-btn" data-email="${escHtml(u.email)}">Resetear</button>
+            <button class="admin-del-btn" data-email="${escHtml(u.email)}">Eliminar</button>
+          `}
         </td>
       </tr>`;
   }).join("");
 
-  // Botones de eliminar
   adminList.querySelectorAll(".admin-del-btn").forEach(btn => {
     btn.addEventListener("click", () => deleteUser(btn.dataset.email));
+  });
+  adminList.querySelectorAll(".admin-reset-btn").forEach(btn => {
+    btn.addEventListener("click", () => resetUser(btn.dataset.email));
   });
 }
 
@@ -103,6 +108,19 @@ adminAddBtn?.addEventListener("click", async () => {
   adminMsg.classList.add("admin-msg--ok");
   loadUsers();
 });
+
+// ── Resetear contraseña ───────────────────────────────────────────────────────
+async function resetUser(email) {
+  if (!confirm(`¿Resetear contraseña de ${email}?\nEl usuario deberá crear una nueva contraseña al ingresar.`)) return;
+
+  const { error } = await window._sb.rpc("reset_user_auth", { target_email: email });
+
+  if (error) {
+    alert("No se pudo resetear. " + error.message);
+    return;
+  }
+  alert(`✓ Contraseña de ${email} reseteada. El usuario puede crear una nueva al ingresar.`);
+}
 
 // ── Eliminar usuario ──────────────────────────────────────────────────────────
 async function deleteUser(email) {

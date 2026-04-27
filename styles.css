@@ -1513,6 +1513,32 @@ html[data-theme="light"] .admin-badge--admin {
   border-color: rgba(77, 182, 0, 0.35);
 }
 
+.admin-reset-btn {
+  height: 32px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 180, 0, 0.25);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #ffd580;
+  background: rgba(255, 180, 0, 0.07);
+  cursor: pointer;
+  transition: background 160ms, border-color 160ms;
+  margin-right: 6px;
+}
+.admin-reset-btn:hover {
+  background: rgba(255, 180, 0, 0.18);
+  border-color: rgba(255, 180, 0, 0.5);
+}
+html[data-theme="light"] .admin-reset-btn {
+  color: #7a5800;
+  background: rgba(200, 140, 0, 0.07);
+  border-color: rgba(200, 140, 0, 0.2);
+}
+
 .admin-del-btn {
   height: 32px;
   padding: 0 14px;
