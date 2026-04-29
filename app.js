@@ -357,30 +357,74 @@ async function loadProducts() {
   try {
     const [imp, avr] = await Promise.all([fetchSheet(URL_IMPORTADORA), fetchSheet(URL_AVR)]);
 
-    // Clave compuesta cp|color — productos con mismo cp pero distinto color son distintos
-    const impMap = new Map();
+    // Agrupar importadora por cp para saber cuántos productos comparten el mismo código
+    const impByCp = new Map(); // cp → item[]
     imp.rows.forEach(row => {
       const item = buildImportadora(row, imp.headerMap);
       if (!item.nombre && !item.cp) return;
-      const key = item.cp ? item.cp + "|" + normalizeText(item.color) : "_imp_" + impMap.size;
-      impMap.set(key, item);
+      if (item.cp) {
+        if (!impByCp.has(item.cp)) impByCp.set(item.cp, []);
+        impByCp.get(item.cp).push(item);
+      }
     });
 
-    const avrMap = new Map();
+    // Agrupar AVR por cp
+    const avrByCp = new Map(); // cp → item[]
     const avrNoCp = [];
     avr.rows.forEach(row => {
       const item = buildAvr(row, avr.headerMap);
       if (item.cp) {
-        const key = item.cp + "|" + normalizeText(item.color);
-        avrMap.set(key, item);
+        if (!avrByCp.has(item.cp)) avrByCp.set(item.cp, []);
+        avrByCp.get(item.cp).push(item);
       } else if (item.nombre || item.codigoAntiguo) {
         avrNoCp.push(item);
       }
     });
 
     const merged = [];
-    const allKeys = new Set([...impMap.keys(), ...avrMap.keys()]);
-    allKeys.forEach(key => merged.push(mergeRows(impMap.get(key), avrMap.get(key))));
+    const avrMatched = new Set(); // "cp|idx" ya asignados
+
+    // Recorrer cada cp único entre importadora y AVR
+    const allCps = new Set([...impByCp.keys(), ...avrByCp.keys()]);
+    allCps.forEach(cp => {
+      const impItems = impByCp.get(cp) || [];
+      const avrItems = avrByCp.get(cp) || [];
+
+      if (impItems.length === 0) {
+        // Solo AVR
+        avrItems.forEach(a => merged.push(mergeRows(null, a)));
+        return;
+      }
+
+      if (impItems.length === 1) {
+        // Un solo producto importadora con este cp → unir con el AVR que tenga (sin exigir color)
+        const avrItem = avrItems[0] || null;
+        if (avrItem) avrMatched.add(cp + "|0");
+        merged.push(mergeRows(impItems[0], avrItem));
+        // AVR extra (raro) → filas independientes
+        avrItems.slice(1).forEach(a => merged.push(mergeRows(null, a)));
+        return;
+      }
+
+      // Múltiples importadora con mismo cp (ej VDE y PRIV) → separar por color
+      impItems.forEach(impItem => {
+        const colorKey = normalizeText(impItem.color);
+        const idx = avrItems.findIndex((a, i) =>
+          !avrMatched.has(cp + "|" + i) && normalizeText(a.color) === colorKey
+        );
+        let avrItem = null;
+        if (idx >= 0) {
+          avrItem = avrItems[idx];
+          avrMatched.add(cp + "|" + idx);
+        }
+        merged.push(mergeRows(impItem, avrItem));
+      });
+      // AVR sin match → filas independientes
+      avrItems.forEach((a, i) => {
+        if (!avrMatched.has(cp + "|" + i)) merged.push(mergeRows(null, a));
+      });
+    });
+
     avrNoCp.forEach(a => merged.push(mergeRows(null, a)));
 
     products = merged
@@ -390,7 +434,7 @@ async function loadProducts() {
         return { ...p, searchIndex: idx, searchTokens: buildSearchTokens(idx) };
       });
 
-    setStatus(`Inventarios listos. Importadora: ${impMap.size} · AVR: ${avrMap.size + avrNoCp.length}.`);
+    setStatus(`Inventarios listos. Importadora: ${[...impByCp.values()].reduce((s,a)=>s+a.length,0)} · AVR: ${[...avrByCp.values()].reduce((s,a)=>s+a.length,0) + avrNoCp.length}.`);
     filterProducts();
   } catch (e) {
     console.error(e);
