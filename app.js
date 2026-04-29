@@ -357,23 +357,53 @@ async function loadProducts() {
   try {
     const [imp, avr] = await Promise.all([fetchSheet(URL_IMPORTADORA), fetchSheet(URL_AVR)]);
 
-    const impMap = new Map();
-    imp.rows.forEach(row => {
-      const item = buildImportadora(row, imp.headerMap);
-      if (item.cp) impMap.set(item.cp, item);
-    });
+    // Mantener TODOS los ítems de importadora (sin deduplicar por cp)
+    const impItems = imp.rows
+      .map(row => buildImportadora(row, imp.headerMap))
+      .filter(item => item.nombre || item.cp);
 
-    const avrMap = new Map();
+    // AVR agrupado por cp para matching; sin cp van aparte
+    const avrByCp = new Map();
     const avrNoCp = [];
     avr.rows.forEach(row => {
       const item = buildAvr(row, avr.headerMap);
-      if (item.cp) avrMap.set(item.cp, item);
-      else if ((item.nombre || item.codigoAntiguo)) avrNoCp.push(item);
+      if (item.cp) {
+        if (!avrByCp.has(item.cp)) avrByCp.set(item.cp, []);
+        avrByCp.get(item.cp).push(item);
+      } else if (item.nombre || item.codigoAntiguo) {
+        avrNoCp.push(item);
+      }
     });
 
+    // Hacer match importadora → AVR preferiendo mismo color
+    const avrMatched = new Set();
     const merged = [];
-    const cps = new Set([...impMap.keys(), ...avrMap.keys()]);
-    cps.forEach(cp => merged.push(mergeRows(impMap.get(cp), avrMap.get(cp))));
+
+    impItems.forEach(impItem => {
+      let avrItem = null;
+      if (impItem.cp && avrByCp.has(impItem.cp)) {
+        const candidates = avrByCp.get(impItem.cp);
+        const colorKey = normalizeText(impItem.color);
+        let idx = candidates.findIndex((a, i) =>
+          !avrMatched.has(impItem.cp + "|" + i) && normalizeText(a.color) === colorKey
+        );
+        if (idx < 0) idx = candidates.findIndex((a, i) =>
+          !avrMatched.has(impItem.cp + "|" + i)
+        );
+        if (idx >= 0) {
+          avrItem = candidates[idx];
+          avrMatched.add(impItem.cp + "|" + idx);
+        }
+      }
+      merged.push(mergeRows(impItem, avrItem));
+    });
+
+    // AVR sin match con importadora → filas independientes
+    avrByCp.forEach((items, cp) => {
+      items.forEach((item, i) => {
+        if (!avrMatched.has(cp + "|" + i)) merged.push(mergeRows(null, item));
+      });
+    });
     avrNoCp.forEach(a => merged.push(mergeRows(null, a)));
 
     products = merged
@@ -383,7 +413,7 @@ async function loadProducts() {
         return { ...p, searchIndex: idx, searchTokens: buildSearchTokens(idx) };
       });
 
-    setStatus(`Inventarios listos. Importadora: ${impMap.size} · AVR: ${avrMap.size + avrNoCp.length}.`);
+    setStatus(`Inventarios listos. Importadora: ${impItems.length} · AVR: ${[...avrByCp.values()].reduce((s,a)=>s+a.length,0) + avrNoCp.length}.`);
     filterProducts();
   } catch (e) {
     console.error(e);
