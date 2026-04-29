@@ -55,6 +55,12 @@ function normalizeText(value) {
     .trim();
 }
 
+const COLOR_CANON = { solex: "verde", vde: "verde", priv: "privado" };
+function normalizeColor(c) {
+  const n = normalizeText(c);
+  return COLOR_CANON[n] || n;
+}
+
 function escapeHtml(value) {
   return String(value ?? "")
     .replaceAll("&", "&amp;")
@@ -408,9 +414,9 @@ async function loadProducts() {
 
       // Múltiples importadora con mismo cp (ej VDE y PRIV) → separar por color
       impItems.forEach(impItem => {
-        const colorKey = normalizeText(impItem.color);
+        const colorKey = normalizeColor(impItem.color);
         const idx = avrItems.findIndex((a, i) =>
-          !avrMatched.has(cp + "|" + i) && normalizeText(a.color) === colorKey
+          !avrMatched.has(cp + "|" + i) && normalizeColor(a.color) === colorKey
         );
         let avrItem = null;
         if (idx >= 0) {
