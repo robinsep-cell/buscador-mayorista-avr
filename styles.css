@@ -1225,6 +1225,99 @@ html[data-theme="light"] .admin-hero-btn {
   border-color: rgba(77, 182, 0, 0.28);
 }
 
+/* ── Botón cambiar clave ── */
+.pwd-btn {
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+  background: rgba(255,255,255,0.06);
+  cursor: pointer;
+  transition: background 160ms;
+  white-space: nowrap;
+}
+.pwd-btn:hover { background: rgba(255,255,255,0.12); }
+html[data-theme="light"] .pwd-btn {
+  border-color: rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.05);
+}
+
+/* ── Modal cambiar contraseña ── */
+.pwd-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(420px, calc(100% - 32px));
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  background: var(--surface, #1a1a2e);
+  color: var(--text);
+  padding: 0;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+}
+html[data-theme="light"] .pwd-dialog {
+  background: #fff;
+  border-color: rgba(0,0,0,0.1);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+}
+.pwd-dialog::backdrop {
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+}
+.pwd-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 22px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+html[data-theme="light"] .pwd-header { border-color: rgba(0,0,0,0.08); }
+.pwd-title { font-size: 1.1rem; font-weight: 700; margin: 0; }
+.pwd-close {
+  width: 32px; height: 32px;
+  border: none; border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+  color: var(--text); font-size: 1rem;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.pwd-close:hover { background: rgba(255,255,255,0.14); }
+.pwd-body { padding: 20px 22px 24px; display: flex; flex-direction: column; gap: 14px; }
+.pwd-field { display: flex; flex-direction: column; gap: 6px; }
+.pwd-label { font-size: 0.82rem; font-weight: 600; color: var(--muted); }
+.pwd-input {
+  height: 48px;
+  padding: 0 14px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.95rem;
+}
+.pwd-input:focus { outline: none; border-color: var(--accent, #7c6dfa); }
+html[data-theme="light"] .pwd-input {
+  background: #f5f5f5;
+  border-color: rgba(0,0,0,0.12);
+}
+.pwd-save-btn {
+  height: 50px;
+  border: none; border-radius: 14px;
+  background: var(--accent, #7c6dfa);
+  color: #fff;
+  font: inherit; font-size: 0.95rem; font-weight: 700;
+  cursor: pointer;
+  transition: opacity 160ms;
+}
+.pwd-save-btn:hover { opacity: 0.88; }
+.pwd-save-btn:disabled { opacity: 0.5; cursor: default; }
+.pwd-msg { font-size: 0.85rem; min-height: 1.2em; margin: 0; }
+.pwd-msg--ok    { color: #6fdb6f; }
+.pwd-msg--error { color: #ff7070; }
+
 /* ── Admin panel ── */
 .admin-layout {
   width: min(1000px, calc(100% - 28px));
@@ -1604,29 +1697,52 @@ html[data-theme="light"] .admin-del-btn {
     width: 100%;
   }
 
+  /* Tabla admin → tarjetas en móvil */
   .admin-table-wrap {
     border-radius: 14px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow-x: visible;
+    background: transparent;
+    border: none;
+    padding: 0;
   }
 
   .admin-table {
-    min-width: 480px;
+    display: block;
+    min-width: 0;
+    background: transparent;
   }
-
+  .admin-table thead { display: none; }
+  .admin-table tbody { display: flex; flex-direction: column; gap: 10px; }
+  .admin-table tbody tr {
+    display: flex;
+    flex-direction: column;
+    padding: 14px 14px 12px;
+    border-radius: 14px;
+    background: var(--surface2, rgba(255,255,255,0.04));
+    border: 1px solid var(--border, rgba(255,255,255,0.08));
+  }
   .admin-td {
-    padding: 10px 10px;
+    padding: 2px 0;
+    border: none;
   }
-
+  .admin-td--center { text-align: left; }
+  .admin-td--muted { font-size: 0.78rem; }
+  /* fila de botones al final de cada tarjeta */
+  .admin-td:last-child {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
   .admin-reset-btn,
   .admin-del-btn {
-    font-size: 0.68rem;
-    padding: 0 8px;
-    height: 28px;
+    flex: 1;
     display: block;
-    width: 100%;
-    margin-right: 0;
-    margin-bottom: 4px;
+    width: auto;
+    margin: 0;
+    height: 38px;
+    font-size: 0.75rem;
     text-align: center;
   }
 }

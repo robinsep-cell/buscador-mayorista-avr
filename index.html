@@ -56,6 +56,7 @@
                     <span class="theme-toggle-text">Modo claro</span>
                   </button>
                   <button id="adminBtn" class="admin-hero-btn" type="button" hidden>Usuarios</button>
+                  <button id="pwdBtn" class="pwd-btn" type="button">🔑 Clave</button>
                   <button id="logoutBtn" class="logout-btn" type="button">Salir</button>
                 </div>
               </div>
@@ -273,6 +274,26 @@
       </div><!-- /#adminView -->
 
     </div><!-- /#appContent -->
+
+    <!-- Modal Cambiar Contraseña -->
+    <dialog id="pwdModal" class="pwd-dialog">
+      <div class="pwd-header">
+        <h2 class="pwd-title">Cambiar contraseña</h2>
+        <button id="pwdClose" class="pwd-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="pwd-body">
+        <div class="pwd-field">
+          <label class="pwd-label" for="pwdNew">Nueva contraseña</label>
+          <input id="pwdNew" class="pwd-input" type="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password" />
+        </div>
+        <div class="pwd-field">
+          <label class="pwd-label" for="pwdConfirm">Confirmar contraseña</label>
+          <input id="pwdConfirm" class="pwd-input" type="password" placeholder="Repite la contraseña" autocomplete="new-password" />
+        </div>
+        <button id="pwdSaveBtn" class="pwd-save-btn" type="button">Guardar nueva contraseña</button>
+        <p id="pwdMsg" class="pwd-msg"></p>
+      </div>
+    </dialog>
 
     <script src="./auth.js"></script>
     <script src="./admin.js"></script>

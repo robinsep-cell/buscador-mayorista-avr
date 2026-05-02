@@ -128,3 +128,55 @@ authSendBtn.addEventListener("click", async () => {
 
 // ── Cerrar sesión ─────────────────────────────────────────────────────────────
 logoutBtn.addEventListener("click", () => sb.auth.signOut());
+
+// ── Cambiar contraseña ────────────────────────────────────────────────────────
+const pwdBtn     = document.getElementById("pwdBtn");
+const pwdModal   = document.getElementById("pwdModal");
+const pwdClose   = document.getElementById("pwdClose");
+const pwdNew     = document.getElementById("pwdNew");
+const pwdConfirm = document.getElementById("pwdConfirm");
+const pwdSaveBtn = document.getElementById("pwdSaveBtn");
+const pwdMsg     = document.getElementById("pwdMsg");
+
+pwdBtn?.addEventListener("click", () => {
+  pwdNew.value = ""; pwdConfirm.value = "";
+  pwdMsg.textContent = ""; pwdMsg.className = "pwd-msg";
+  pwdModal.showModal();
+});
+
+pwdClose?.addEventListener("click", () => pwdModal.close());
+pwdModal?.addEventListener("click", e => { if (e.target === pwdModal) pwdModal.close(); });
+
+pwdSaveBtn?.addEventListener("click", async () => {
+  const nueva    = pwdNew.value;
+  const confirma = pwdConfirm.value;
+  pwdMsg.textContent = ""; pwdMsg.className = "pwd-msg";
+
+  if (nueva.length < 6) {
+    pwdMsg.textContent = "La contraseña debe tener al menos 6 caracteres.";
+    pwdMsg.classList.add("pwd-msg--error"); return;
+  }
+  if (nueva !== confirma) {
+    pwdMsg.textContent = "Las contraseñas no coinciden.";
+    pwdMsg.classList.add("pwd-msg--error"); return;
+  }
+
+  pwdSaveBtn.disabled = true;
+  pwdSaveBtn.textContent = "Guardando...";
+
+  const { error } = await sb.auth.updateUser({ password: nueva });
+
+  pwdSaveBtn.disabled = false;
+  pwdSaveBtn.textContent = "Guardar nueva contraseña";
+
+  if (error) {
+    pwdMsg.textContent = "Error: " + error.message;
+    pwdMsg.classList.add("pwd-msg--error");
+    return;
+  }
+
+  pwdMsg.textContent = "✓ Contraseña actualizada correctamente.";
+  pwdMsg.classList.add("pwd-msg--ok");
+  pwdNew.value = ""; pwdConfirm.value = "";
+  setTimeout(() => pwdModal.close(), 1800);
+});
