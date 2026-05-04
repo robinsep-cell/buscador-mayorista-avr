@@ -29,7 +29,7 @@ const statusNode = document.querySelector("#status");
 const counterNode = document.querySelector("#counter");
 const resultsBody = document.querySelector("#resultsBody");
 
-const COLSPAN = 11;
+const COLSPAN = 12;
 let products = [];
 
 const THEME_STORAGE_KEY = "avr-marketplace-theme";
@@ -314,8 +314,11 @@ function renderRows(items, tokens) {
     resultsBody.innerHTML = `<tr><td colspan="${COLSPAN}" class="empty-cell">No encontré resultados.</td></tr>`;
     return;
   }
-  resultsBody.innerHTML = items.map(p => `
+  resultsBody.innerHTML = items.map(p => {
+    const checked = window.cotSelection?.has(p._id) ? "checked" : "";
+    return `
     <tr>
+      <td class="cot-check-cell"><input type="checkbox" class="cot-check" data-id="${p._id}" ${checked} /></td>
       <td class="name-cell">${highlight(p.nombre, tokens)}</td>
       <td class="siglas-cell">${renderSiglas(p, tokens)}</td>
       <td class="siglas-cell">${renderBadges(p.codigoAntiguo, tokens)}</td>
@@ -327,8 +330,8 @@ function renderRows(items, tokens) {
       <td class="price-cell">${formatPrice(p.costo)}</td>
       <td class="price-cell">${formatPrice(p.ventaSin)}</td>
       <td class="price-cell">${formatPrice(p.ventaCon)}</td>
-    </tr>
-  `).join("");
+    </tr>`;
+  }).join("");
 }
 
 function filterProducts() {
@@ -435,10 +438,11 @@ async function loadProducts() {
 
     products = merged
       .filter(p => p.nombre || p.codigoAntiguo.length || p.marca)
-      .map(p => {
+      .map((p, i) => {
         const idx = buildSearchIndex(p);
-        return { ...p, searchIndex: idx, searchTokens: buildSearchTokens(idx) };
+        return { ...p, _id: i, searchIndex: idx, searchTokens: buildSearchTokens(idx) };
       });
+    window._products = products;
 
     setStatus(`Inventarios listos. Importadora: ${[...impByCp.values()].reduce((s,a)=>s+a.length,0)} · AVR: ${[...avrByCp.values()].reduce((s,a)=>s+a.length,0) + avrNoCp.length}.`);
     filterProducts();

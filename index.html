@@ -57,6 +57,9 @@
                   </button>
                   <button id="adminBtn" class="admin-hero-btn" type="button" hidden>Usuarios</button>
                   <button id="pwdBtn" class="pwd-btn" type="button">🔑 Clave</button>
+                  <button id="cotBtn" class="cot-open-hero-btn" type="button" disabled>
+                    🧾 Cotizar <span id="cotBadge" class="cot-hero-badge" hidden>0</span>
+                  </button>
                   <button id="logoutBtn" class="logout-btn" type="button">Salir</button>
                 </div>
               </div>
@@ -129,6 +132,7 @@
           <table>
             <thead>
               <tr>
+                <th class="cot-check-th" title="Seleccionar para cotizar">☑</th>
                 <th>Producto</th>
                 <th>Siglas</th>
                 <th>Cód. Antiguo</th>
@@ -230,6 +234,123 @@
           </div>
         </div>
       </dialog>
+      <!-- ── Modal Cotizador ── -->
+      <dialog id="cotModal" class="cot-dialog">
+
+        <!-- Tabs -->
+        <div class="cot-tabs">
+          <button class="cot-tab cot-tab--active" type="button">🧾 Cotización Cliente</button>
+          <button class="cot-tab cot-tab--disabled" type="button" disabled>📋 Orden de Compra</button>
+          <button id="cotClose" class="cot-dialog-x" type="button" aria-label="Cerrar">✕</button>
+        </div>
+
+        <!-- Documento (área imprimible) -->
+        <div id="cotDoc" class="cot-doc">
+
+          <!-- Encabezado empresa -->
+          <div class="cot-doc-header">
+            <div class="cot-header-left">
+              <img class="cot-logo" src="./logo-autovidriosrobin.jpg" alt="AVR" />
+              <div class="cot-company-block">
+                <p class="cot-company-name">AUTOVIDRIOSROBIN SPA</p>
+                <p>RUT: 77.068.352-1</p>
+                <p>José Arrieta 7044, La Reina</p>
+                <p class="cot-company-tag">Venta al por menor — Repuestos Automotrices</p>
+              </div>
+            </div>
+            <div class="cot-title-block">
+              <p class="cot-title-big">COTIZACIÓN</p>
+              <p id="cotNumero" class="cot-numero">N° —</p>
+              <p id="cotFecha" class="cot-fecha">Fecha: —</p>
+              <p>Validez: <strong>3 días hábiles</strong></p>
+            </div>
+          </div>
+
+          <p id="cotEnvio" class="cot-envio"></p>
+          <hr class="cot-hr" />
+
+          <!-- Datos del cliente -->
+          <div class="cot-client-box">
+            <div class="cot-client-row">
+              <div class="cot-client-field">
+                <span class="cot-client-label">Cliente</span>
+                <input id="cotClienteNombre" class="cot-client-inp" type="text" placeholder="Nombre del cliente…" autocomplete="off" />
+              </div>
+              <div class="cot-client-field">
+                <span class="cot-client-label">RUT</span>
+                <input id="cotClienteRut" class="cot-client-inp" type="text" placeholder="12.345.678-9" maxlength="12" autocomplete="off" />
+                <span id="cotRutMsg" class="cot-field-msg"></span>
+              </div>
+            </div>
+            <div class="cot-client-row">
+              <div class="cot-client-field">
+                <span class="cot-client-label">Teléfono</span>
+                <input id="cotClienteTel" class="cot-client-inp" type="tel" placeholder="+56 9 XXXX XXXX" autocomplete="off" />
+              </div>
+              <div class="cot-client-field">
+                <span class="cot-client-label">Correo</span>
+                <input id="cotClienteEmail" class="cot-client-inp" type="email" placeholder="cliente@correo.com" autocomplete="off" />
+                <span id="cotEmailMsg" class="cot-field-msg"></span>
+              </div>
+            </div>
+            <div class="cot-client-row">
+              <div class="cot-client-field cot-client-field--full">
+                <span class="cot-client-label">Ejecutivo responsable</span>
+                <input id="cotEjecutivo" class="cot-client-inp" type="text" placeholder="Nombre del ejecutivo…" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Selector tipo de precio -->
+          <div class="cot-precio-selector no-print">
+            <span class="cot-precio-label">Precio a mostrar:</span>
+            <label class="cot-radio-lbl"><input type="radio" name="cotPrecio" value="sin" checked /> Sin instalación</label>
+            <label class="cot-radio-lbl"><input type="radio" name="cotPrecio" value="con" /> Con instalación</label>
+            <label class="cot-radio-lbl"><input type="radio" name="cotPrecio" value="ambas" /> Ambas</label>
+          </div>
+
+          <!-- Tabla de productos -->
+          <table class="cot-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Descripción del Producto</th>
+                <th>Cant.</th>
+                <th>P. Unitario</th>
+                <th>Subtotal</th>
+                <th class="no-print"></th>
+              </tr>
+            </thead>
+            <tbody id="cotItemsTbody"></tbody>
+          </table>
+
+          <!-- Totales -->
+          <div class="cot-totals">
+            <div class="cot-total-row"><span>Neto:</span><span id="cotNeto">—</span></div>
+            <div class="cot-total-row"><span>IVA (19%):</span><span id="cotIva">—</span></div>
+            <div class="cot-total-row cot-total-row--final"><span>TOTAL:</span><span id="cotTotal">—</span></div>
+          </div>
+
+          <!-- Notas -->
+          <div class="cot-notes-wrap">
+            <p class="cot-notes-label">NOTAS / OBSERVACIONES</p>
+            <textarea id="cotNotas" class="cot-notes-inp" rows="3" placeholder="Condiciones especiales, detalles de entrega, instrucciones para el cliente…"></textarea>
+          </div>
+
+        </div><!-- /#cotDoc -->
+
+        <!-- Acciones -->
+        <div class="cot-actions">
+          <button class="cot-action-btn cot-btn-secondary" id="cotBtnClose2" type="button" onclick="document.getElementById('cotModal').close()">Cerrar</button>
+          <button class="cot-action-btn" id="cotBtnGuardar" type="button">💾 Guardar</button>
+          <button class="cot-action-btn" id="cotBtnEmail" type="button">✉️ Email</button>
+          <button class="cot-action-btn cot-btn-wa" id="cotBtnWA" type="button">💬 WhatsApp</button>
+          <button class="cot-action-btn" id="cotBtnCopiar" type="button">📋 Copiar</button>
+          <button class="cot-action-btn cot-btn-primary" id="cotBtnImprimir" type="button">🖨️ Imprimir Cotización</button>
+        </div>
+
+      </dialog>
+
       </div><!-- /#mainView -->
 
       <!-- ── Panel de administración ── -->
@@ -298,5 +419,6 @@
     <script src="./auth.js"></script>
     <script src="./admin.js"></script>
     <script src="./app.js"></script>
+    <script src="./cotizador.js"></script>
   </body>
 </html>

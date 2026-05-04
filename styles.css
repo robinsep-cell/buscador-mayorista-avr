@@ -1870,3 +1870,391 @@ html[data-theme="light"] .admin-del-btn {
     min-width: 820px;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   COTIZADOR
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Checkbox en tabla de resultados */
+.cot-check-th {
+  width: 36px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.cot-check-cell {
+  text-align: center;
+  width: 36px;
+}
+.cot-check {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+/* Botón "Cotizar" en hero */
+.cot-open-hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1.5px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+.cot-open-hero-btn:hover:not(:disabled) {
+  background: var(--primary);
+  color: #111;
+}
+.cot-open-hero-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.cot-hero-badge {
+  background: var(--primary);
+  color: #111;
+  border-radius: 99px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 1px 7px;
+}
+
+/* ── Dialog ──────────────────────────────────────────────────── */
+.cot-dialog {
+  width: min(820px, 96vw);
+  max-height: 92vh;
+  overflow-y: auto;
+  border: none;
+  border-radius: 14px;
+  padding: 0;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+}
+.cot-dialog::backdrop {
+  background: rgba(0,0,0,0.6);
+}
+
+/* Tabs */
+.cot-tabs {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-2);
+  border-radius: 14px 14px 0 0;
+}
+.cot-tab {
+  padding: 12px 18px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.cot-tab--active {
+  color: var(--ink);
+  border-bottom-color: var(--primary);
+}
+.cot-tab--disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.cot-dialog-x {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+.cot-dialog-x:hover { background: var(--line); }
+
+/* ── Documento ───────────────────────────────────────────────── */
+.cot-doc {
+  padding: 24px 28px 20px;
+}
+
+/* Header empresa */
+.cot-doc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+.cot-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.cot-logo {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.cot-company-block p {
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.cot-company-name {
+  font-size: 0.95rem !important;
+  font-weight: 700;
+  color: var(--ink) !important;
+}
+.cot-company-tag { font-size: 0.72rem !important; }
+.cot-title-block { text-align: right; }
+.cot-title-big {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--ink);
+}
+.cot-numero { font-size: 0.85rem; font-weight: 600; margin-top: 4px; }
+.cot-fecha  { font-size: 0.8rem; color: var(--muted); }
+.cot-title-block strong { font-size: 0.85rem; }
+
+.cot-envio {
+  font-size: 0.82rem;
+  color: #b45309;
+  margin-bottom: 10px;
+}
+[data-theme="light"] .cot-envio { color: #92400e; }
+
+.cot-hr {
+  border: none;
+  border-top: 2px solid var(--ink);
+  margin: 10px 0 16px;
+}
+
+/* Cliente */
+.cot-client-box {
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--primary);
+  border-radius: 8px;
+  padding: 14px 18px;
+  background: var(--surface-2);
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cot-client-row {
+  display: flex;
+  gap: 20px;
+}
+.cot-client-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.cot-client-field--full { flex: 1 1 100%; }
+.cot-client-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cot-client-inp {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  padding: 4px 2px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.cot-client-inp:focus { border-bottom-color: var(--primary); }
+.cot-client-inp.cot-field-ok  { border-bottom-color: #22c55e; }
+.cot-client-inp.cot-field-err { border-bottom-color: #ef4444; }
+.cot-field-msg { font-size: 0.68rem; }
+.cot-msg-ok  { color: #22c55e; }
+.cot-msg-err { color: #ef4444; }
+
+/* Selector precio */
+.cot-precio-selector {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.cot-precio-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+.cot-radio-lbl {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  color: var(--ink);
+}
+.cot-radio-lbl input { accent-color: var(--primary); }
+
+/* Tabla items */
+.cot-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 14px;
+  font-size: 0.82rem;
+}
+.cot-table thead tr {
+  background: #111;
+  color: #fff;
+}
+[data-theme="light"] .cot-table thead tr { background: #1a2020; }
+.cot-table thead th {
+  padding: 9px 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.78rem;
+}
+.cot-table tbody tr:nth-child(even) { background: var(--surface-2); }
+.cot-table tbody tr:hover { background: rgba(99,221,0,0.06); }
+.cot-td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.cot-td-num   { width: 32px; text-align: center; color: var(--muted); }
+.cot-td-cant  { width: 70px; text-align: center; }
+.cot-td-price { width: 110px; text-align: right; }
+.cot-item-sub { display: block; font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+.cot-cant-inp {
+  width: 52px;
+  text-align: center;
+  padding: 4px 6px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.82rem;
+}
+.cot-rm-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 4px 7px;
+  border-radius: 5px;
+  transition: background 0.15s, color 0.15s;
+}
+.cot-rm-btn:hover { background: rgba(239,68,68,0.15); color: #ef4444; }
+
+/* Totales */
+.cot-totals {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  margin-bottom: 18px;
+}
+.cot-total-row {
+  display: flex;
+  gap: 28px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.cot-total-row span:last-child { min-width: 100px; text-align: right; }
+.cot-total-row--final {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--ink);
+  border-top: 2px solid var(--ink);
+  padding-top: 6px;
+  margin-top: 4px;
+}
+
+/* Notas */
+.cot-notes-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.cot-notes-inp {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface-2);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.82rem;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.cot-notes-inp:focus { border-color: var(--primary); }
+
+/* Acciones */
+.cot-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--line);
+  background: var(--surface-2);
+  border-radius: 0 0 14px 14px;
+  flex-wrap: wrap;
+}
+.cot-action-btn {
+  padding: 9px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.cot-action-btn:hover { background: var(--surface-2); border-color: var(--muted); }
+.cot-btn-secondary { color: var(--muted); }
+.cot-btn-wa {
+  border-color: #25d366;
+  color: #25d366;
+}
+.cot-btn-wa:hover { background: rgba(37,211,102,0.12); }
+.cot-btn-primary {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+.cot-btn-primary:hover { opacity: 0.85; }
+
+/* Responsive modal */
+@media (max-width: 640px) {
+  .cot-doc { padding: 16px; }
+  .cot-doc-header { flex-direction: column; gap: 10px; }
+  .cot-title-block { text-align: left; }
+  .cot-client-row { flex-direction: column; gap: 10px; }
+  .cot-actions { gap: 6px; }
+  .cot-action-btn { padding: 8px 12px; font-size: 0.78rem; }
+}
