@@ -420,6 +420,7 @@ async function loadProducts() {
       // Múltiples importadora con mismo cp (ej VDE y PRIV) → separar por color
       impItems.forEach(impItem => {
         const colorKey = normalizeColor(impItem.color);
+        // Primero buscar un AVR sin consumir con el mismo color
         const idx = avrItems.findIndex((a, i) =>
           !avrMatched.has(cp + "|" + i) && normalizeColor(a.color) === colorKey
         );
@@ -427,6 +428,11 @@ async function loadProducts() {
         if (idx >= 0) {
           avrItem = avrItems[idx];
           avrMatched.add(cp + "|" + idx);
+        } else {
+          // Si ya se consumió el único AVR de ese color (ej: izquierda+derecha
+          // comparten mismo color), igual mostrar el stock AVR de ese color
+          const anyIdx = avrItems.findIndex(a => normalizeColor(a.color) === colorKey);
+          if (anyIdx >= 0) avrItem = avrItems[anyIdx];
         }
         merged.push(mergeRows(impItem, avrItem));
       });
