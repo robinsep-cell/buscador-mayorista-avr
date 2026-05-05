@@ -445,6 +445,9 @@ async function loadProducts() {
     avrNoCp.forEach(a => merged.push(mergeRows(null, a)));
     impNoCp.forEach(i => merged.push(mergeRows(i, null)));
 
+    // Debug: exponer datos crudos para diagnóstico en consola
+    window._debugData = { impByCp, avrByCp };
+
     products = merged
       .filter(p => p.nombre || p.codigoAntiguo.length || p.marca)
       .map((p, i) => {
