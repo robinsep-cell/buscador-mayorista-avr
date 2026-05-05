@@ -1877,45 +1877,58 @@ html[data-theme="light"] .admin-del-btn {
 
 /* Checkbox en tabla de resultados */
 .cot-check-th {
-  width: 36px;
+  width: 44px;
   text-align: center;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: var(--muted);
+  padding: 0 8px !important;
 }
 .cot-check-cell {
   text-align: center;
-  width: 36px;
+  width: 44px;
+  padding: 0 8px !important;
+  vertical-align: middle;
 }
 .cot-check {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   accent-color: var(--primary);
   cursor: pointer;
+  display: block;
+  margin: 0 auto;
 }
 
-/* Botón "Cotizar" en hero */
+/* Botón "Cotizar" en hero — mismo estilo que admin-hero-btn */
 .cot-open-hero-btn {
+  flex-shrink: 0;
+  height: 42px;
+  padding: 0 14px;
+  border: 1px solid rgba(99, 221, 0, 0.24);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #dfffc4;
+  background: rgba(99, 221, 0, 0.08);
+  cursor: pointer;
+  transition: background 160ms, border-color 160ms;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: 1.5px solid var(--primary);
-  background: transparent;
-  color: var(--primary);
-  font-family: inherit;
-  font-size: 0.82rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.18s, color 0.18s;
+  white-space: nowrap;
 }
 .cot-open-hero-btn:hover:not(:disabled) {
-  background: var(--primary);
-  color: #111;
+  background: rgba(99, 221, 0, 0.18);
+  border-color: rgba(99, 221, 0, 0.5);
 }
 .cot-open-hero-btn:disabled {
-  opacity: 0.4;
+  opacity: 0.35;
   cursor: not-allowed;
+}
+html[data-theme="light"] .cot-open-hero-btn {
+  color: #1a4000;
+  background: rgba(77, 182, 0, 0.1);
+  border-color: rgba(77, 182, 0, 0.28);
 }
 .cot-hero-badge {
   background: var(--primary);
@@ -1924,6 +1937,8 @@ html[data-theme="light"] .admin-del-btn {
   font-size: 0.72rem;
   font-weight: 700;
   padding: 1px 7px;
+  min-width: 20px;
+  text-align: center;
 }
 
 /* ── Dialog ──────────────────────────────────────────────────── */
