@@ -367,12 +367,15 @@ async function loadProducts() {
 
     // Agrupar importadora por cp para saber cuántos productos comparten el mismo código
     const impByCp = new Map(); // cp → item[]
+    const impNoCp = [];        // filas de importadora sin CdP (igual se muestran)
     imp.rows.forEach(row => {
       const item = buildImportadora(row, imp.headerMap);
       if (!item.nombre && !item.cp) return;
       if (item.cp) {
         if (!impByCp.has(item.cp)) impByCp.set(item.cp, []);
         impByCp.get(item.cp).push(item);
+      } else if (item.nombre || item.descripcion) {
+        impNoCp.push(item); // rescatar: sin CdP pero con datos útiles
       }
     });
 
@@ -434,6 +437,7 @@ async function loadProducts() {
     });
 
     avrNoCp.forEach(a => merged.push(mergeRows(null, a)));
+    impNoCp.forEach(i => merged.push(mergeRows(i, null)));
 
     products = merged
       .filter(p => p.nombre || p.codigoAntiguo.length || p.marca)
@@ -443,7 +447,7 @@ async function loadProducts() {
       });
     window._products = products;
 
-    setStatus(`Inventarios listos. Importadora: ${[...impByCp.values()].reduce((s,a)=>s+a.length,0)} · AVR: ${[...avrByCp.values()].reduce((s,a)=>s+a.length,0) + avrNoCp.length}.`);
+    setStatus(`Inventarios listos. Importadora: ${[...impByCp.values()].reduce((s,a)=>s+a.length,0) + impNoCp.length} · AVR: ${[...avrByCp.values()].reduce((s,a)=>s+a.length,0) + avrNoCp.length}.`);
     filterProducts();
   } catch (e) {
     console.error(e);
