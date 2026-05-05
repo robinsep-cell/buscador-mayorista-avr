@@ -29,7 +29,7 @@ const statusNode = document.querySelector("#status");
 const counterNode = document.querySelector("#counter");
 const resultsBody = document.querySelector("#resultsBody");
 
-const COLSPAN = 12;
+const COLSPAN = 11;
 let products = [];
 
 const THEME_STORAGE_KEY = "avr-marketplace-theme";
@@ -319,11 +319,10 @@ function renderRows(items, tokens) {
     return `
     <tr>
       <td class="cot-check-cell"><input type="checkbox" class="cot-check" data-id="${p._id}" ${checked} /></td>
-      <td class="name-cell">${highlight(p.nombre, tokens)}</td>
+      <td class="name-cell${p.medida ? ' has-medida' : ''}" ${p.medida ? `data-medida="📐 ${escapeHtml(p.medida)}"` : ''}>${highlight(p.nombre, tokens)}</td>
       <td class="siglas-cell">${renderSiglas(p, tokens)}</td>
       <td class="siglas-cell">${renderBadges(p.codigoAntiguo, tokens)}</td>
       <td class="years-cell">${highlight(buildYearLabel(p.anioDesde, p.anioHasta), tokens)}</td>
-      <td>${highlight(p.medida, tokens)}</td>
       <td>${highlight(p.color, tokens)}</td>
       <td class="${stockClass(p.stockImp)}">${highlight(p.stockImp || "0", tokens)}</td>
       <td class="${stockClass(p.stockAvr)}">${highlight(p.stockAvr || "0", tokens)}</td>

@@ -2273,3 +2273,41 @@ html[data-theme="light"] .cot-open-hero-btn {
   .cot-actions { gap: 6px; }
   .cot-action-btn { padding: 8px 12px; font-size: 0.78rem; }
 }
+
+/* ── Globo de medida en celda nombre ── */
+.name-cell {
+  position: relative;
+}
+.name-cell.has-medida {
+  cursor: default;
+}
+.name-cell.has-medida::after {
+  content: attr(data-medida);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  z-index: 99;
+  background: #1a1f26;
+  color: #dfffc4;
+  border: 1px solid rgba(99, 221, 0, 0.35);
+  border-radius: 7px;
+  padding: 5px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.15s, transform 0.15s;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+.name-cell.has-medida:hover::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+[data-theme="light"] .name-cell.has-medida::after {
+  background: #ffffff;
+  color: #1a4000;
+  border-color: rgba(77, 182, 0, 0.4);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
