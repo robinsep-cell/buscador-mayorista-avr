@@ -182,6 +182,7 @@ function formatPrice(value) {
 function buildImportadora(row, hm) {
   return {
     cp: getCell(row, hm, "CodigoProveedor").toUpperCase(),
+    codigoAntiguo: getCell(row, hm, "CodigoAntiguo"),
     nombre: getCell(row, hm, "Nombre"),
     descripcion: getCell(row, hm, "Descripcion"),
     grupo: getCell(row, hm, "Grupo"),
@@ -225,7 +226,10 @@ function pickField(impVal, avrVal) {
 }
 
 function mergeRows(imp, avr) {
-  const codigoAntiguoList = avr ? siglasFromCodigoAntiguo(avr.codigoAntiguo) : [];
+  // Combinar códigos antiguos de ambas hojas (sin duplicados)
+  const avrCodigos = avr ? siglasFromCodigoAntiguo(avr.codigoAntiguo) : [];
+  const impCodigos = imp ? siglasFromCodigoAntiguo(imp.codigoAntiguo) : [];
+  const codigoAntiguoList = [...new Set([...avrCodigos, ...impCodigos])];
   const nombre = pickField(imp?.nombre, avr?.nombre);
   const siglaSheet = pickField(imp?.sigla, avr?.sigla);
   const sigAuto = siglaSheet ? [] : siglasFromNombre(nombre);
