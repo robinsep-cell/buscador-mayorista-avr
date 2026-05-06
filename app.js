@@ -182,6 +182,7 @@ function formatPrice(value) {
 function buildImportadora(row, hm) {
   return {
     cp: getCell(row, hm, "CodigoProveedor").toUpperCase(),
+    sku: getCell(row, hm, "SKU"),
     codigoAntiguo: getCell(row, hm, "CodigoAntiguo"),
     nombre: getCell(row, hm, "Nombre"),
     descripcion: getCell(row, hm, "Descripcion"),
@@ -230,6 +231,7 @@ function mergeRows(imp, avr) {
   const avrCodigos = avr ? siglasFromCodigoAntiguo(avr.codigoAntiguo) : [];
   const impCodigos = imp ? siglasFromCodigoAntiguo(imp.codigoAntiguo) : [];
   const codigoAntiguoList = [...new Set([...avrCodigos, ...impCodigos])];
+  const sku = imp?.sku || "";
   const nombre = pickField(imp?.nombre, avr?.nombre);
   const siglaSheet = pickField(imp?.sigla, avr?.sigla);
   const sigAuto = siglaSheet ? [] : siglasFromNombre(nombre);
@@ -238,6 +240,7 @@ function mergeRows(imp, avr) {
     siglaSheet,
     siglasAuto: sigAuto,
     codigoAntiguo: codigoAntiguoList,
+    sku,
     marca: pickField(imp?.marca, avr?.marca),
     marcasCompat: pickField(imp?.marcasCompat, avr?.marcasCompat),
     anioDesde: pickField(imp?.anioDesde, avr?.anioDesde),
@@ -259,6 +262,7 @@ function buildSearchIndex(p) {
     p.siglaSheet,
     p.siglasAuto.join(" "),
     p.codigoAntiguo.join(" "),
+    p.sku,
     p.marca,
     p.marcasCompat,
     p.color,
