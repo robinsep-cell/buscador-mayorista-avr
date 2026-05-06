@@ -263,6 +263,7 @@ function buildSearchIndex(p) {
     p.siglasAuto.join(" "),
     p.codigoAntiguo.join(" "),
     p.sku,
+    p.cp,
     p.marca,
     p.marcasCompat,
     p.color,
