@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generador CNC Espejos</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  </head>
+  <body>
+    <section id="authScreen" class="auth-screen">
+      <div class="auth-card">
+        <p class="eyebrow">AutovidriosRobin</p>
+        <h1>Acceso CNC</h1>
+        <p class="auth-subtitle">Generador privado de archivos .NC</p>
+
+        <div class="field">
+          <label for="authEmail">Correo</label>
+          <input id="authEmail" type="email" autocomplete="email" placeholder="correo@empresa.cl" />
+        </div>
+        <div class="field">
+          <label for="authPassword">Clave</label>
+          <input id="authPassword" type="password" autocomplete="current-password" placeholder="Minimo 6 caracteres" />
+        </div>
+        <button id="authSendBtn" class="primary-btn" type="button">Entrar</button>
+        <p id="authError" class="auth-error"></p>
+      </div>
+    </section>
+
+    <main id="appContent" class="app-shell" hidden>
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">AutovidriosRobin</p>
+          <h1>Generador CNC Espejos</h1>
+        </div>
+        <div class="top-actions">
+          <div class="status-pill" id="statusPill">Sin SVG</div>
+          <button id="logoutBtn" class="logout-btn" type="button">Salir</button>
+        </div>
+      </header>
+
+      <section class="workspace">
+        <aside class="controls">
+          <label class="file-drop" for="svgInput">
+            <span class="file-icon">SVG</span>
+            <strong id="fileLabel">Seleccionar silueta(s)</strong>
+            <small>Una o varias exportadas desde Silhouette Studio</small>
+            <input id="svgInput" type="file" accept=".svg,image/svg+xml" multiple />
+          </label>
+
+          <div class="field">
+            <label for="jobName">Nombre del archivo</label>
+            <input id="jobName" type="text" value="MODELO PRUEBA" />
+          </div>
+
+          <div class="split">
+            <div class="field">
+              <label for="side">Lado</label>
+              <select id="side">
+                <option value="DER">DER</option>
+                <option value="IZQ">IZQ</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="copies">Piezas</label>
+              <select id="copies">
+                <option value="1">1</option>
+                <option value="2" selected>2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="singlePlacement">Ubicacion cuando es 1 pieza</label>
+            <select id="singlePlacement">
+              <option value="auto" selected>Automatico: aprovecha lamina</option>
+              <option value="left">Izquierda</option>
+              <option value="center">Centro</option>
+            </select>
+            <small class="field-help">Con varios SVG, cada archivo se pone como un molde distinto si cabe.</small>
+          </div>
+
+          <label class="check-field">
+            <input id="autoRotate" type="checkbox" checked />
+            <span>Girar automaticamente si ayuda a que quepa</span>
+          </label>
+
+          <div class="split">
+            <div class="field">
+              <label for="sheetWidth">Ancho plancha</label>
+              <input id="sheetWidth" type="number" value="400" min="1" step="0.1" />
+            </div>
+            <div class="field">
+              <label for="sheetHeight">Alto plancha</label>
+              <input id="sheetHeight" type="number" value="200" min="1" step="0.1" />
+            </div>
+          </div>
+
+          <div class="split">
+            <div class="field">
+              <label for="feed">Avance</label>
+              <input id="feed" type="number" value="450" min="1" step="1" />
+            </div>
+            <div class="field">
+              <label for="tolerance">Suavizado</label>
+              <input id="tolerance" type="number" value="0.04" min="0" step="0.01" />
+            </div>
+          </div>
+
+          <button id="generateBtn" class="primary-btn" type="button" disabled>Generar .NC</button>
+          <div class="filename-box" id="filenameBox">Archivo: -</div>
+          <a id="downloadLink" class="download-btn disabled" href="#" download>Descargar .NC</a>
+          <button id="copyBtn" class="secondary-btn" type="button" disabled>Copiar codigo</button>
+        </aside>
+
+        <section class="preview-area">
+          <div class="metrics" id="metrics">
+            <span>Contorno: -</span>
+            <span>Puntos: -</span>
+            <span>Z: -</span>
+          </div>
+          <div class="preview-frame">
+            <svg id="previewSvg" viewBox="0 0 400 200" role="img" aria-label="Vista previa de plancha CNC">
+              <rect x="0" y="0" width="400" height="200" class="sheet" />
+              <g id="previewPaths"></g>
+            </svg>
+          </div>
+          <textarea id="ncOutput" spellcheck="false" placeholder="Aqui aparecera el codigo .NC generado"></textarea>
+        </section>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

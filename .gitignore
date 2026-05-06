@@ -1,7 +1,9 @@
 *.py
+!cnc_generador/generar_nc_espejo.py
 *.csv
 *.gs
 *.md
 *.backup*
 __pycache__/
 *.pyc
+cnc_generador/output/
