@@ -54,7 +54,12 @@ function showAuth() {
 
 async function showApp(session) {
   const email = session.user.email.toLowerCase();
-  const { data } = await sb.from("authorized_emails").select("email").eq("email", email).maybeSingle();
+  const { data, error } = await sb.from("authorized_emails").select("email").eq("email", email).maybeSingle();
+  if (error) {
+    showAuth();
+    authError.textContent = "No se pudo verificar autorizacion. Recarga e intenta de nuevo.";
+    return;
+  }
   if (!data) {
     await sb.auth.signOut();
     showAuth();
@@ -104,8 +109,9 @@ authSendBtn.addEventListener("click", async () => {
     return;
   }
 
-  const { error: signInErr } = await sb.auth.signInWithPassword({ email, password });
+  const { data: signInData, error: signInErr } = await sb.auth.signInWithPassword({ email, password });
   if (!signInErr) {
+    if (signInData?.session) await showApp(signInData.session);
     authSendBtn.disabled = false;
     authSendBtn.textContent = "Entrar";
     return;
@@ -114,6 +120,8 @@ authSendBtn.addEventListener("click", async () => {
   if (signInErr.message === "Invalid login credentials") {
     const { error: signUpErr } = await sb.auth.signUp({ email, password });
     if (!signUpErr) {
+      const { data: sessionData } = await sb.auth.getSession();
+      if (sessionData?.session) await showApp(sessionData.session);
       authSendBtn.disabled = false;
       authSendBtn.textContent = "Entrar";
       return;
