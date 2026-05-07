@@ -57,6 +57,7 @@
                   </button>
                   <button id="adminBtn" class="admin-hero-btn" type="button" hidden>Usuarios</button>
                   <button id="pwdBtn" class="pwd-btn" type="button">🔑 Clave</button>
+                  <button id="historialBtn" class="cot-open-hero-btn" type="button" style="background:none;border-color:rgba(255,255,255,0.2);color:var(--ink);">📋 Historial</button>
                   <button id="cotBtn" class="cot-open-hero-btn" type="button">
                     🧾 Cotizar <span id="cotBadge" class="cot-hero-badge" hidden>0</span>
                   </button>
@@ -348,6 +349,14 @@
             <textarea id="cotNotas" class="cot-notes-inp" rows="3" placeholder="Condiciones especiales, detalles de entrega, instrucciones para el cliente…"></textarea>
           </div>
 
+          <!-- Garantía (fija, siempre visible) -->
+          <div class="cot-garantia">
+            <p class="cot-garantia-title">GARANTÍA Y CONDICIONES</p>
+            <p>• Garantía de <strong>6 meses</strong> por falla de fábrica o instalación desde la fecha de entrega.</p>
+            <p>• Productos pintados, grabados o alterados <strong>no podrán ser devueltos</strong>.</p>
+            <p>• Devoluciones por desistimiento: <strong>10 días hábiles</strong> desde la entrega, en las mismas condiciones en que fue entregado el producto.</p>
+          </div>
+
         </div><!-- /#cotDoc -->
 
         <!-- Acciones -->
@@ -424,6 +433,24 @@
         </div>
         <button id="pwdSaveBtn" class="pwd-save-btn" type="button">Guardar nueva contraseña</button>
         <p id="pwdMsg" class="pwd-msg"></p>
+      </div>
+    </dialog>
+
+    <!-- Modal historial de cotizaciones -->
+    <dialog id="historialModal" class="cot-dialog" style="max-width:900px">
+      <div class="cot-tabs">
+        <span style="font-weight:700;font-size:1rem;padding:0 4px">📋 Historial de Cotizaciones</span>
+        <button id="historialClose" class="cot-dialog-x" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div style="padding:0 24px 24px">
+        <div style="display:flex;gap:10px;margin-bottom:16px;align-items:center">
+          <input id="historialSearch" type="text" placeholder="Buscar por N°, cliente o ejecutivo…"
+            style="flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:0.9rem" />
+          <button id="historialReload" type="button" class="cot-action-btn" style="padding:8px 16px">↺ Actualizar</button>
+        </div>
+        <div id="historialList" style="overflow-y:auto;max-height:500px">
+          <p style="color:var(--muted);text-align:center;padding:24px">Cargando…</p>
+        </div>
       </div>
     </dialog>
 

@@ -355,7 +355,11 @@ async function saveCotizacion() {
 // ── Imprimir ──────────────────────────────────────────────────────────────────
 function printCot() {
   const logoSrc = document.querySelector(".cot-logo")?.src || "";
-  const content = document.getElementById("cotDoc").innerHTML;
+  // Sincronizar atributos value de todos los inputs/textareas antes de copiar el HTML
+  const doc = document.getElementById("cotDoc");
+  doc.querySelectorAll("input").forEach(el => el.setAttribute("value", el.value));
+  doc.querySelectorAll("textarea").forEach(el => { el.innerHTML = el.value; });
+  const content = doc.innerHTML;
   const win = window.open("", "_blank", "width=900,height=1100");
   win.document.write(`<!DOCTYPE html>
 <html lang="es">
@@ -422,6 +426,86 @@ function shareWA() {
 }
 
 // ── Event listeners ───────────────────────────────────────────────────────────
+// ── Historial de cotizaciones ─────────────────────────────────────────────────
+const historialModal  = document.getElementById("historialModal");
+const historialClose  = document.getElementById("historialClose");
+const historialList   = document.getElementById("historialList");
+const historialSearch = document.getElementById("historialSearch");
+const historialReload = document.getElementById("historialReload");
+let _historialData    = [];
+
+function fmtDate(iso) {
+  if (!iso) return "—";
+  return new Date(iso).toLocaleDateString("es-CL", { day:"2-digit", month:"2-digit", year:"numeric" });
+}
+
+function renderHistorial(rows) {
+  if (!rows.length) {
+    historialList.innerHTML = `<p style="color:var(--muted);text-align:center;padding:24px">Sin cotizaciones encontradas.</p>`;
+    return;
+  }
+  historialList.innerHTML = `
+    <table style="width:100%;border-collapse:collapse;font-size:0.85rem">
+      <thead>
+        <tr style="border-bottom:2px solid var(--border)">
+          <th style="text-align:left;padding:8px 10px;color:var(--muted);font-weight:600">N°</th>
+          <th style="text-align:left;padding:8px 10px;color:var(--muted);font-weight:600">Fecha</th>
+          <th style="text-align:left;padding:8px 10px;color:var(--muted);font-weight:600">Cliente</th>
+          <th style="text-align:left;padding:8px 10px;color:var(--muted);font-weight:600">Ejecutivo</th>
+          <th style="text-align:right;padding:8px 10px;color:var(--muted);font-weight:600">Total</th>
+          <th style="text-align:left;padding:8px 10px;color:var(--muted);font-weight:600">Items</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rows.map(r => `
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:9px 10px;font-weight:700;color:var(--primary)">${esc(r.numero || "—")}</td>
+            <td style="padding:9px 10px">${fmtDate(r.created_at)}</td>
+            <td style="padding:9px 10px">${esc(r.cliente_nombre || "—")}</td>
+            <td style="padding:9px 10px">${esc(r.ejecutivo || "—")}</td>
+            <td style="padding:9px 10px;text-align:right;font-weight:600">${fmtCLP(r.total)}</td>
+            <td style="padding:9px 10px;color:var(--muted)">${Array.isArray(r.items) ? r.items.length + " prod." : "—"}</td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>`;
+}
+
+async function loadHistorial() {
+  historialList.innerHTML = `<p style="color:var(--muted);text-align:center;padding:24px">Cargando…</p>`;
+  const { data, error } = await window._sb
+    .from("cotizaciones")
+    .select("numero,created_at,cliente_nombre,ejecutivo,total,items")
+    .order("created_at", { ascending: false })
+    .limit(200);
+  if (error) {
+    historialList.innerHTML = `<p style="color:#f87171;text-align:center;padding:24px">Error: ${error.message}</p>`;
+    return;
+  }
+  _historialData = data || [];
+  renderHistorial(_historialData);
+}
+
+function filterHistorial() {
+  const q = (historialSearch.value || "").toLowerCase().trim();
+  if (!q) return renderHistorial(_historialData);
+  const filtered = _historialData.filter(r =>
+    (r.numero || "").toLowerCase().includes(q) ||
+    (r.cliente_nombre || "").toLowerCase().includes(q) ||
+    (r.ejecutivo || "").toLowerCase().includes(q)
+  );
+  renderHistorial(filtered);
+}
+
+document.getElementById("historialBtn")?.addEventListener("click", () => {
+  historialModal.showModal();
+  loadHistorial();
+});
+historialClose?.addEventListener("click", () => historialModal.close());
+historialModal?.addEventListener("click", e => { if (e.target === historialModal) historialModal.close(); });
+historialReload?.addEventListener("click", loadHistorial);
+historialSearch?.addEventListener("input", filterHistorial);
+
 cotBtn?.addEventListener("click", openCotModal);
 cotBtnClose?.addEventListener("click", () => cotModal.close());
 cotModal?.addEventListener("click", e => { if (e.target === cotModal) cotModal.close(); });
