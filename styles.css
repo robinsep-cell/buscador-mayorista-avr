@@ -2340,6 +2340,9 @@ html[data-theme="light"] .cot-open-hero-btn {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
 }
 .cot-manual-inp {
   border: 1.5px solid var(--border);
@@ -2352,7 +2355,7 @@ html[data-theme="light"] .cot-open-hero-btn {
   transition: border-color 0.15s;
 }
 .cot-manual-inp:focus { border-color: var(--accent); }
-.cot-manual-nombre { flex: 1; min-width: 200px; }
+.cot-manual-nombre { flex: 1; min-width: 0; }
 .cot-manual-cant   { width: 64px; text-align: center; }
 .cot-manual-precio { width: 130px; }
 .cot-manual-confirm-btn {

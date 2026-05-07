@@ -161,7 +161,6 @@ function renderCotItems() {
           <td class="cot-td cot-td-num">${idx + 1}</td>
           <td class="cot-td">
             <strong>${esc(p.nombre)}</strong>
-            <span class="cot-item-manual-tag">externo</span>
           </td>
           <td class="cot-td cot-td-cant">
             <input class="cot-cant-inp" type="number" value="${cant}" min="1" max="999" data-id="${p._id}" />
@@ -256,7 +255,6 @@ function calcTotals() {
 
 // ── Abrir modal ───────────────────────────────────────────────────────────────
 async function openCotModal() {
-  if (window.cotSelection.size === 0) return;
 
   const today = new Date();
   cotFechaEl.textContent = "Fecha: " + formatDateShort(today);
@@ -289,7 +287,7 @@ function updateCotBtn() {
   const n = window.cotSelection.size;
   cotBadge.textContent = n;
   cotBadge.hidden  = n === 0;
-  cotBtn.disabled  = n === 0;
+  cotBtn.disabled  = false; // siempre habilitado, se pueden agregar externos
 }
 
 document.getElementById("resultsBody").addEventListener("change", e => {
