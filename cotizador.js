@@ -454,28 +454,57 @@ function renderHistorial(rows) {
           <th style="text-align:left;padding:8px 10px;color:var(--muted);font-weight:600">Ejecutivo</th>
           <th style="text-align:right;padding:8px 10px;color:var(--muted);font-weight:600">Total</th>
           <th style="text-align:left;padding:8px 10px;color:var(--muted);font-weight:600">Items</th>
+          <th style="padding:8px 10px"></th>
         </tr>
       </thead>
       <tbody>
-        ${rows.map(r => `
-          <tr style="border-bottom:1px solid var(--border)">
-            <td style="padding:9px 10px;font-weight:700;color:var(--primary)">${esc(r.numero || "—")}</td>
-            <td style="padding:9px 10px">${fmtDate(r.created_at)}</td>
-            <td style="padding:9px 10px">${esc(r.cliente_nombre || "—")}</td>
-            <td style="padding:9px 10px">${esc(r.ejecutivo || "—")}</td>
-            <td style="padding:9px 10px;text-align:right;font-weight:600">${fmtCLP(r.total)}</td>
-            <td style="padding:9px 10px;color:var(--muted)">${Array.isArray(r.items) ? r.items.length + " prod." : "—"}</td>
-          </tr>
-        `).join("")}
+        ${rows.map(r => {
+          const anulada = r.estado === 'anulada';
+          const rowStyle = anulada
+            ? 'border-bottom:1px solid var(--border);opacity:0.45;text-decoration:line-through'
+            : 'border-bottom:1px solid var(--border)';
+          const btnAnular = anulada
+            ? `<span style="font-size:0.75rem;color:#f87171;font-weight:600">ANULADA</span>`
+            : `<button class="hist-anular-btn" data-id="${r.id}" data-num="${esc(r.numero)}"
+                style="background:none;border:1px solid #f87171;color:#f87171;border-radius:6px;padding:4px 10px;cursor:pointer;font-size:0.78rem;font-weight:600">
+                Anular
+              </button>`;
+          return `
+            <tr style="${rowStyle}">
+              <td style="padding:9px 10px;font-weight:700;color:var(--primary)">${esc(r.numero || "—")}</td>
+              <td style="padding:9px 10px">${fmtDate(r.created_at)}</td>
+              <td style="padding:9px 10px">${esc(r.cliente_nombre || "—")}</td>
+              <td style="padding:9px 10px">${esc(r.ejecutivo || "—")}</td>
+              <td style="padding:9px 10px;text-align:right;font-weight:600">${fmtCLP(r.total)}</td>
+              <td style="padding:9px 10px;color:var(--muted)">${Array.isArray(r.items) ? r.items.length + " prod." : "—"}</td>
+              <td style="padding:9px 10px">${btnAnular}</td>
+            </tr>`;
+        }).join("")}
       </tbody>
     </table>`;
+
+  // Listeners botones anular
+  historialList.querySelectorAll(".hist-anular-btn").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const num = btn.dataset.num;
+      if (!confirm(`¿Anular cotización ${num}? Quedará marcada pero no se eliminará.`)) return;
+      btn.disabled = true;
+      btn.textContent = "…";
+      const { error } = await window._sb
+        .from("cotizaciones")
+        .update({ estado: "anulada" })
+        .eq("id", btn.dataset.id);
+      if (error) { alert("Error: " + error.message); btn.disabled = false; btn.textContent = "Anular"; return; }
+      await loadHistorial();
+    });
+  });
 }
 
 async function loadHistorial() {
   historialList.innerHTML = `<p style="color:var(--muted);text-align:center;padding:24px">Cargando…</p>`;
   const { data, error } = await window._sb
     .from("cotizaciones")
-    .select("numero,created_at,cliente_nombre,ejecutivo,total,items")
+    .select("id,numero,created_at,cliente_nombre,ejecutivo,total,items,estado")
     .order("created_at", { ascending: false })
     .limit(200);
   if (error) {
