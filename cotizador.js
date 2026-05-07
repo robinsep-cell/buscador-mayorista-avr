@@ -1,8 +1,9 @@
 // ── Cotizador AutovidriosRobin ────────────────────────────────────────────────
 
 window.cotSelection = new Map(); // _id → product (con _cant). Manuales usan key "m_N"
-let _cotNumero = null;
+let _cotNumero    = null;
 let _manualCounter = 0;
+let _reemplazaA   = null; // numero de cotización que se reemplaza al guardar
 
 // ── DOM ───────────────────────────────────────────────────────────────────────
 const cotBtn      = document.getElementById("cotBtn");
@@ -340,16 +341,26 @@ async function saveCotizacion() {
     notas:            cotNotasEl.value.trim(),
     neto, iva, total: subtotal,
     created_by:       window.currentUser?.email || "",
+    reemplaza_a:      _reemplazaA || null,
   });
 
   cotBtnGuardar.disabled = false;
   if (error) {
     cotBtnGuardar.textContent = "💾 Guardar";
     alert("Error al guardar: " + error.message);
-  } else {
-    cotBtnGuardar.textContent = "✓ Guardado";
-    setTimeout(() => { cotBtnGuardar.textContent = "💾 Guardar"; }, 2500);
+    return;
   }
+
+  // Si reemplaza una anterior → anularla automáticamente
+  if (_reemplazaA) {
+    await window._sb.from("cotizaciones")
+      .update({ estado: "anulada", anulada_por: _cotNumero })
+      .eq("numero", _reemplazaA);
+    _reemplazaA = null;
+  }
+
+  cotBtnGuardar.textContent = "✓ Guardado";
+  setTimeout(() => { cotBtnGuardar.textContent = "💾 Guardar"; }, 2500);
 }
 
 // ── Imprimir ──────────────────────────────────────────────────────────────────
@@ -463,15 +474,22 @@ function renderHistorial(rows) {
           const rowStyle = anulada
             ? 'border-bottom:1px solid var(--border);opacity:0.45;text-decoration:line-through'
             : 'border-bottom:1px solid var(--border)';
+          const refTag = r.reemplaza_a
+            ? `<div style="font-size:0.7rem;color:#f59e0b;margin-top:2px">↺ Reemplaza ${esc(r.reemplaza_a)}</div>` : "";
+          const anuladaTag = r.anulada_por
+            ? `<div style="font-size:0.7rem;color:#f87171;margin-top:2px">→ Reemplazada por ${esc(r.anulada_por)}</div>` : "";
           const btnAnular = anulada
-            ? `<span style="font-size:0.75rem;color:#f87171;font-weight:600">ANULADA</span>`
-            : `<button class="hist-anular-btn" data-id="${r.id}" data-num="${esc(r.numero)}"
-                style="background:none;border:1px solid #f87171;color:#f87171;border-radius:6px;padding:4px 10px;cursor:pointer;font-size:0.78rem;font-weight:600">
-                Anular
-              </button>`;
+            ? `<span style="font-size:0.75rem;color:#f87171;font-weight:600">ANULADA</span>${anuladaTag}`
+            : `<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-start">
+                <button class="hist-requotizar-btn" style="background:none;border:1px solid var(--primary);color:var(--primary);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:0.78rem;font-weight:600">↺ Re-cotizar</button>
+                <button class="hist-anular-btn" data-id="${r.id}" data-num="${esc(r.numero)}"
+                  style="background:none;border:1px solid #f87171;color:#f87171;border-radius:6px;padding:4px 10px;cursor:pointer;font-size:0.78rem;font-weight:600">
+                  Anular
+                </button>
+              </div>`;
           return `
             <tr style="${rowStyle}">
-              <td style="padding:9px 10px;font-weight:700;color:var(--primary)">${esc(r.numero || "—")}</td>
+              <td style="padding:9px 10px;font-weight:700;color:var(--primary)">${esc(r.numero || "—")}${refTag}</td>
               <td style="padding:9px 10px">${fmtDate(r.created_at)}</td>
               <td style="padding:9px 10px">${esc(r.cliente_nombre || "—")}</td>
               <td style="padding:9px 10px">${esc(r.ejecutivo || "—")}</td>
@@ -482,6 +500,12 @@ function renderHistorial(rows) {
         }).join("")}
       </tbody>
     </table>`;
+
+  // Listeners botones re-cotizar
+  historialList.querySelectorAll(".hist-requotizar-btn").forEach((btn, i) => {
+    const row = rows.filter(r => r.estado !== 'anulada')[i];
+    btn.addEventListener("click", () => { if (row) reQuotizar(row); });
+  });
 
   // Listeners botones anular
   historialList.querySelectorAll(".hist-anular-btn").forEach(btn => {
@@ -504,7 +528,7 @@ async function loadHistorial() {
   historialList.innerHTML = `<p style="color:var(--muted);text-align:center;padding:24px">Cargando…</p>`;
   const { data, error } = await window._sb
     .from("cotizaciones")
-    .select("id,numero,created_at,cliente_nombre,ejecutivo,total,items,estado")
+    .select("id,numero,created_at,cliente_nombre,cliente_rut,cliente_telefono,cliente_email,ejecutivo,total,items,notas,estado,reemplaza_a,anulada_por")
     .order("created_at", { ascending: false })
     .limit(200);
   if (error) {
@@ -524,6 +548,45 @@ function filterHistorial() {
     (r.ejecutivo || "").toLowerCase().includes(q)
   );
   renderHistorial(filtered);
+}
+
+// ── Re-cotizar ────────────────────────────────────────────────────────────────
+async function reQuotizar(row) {
+  historialModal.close();
+
+  // Limpiar estado anterior
+  window.cotSelection.clear();
+  _manualCounter = 0;
+  _reemplazaA = row.numero;
+
+  // Cargar items como productos manuales
+  (row.items || []).forEach(item => {
+    const key = "m_" + (++_manualCounter);
+    window.cotSelection.set(key, {
+      _id: key, _isManual: true,
+      _cant: item.cant || 1,
+      _precioManual: item.precio || item.precioSin || 0,
+      nombre:    item.nombre    || "",
+      marca:     item.marca     || "",
+      color:     item.color     || "",
+      anioDesde: item.anioDesde || "",
+      anioHasta: item.anioHasta || "",
+      ventaSin: String(item.precioSin || 0),
+      ventaCon: String(item.precioCon || 0),
+    });
+  });
+
+  updateCotBtn();
+  await openCotModal();
+
+  // Pre-llenar datos del cliente
+  if (cotNombreEl) cotNombreEl.value = row.cliente_nombre || "";
+  if (cotRutEl)    cotRutEl.value    = row.cliente_rut    || "";
+  if (cotTelEl)    cotTelEl.value    = row.cliente_telefono || "";
+  if (cotEmailEl)  cotEmailEl.value  = row.cliente_email  || "";
+  if (cotEjecEl)   cotEjecEl.value   = row.ejecutivo      || "";
+  if (cotNotasEl)  cotNotasEl.value  = (row.notas ? row.notas + "\n" : "") +
+                                        `Reemplaza a: ${row.numero}`;
 }
 
 document.getElementById("historialBtn")?.addEventListener("click", () => {
