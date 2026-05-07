@@ -2311,3 +2311,78 @@ html[data-theme="light"] .cot-open-hero-btn {
   border-color: rgba(77, 182, 0, 0.4);
   box-shadow: 0 4px 16px rgba(0,0,0,0.12);
 }
+
+/* ── Cotizador: agregar producto externo ─────────────────────────────────── */
+.cot-manual-bar {
+  margin: 0 0 12px;
+}
+.cot-add-manual-btn {
+  background: none;
+  border: 1.5px dashed var(--accent);
+  color: var(--accent);
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.cot-add-manual-btn:hover {
+  background: rgba(99,221,0,0.08);
+}
+.cot-manual-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.cot-manual-inp {
+  border: 1.5px solid var(--border);
+  border-radius: 7px;
+  padding: 7px 10px;
+  font-size: 0.85rem;
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.cot-manual-inp:focus { border-color: var(--accent); }
+.cot-manual-nombre { flex: 1; min-width: 200px; }
+.cot-manual-cant   { width: 64px; text-align: center; }
+.cot-manual-precio { width: 130px; }
+.cot-manual-confirm-btn {
+  background: var(--accent);
+  color: #000;
+  border: none;
+  border-radius: 7px;
+  padding: 7px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.cot-manual-cancel-btn {
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 7px;
+  padding: 7px 10px;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.cot-item-manual-tag {
+  display: inline-block;
+  font-size: 0.68rem;
+  background: #f59e0b22;
+  color: #b45309;
+  border: 1px solid #f59e0b55;
+  border-radius: 4px;
+  padding: 1px 5px;
+  margin-left: 6px;
+  font-weight: 600;
+  vertical-align: middle;
+}

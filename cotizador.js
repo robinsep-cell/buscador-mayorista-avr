@@ -1,7 +1,8 @@
 // ── Cotizador AutovidriosRobin ────────────────────────────────────────────────
 
-window.cotSelection = new Map(); // _id → product (con _cant)
+window.cotSelection = new Map(); // _id → product (con _cant). Manuales usan key "m_N"
 let _cotNumero = null;
+let _manualCounter = 0;
 
 // ── DOM ───────────────────────────────────────────────────────────────────────
 const cotBtn      = document.getElementById("cotBtn");
@@ -105,6 +106,7 @@ function getPrecioTipo() {
 }
 
 function getUnitPrice(p, tipo) {
+  if (p._isManual) return p._precioManual || 0;
   if (tipo === "con") return parsePrice(p.ventaCon);
   return parsePrice(p.ventaSin); // "sin" o "ambas" → sin instalación para subtotal
 }
@@ -150,6 +152,30 @@ function renderCotItems() {
         </tr>`;
     }
 
+    // Producto manual: precio editable directamente
+    if (p._isManual) {
+      const precio = p._precioManual || 0;
+      const sub    = precio * cant;
+      return `
+        <tr>
+          <td class="cot-td cot-td-num">${idx + 1}</td>
+          <td class="cot-td">
+            <strong>${esc(p.nombre)}</strong>
+            <span class="cot-item-manual-tag">externo</span>
+          </td>
+          <td class="cot-td cot-td-cant">
+            <input class="cot-cant-inp" type="number" value="${cant}" min="1" max="999" data-id="${p._id}" />
+          </td>
+          <td class="cot-td cot-td-price">
+            <input class="cot-precio-manual-inp" type="number" value="${precio}" min="0" data-id="${p._id}" style="width:100px;border:1px solid var(--border);border-radius:5px;padding:3px 6px;background:var(--bg);color:var(--text);font-size:0.82rem;" />
+          </td>
+          <td class="cot-td cot-td-price"><strong>${fmtCLP(sub)}</strong></td>
+          <td class="cot-td no-print">
+            <button class="cot-rm-btn" data-id="${p._id}">✕</button>
+          </td>
+        </tr>`;
+    }
+
     const precio = tipo === "con" ? con : sin;
     const sub    = precio * cant;
     return `
@@ -173,8 +199,9 @@ function renderCotItems() {
   // Cantidad inputs
   cotItemsEl.querySelectorAll(".cot-cant-inp").forEach(inp => {
     inp.addEventListener("change", () => {
-      const id = Number(inp.dataset.id);
-      const p  = window.cotSelection.get(id);
+      const raw = inp.dataset.id;
+      const id  = raw.startsWith("m_") ? raw : Number(raw);
+      const p   = window.cotSelection.get(id);
       if (p) {
         p._cant = Math.max(1, parseInt(inp.value) || 1);
         inp.value = p._cant;
@@ -184,10 +211,24 @@ function renderCotItems() {
     });
   });
 
+  // Precio manual editable
+  cotItemsEl.querySelectorAll(".cot-precio-manual-inp").forEach(inp => {
+    inp.addEventListener("change", () => {
+      const id = inp.dataset.id;
+      const p  = window.cotSelection.get(id);
+      if (p) {
+        p._precioManual = Math.max(0, parseInt(inp.value) || 0);
+        window.cotSelection.set(id, p);
+      }
+      renderCotItems();
+    });
+  });
+
   // Botones eliminar
   cotItemsEl.querySelectorAll(".cot-rm-btn").forEach(btn => {
     btn.addEventListener("click", () => {
-      const id = Number(btn.dataset.id);
+      const raw = btn.dataset.id;
+      const id  = raw.startsWith("m_") ? raw : Number(raw);
       window.cotSelection.delete(id);
       const cb = document.querySelector(`.cot-check[data-id="${id}"]`);
       if (cb) cb.checked = false;
@@ -419,6 +460,51 @@ cotBtnCopiar?.addEventListener("click", () => {
     setTimeout(() => { cotBtnCopiar.textContent = "📋 Copiar"; }, 2000);
   });
 });
+
+// ── Producto externo / manual ─────────────────────────────────────────────────
+const cotAddManualBtn    = document.getElementById("cotAddManualBtn");
+const cotManualForm      = document.getElementById("cotManualForm");
+const cotManualNombreEl  = document.getElementById("cotManualNombre");
+const cotManualCantEl    = document.getElementById("cotManualCant");
+const cotManualPrecioEl  = document.getElementById("cotManualPrecio");
+const cotManualConfirm   = document.getElementById("cotManualConfirm");
+const cotManualCancel    = document.getElementById("cotManualCancel");
+
+cotAddManualBtn?.addEventListener("click", () => {
+  cotManualForm.hidden = false;
+  cotManualNombreEl.focus();
+});
+
+cotManualCancel?.addEventListener("click", () => {
+  cotManualForm.hidden = true;
+  cotManualNombreEl.value = "";
+  cotManualCantEl.value   = "1";
+  cotManualPrecioEl.value = "";
+});
+
+function confirmManualProduct() {
+  const nombre = cotManualNombreEl.value.trim();
+  if (!nombre) { cotManualNombreEl.focus(); return; }
+  const cant   = Math.max(1, parseInt(cotManualCantEl.value) || 1);
+  const precio = Math.max(0, parseInt(String(cotManualPrecioEl.value).replace(/\./g,"")) || 0);
+  const key    = "m_" + (++_manualCounter);
+  window.cotSelection.set(key, {
+    _id: key, _isManual: true, _cant: cant, _precioManual: precio,
+    nombre, marca: "", color: "", anioDesde: "", anioHasta: "",
+    ventaSin: "0", ventaCon: "0",
+  });
+  // Resetear form
+  cotManualNombreEl.value = "";
+  cotManualCantEl.value   = "1";
+  cotManualPrecioEl.value = "";
+  cotManualForm.hidden    = true;
+  updateCotBtn();
+  renderCotItems();
+}
+
+cotManualConfirm?.addEventListener("click", confirmManualProduct);
+cotManualNombreEl?.addEventListener("keydown", e => { if (e.key === "Enter") cotManualPrecioEl.focus(); });
+cotManualPrecioEl?.addEventListener("keydown", e => { if (e.key === "Enter") confirmManualProduct(); });
 
 // Tipo de precio → re-renderizar
 document.querySelectorAll('input[name="cotPrecio"]').forEach(r => {
