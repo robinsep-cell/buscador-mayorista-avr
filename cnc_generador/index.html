@@ -81,10 +81,14 @@
             <small class="field-help">Con varios SVG, cada archivo se pone como un molde distinto si cabe.</small>
           </div>
 
-          <label class="check-field">
-            <input id="autoRotate" type="checkbox" checked />
-            <span>Girar automaticamente si ayuda a que quepa</span>
-          </label>
+          <div class="field">
+            <label for="rotationMode">Rotacion de piezas</label>
+            <select id="rotationMode">
+              <option value="auto" selected>Automatico: girar si conviene</option>
+              <option value="force">Forzar giro 90 grados</option>
+              <option value="none">No girar</option>
+            </select>
+          </div>
 
           <div class="split">
             <div class="field">

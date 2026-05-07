@@ -32,7 +32,7 @@ const jobName = document.querySelector("#jobName");
 const side = document.querySelector("#side");
 const copies = document.querySelector("#copies");
 const singlePlacement = document.querySelector("#singlePlacement");
-const autoRotate = document.querySelector("#autoRotate");
+const rotationMode = document.querySelector("#rotationMode");
 const sheetWidth = document.querySelector("#sheetWidth");
 const sheetHeight = document.querySelector("#sheetHeight");
 const feed = document.querySelector("#feed");
@@ -331,11 +331,13 @@ function rotatePoints90(points) {
   return normalizePoints(rotated);
 }
 
-function chooseOrientationCombinations(items, sheetW, sheetH, allowRotate) {
+function chooseOrientationCombinations(items, sheetW, sheetH, mode) {
   const variants = items.map((item) => {
     const normal = { ...item, points: normalizePoints(item.points), rotated: false };
-    if (!allowRotate) return [normal];
-    return [normal, { ...item, points: rotatePoints90(item.points), rotated: true }];
+    const rotated = { ...item, points: rotatePoints90(item.points), rotated: true };
+    if (mode === "none") return [normal];
+    if (mode === "force") return [rotated];
+    return [normal, rotated];
   });
 
   let best = null;
@@ -358,8 +360,8 @@ function chooseOrientationCombinations(items, sheetW, sheetH, allowRotate) {
   return variants.map((variant) => variant[0]);
 }
 
-function makeLayout(items, sheetW, sheetH, mirror, placement, allowRotate) {
-  const oriented = chooseOrientationCombinations(items, sheetW, sheetH, allowRotate);
+function makeLayout(items, sheetW, sheetH, mirror, placement, rotation) {
+  const oriented = chooseOrientationCombinations(items, sheetW, sheetH, rotation);
   const prepared = oriented.map((item) => ({ ...item, box: bbox(item.points) }));
   prepared.forEach((item) => {
     if (item.box.height > sheetH) {
@@ -477,7 +479,7 @@ function regenerate() {
         original: design.contour,
       }));
     });
-    const paths = makeLayout(items, sheetW, sheetH, side.value === "IZQ", singlePlacement.value, autoRotate.checked);
+    const paths = makeLayout(items, sheetW, sheetH, side.value === "IZQ", singlePlacement.value, rotationMode.value);
     const nc = makeNc(`${jobName.value.trim()} ${paths.length} ${side.value}`.trim(), paths, Number(feed.value));
     renderPreview(paths, sheetW, sheetH);
 
@@ -557,7 +559,7 @@ copyBtn.addEventListener("click", async () => {
     copyBtn.textContent = original;
   }, 1400);
 });
-[jobName, side, copies, singlePlacement, autoRotate, sheetWidth, sheetHeight, feed, tolerance].forEach((control) => {
+[jobName, side, copies, singlePlacement, rotationMode, sheetWidth, sheetHeight, feed, tolerance].forEach((control) => {
   control.addEventListener("input", () => state.designs.length && regenerate());
 });
 
