@@ -332,11 +332,12 @@ function rotatePoints90(points) {
 }
 
 function chooseOrientationCombinations(items, sheetW, sheetH, mode) {
-  const variants = items.map((item) => {
+  const variants = items.map((item, index) => {
     const normal = { ...item, points: normalizePoints(item.points), rotated: false };
     const rotated = { ...item, points: rotatePoints90(item.points), rotated: true };
     if (mode === "none") return [normal];
     if (mode === "force") return [rotated];
+    if (mode === "alternate") return [index % 2 === 1 ? rotated : normal];
     return [normal, rotated];
   });
 
