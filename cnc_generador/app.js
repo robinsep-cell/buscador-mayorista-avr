@@ -330,6 +330,18 @@ function rotatePoints90(points) {
   return normalizePoints(rotated);
 }
 
+function scalePointsToSize(points, targetWidth, targetHeight) {
+  const box = bbox(points);
+  const width = Number(targetWidth) || box.width;
+  const height = Number(targetHeight) || box.height;
+  const sx = box.width ? width / box.width : 1;
+  const sy = box.height ? height / box.height : 1;
+  return points.map((p) => ({
+    x: (p.x - box.minX) * sx,
+    y: (p.y - box.minY) * sy,
+  }));
+}
+
 function makeLayout(items, sheetW, sheetH, placement) {
   const prepared = items.map((item) => ({ ...item, points: normalizePoints(item.points), box: bbox(item.points) }));
   prepared.forEach((item) => {
@@ -437,8 +449,21 @@ function currentPieceCount() {
   return state.designs.length > 1 ? state.designs.length : Number(copies.value);
 }
 
+function currentPieceDefaults() {
+  if (!state.designs.length) return [];
+  const copyCount = state.designs.length > 1 ? 1 : Number(copies.value);
+  return state.designs.flatMap((design) => {
+    const box = bbox(design.contour);
+    return Array.from({ length: copyCount }, () => ({
+      width: box.width,
+      height: box.height,
+    }));
+  });
+}
+
 function buildPieceControls() {
   const count = currentPieceCount();
+  const defaults = currentPieceDefaults();
   if (!count) {
     pieceControls.hidden = true;
     pieceControls.innerHTML = '<div class="piece-controls-title">Ajustes por pieza</div>';
@@ -449,6 +474,8 @@ function buildPieceControls() {
   state.pieceSettings = Array.from({ length: count }, (_, index) => ({
     mirrored: state.pieceSettings?.[index]?.mirrored === true,
     rotated: state.pieceSettings?.[index]?.rotated === true,
+    width: Number(state.pieceSettings?.[index]?.width) || defaults[index]?.width || 0,
+    height: Number(state.pieceSettings?.[index]?.height) || defaults[index]?.height || 0,
   }));
 
   pieceControls.hidden = false;
@@ -457,6 +484,16 @@ function buildPieceControls() {
     ${state.pieceSettings.map((setting, index) => `
       <div class="piece-card">
         <div class="piece-card-title">Pieza ${index + 1}</div>
+        <div class="piece-size-grid">
+          <label>
+            <span>Ancho</span>
+            <input class="piece-width" data-index="${index}" type="number" min="1" step="0.1" value="${setting.width.toFixed(1)}" />
+          </label>
+          <label>
+            <span>Alto</span>
+            <input class="piece-height" data-index="${index}" type="number" min="1" step="0.1" value="${setting.height.toFixed(1)}" />
+          </label>
+        </div>
         <div class="piece-card-actions">
           <label class="check-field">
             <input class="piece-mirror" data-index="${index}" type="checkbox" ${setting.mirrored ? "checked" : ""} />
@@ -483,6 +520,18 @@ function buildPieceControls() {
       regenerate();
     });
   });
+  pieceControls.querySelectorAll(".piece-width").forEach((input) => {
+    input.addEventListener("input", () => {
+      state.pieceSettings[Number(input.dataset.index)].width = Number(input.value);
+      regenerate();
+    });
+  });
+  pieceControls.querySelectorAll(".piece-height").forEach((input) => {
+    input.addEventListener("input", () => {
+      state.pieceSettings[Number(input.dataset.index)].height = Number(input.value);
+      regenerate();
+    });
+  });
 }
 
 function regenerate() {
@@ -504,10 +553,14 @@ function regenerate() {
       ...item,
       mirrored: state.pieceSettings?.[index]?.mirrored === true,
       rotated: state.pieceSettings?.[index]?.rotated === true,
+      width: state.pieceSettings?.[index]?.width,
+      height: state.pieceSettings?.[index]?.height,
     }));
     const transformedItems = items.map((item) => ({
       ...item,
-      points: item.rotated ? rotatePoints90(item.points) : item.points,
+      points: item.rotated
+        ? rotatePoints90(scalePointsToSize(item.points, item.width, item.height))
+        : scalePointsToSize(item.points, item.width, item.height),
     }));
     const mirrorLabel = items.some((item) => item.mirrored) ? "MIXTO" : "NORMAL";
     const paths = makeLayout(transformedItems, sheetW, sheetH, singlePlacement.value);

@@ -189,6 +189,24 @@ h1 {
   font-weight: 800;
 }
 
+.piece-size-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.piece-size-grid label {
+  display: grid;
+  gap: 5px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.piece-size-grid input {
+  height: 36px;
+}
+
 .piece-card-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
