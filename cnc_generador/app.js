@@ -29,7 +29,7 @@ const svgInput = document.querySelector("#svgInput");
 const fileLabel = document.querySelector("#fileLabel");
 const statusPill = document.querySelector("#statusPill");
 const jobName = document.querySelector("#jobName");
-const side = document.querySelector("#side");
+const mirrorMode = document.querySelector("#mirrorMode");
 const copies = document.querySelector("#copies");
 const singlePlacement = document.querySelector("#singlePlacement");
 const rotationMode = document.querySelector("#rotationMode");
@@ -360,7 +360,7 @@ function chooseOrientationCombinations(items, sheetW, sheetH, mode) {
   return variants.map((variant) => variant[0]);
 }
 
-function makeLayout(items, sheetW, sheetH, mirror, placement, rotation) {
+function makeLayout(items, sheetW, sheetH, placement, rotation) {
   const oriented = chooseOrientationCombinations(items, sheetW, sheetH, rotation);
   const prepared = oriented.map((item) => ({ ...item, box: bbox(item.points) }));
   prepared.forEach((item) => {
@@ -377,14 +377,14 @@ function makeLayout(items, sheetW, sheetH, mirror, placement, rotation) {
     const shouldCenter = placement === "center" || (placement === "auto" && item.box.width > sheetW * 0.72);
     const left = shouldCenter ? (sheetW - item.box.width) / 2 : Math.max(3, sheetW * 0.025);
     const bottom = (sheetH - item.box.height) / 2;
-    return [{ name: item.name, rotated: item.rotated, points: transformToSheet(item.points, left, bottom, mirror) }];
+    return [{ name: item.name, mirrored: item.mirrored, rotated: item.rotated, points: transformToSheet(item.points, left, bottom, item.mirrored) }];
   }
 
   const gap = (sheetW - totalWidth) / (prepared.length + 1);
   let cursor = gap;
   return prepared.map((item) => {
     const bottom = (sheetH - item.box.height) / 2;
-    const placed = { name: item.name, rotated: item.rotated, points: transformToSheet(item.points, cursor, bottom, mirror) };
+    const placed = { name: item.name, mirrored: item.mirrored, rotated: item.rotated, points: transformToSheet(item.points, cursor, bottom, item.mirrored) };
     cursor += item.box.width + gap;
     return placed;
   });
@@ -471,8 +471,11 @@ function regenerate() {
     const sheetW = Number(sheetWidth.value);
     const sheetH = Number(sheetHeight.value);
     const copyCount = state.designs.length > 1 ? 1 : Number(copies.value);
-    const mirrored = side.value === "IZQ";
-    const orientationLabel = mirrored ? "INVERTIDO" : "NORMAL";
+    const mirrorLabel = {
+      none: "NORMAL",
+      all: "INVERTIDO",
+      alternate: "MIXTO",
+    }[mirrorMode.value];
     const items = state.designs.flatMap((design) => {
       const contour = simplifyClosed(design.contour, tol);
       return Array.from({ length: copyCount }, (_, index) => ({
@@ -480,9 +483,14 @@ function regenerate() {
         points: contour,
         original: design.contour,
       }));
-    });
-    const paths = makeLayout(items, sheetW, sheetH, mirrored, singlePlacement.value, rotationMode.value);
-    const nc = makeNc(`${jobName.value.trim()} ${paths.length} ${orientationLabel}`.trim(), paths, Number(feed.value));
+    }).map((item, index) => ({
+      ...item,
+      mirrored:
+        mirrorMode.value === "all" ||
+        (mirrorMode.value === "alternate" && index % 2 === 1),
+    }));
+    const paths = makeLayout(items, sheetW, sheetH, singlePlacement.value, rotationMode.value);
+    const nc = makeNc(`${jobName.value.trim()} ${paths.length} ${mirrorLabel}`.trim(), paths, Number(feed.value));
     renderPreview(paths, sheetW, sheetH);
 
     const all = paths.flatMap((item) => item.points);
@@ -493,7 +501,7 @@ function regenerate() {
     metrics.innerHTML = [
       `<span>Contorno: ${contourLabel} mm</span>`,
       `<span>Piezas: ${paths.length}</span>`,
-      `<span>Invertir: ${mirrored ? "Si" : "No"}</span>`,
+      `<span>Invertidas: ${paths.filter((item) => item.mirrored).length}</span>`,
       `<span>Puntos: ${simplifiedPoints}</span>`,
       `<span>Giradas: ${paths.filter((item) => item.rotated).length}</span>`,
       `<span>Z: ${Math.min(...zValues).toFixed(3)} a ${Math.max(...zValues).toFixed(3)}</span>`,
@@ -502,7 +510,7 @@ function regenerate() {
     ncOutput.value = nc;
     const blob = new Blob([nc], { type: "text/plain;charset=ascii" });
     state.ncUrl = URL.createObjectURL(blob);
-    const safeName = `${jobName.value.trim() || "MODELO"}_${paths.length}_${orientationLabel}_PRUEBA.NC`.replace(/[^\w.-]+/g, "_");
+    const safeName = `${jobName.value.trim() || "MODELO"}_${paths.length}_${mirrorLabel}_PRUEBA.NC`.replace(/[^\w.-]+/g, "_");
     downloadLink.href = state.ncUrl;
     downloadLink.download = safeName;
     downloadLink.textContent = `Descargar ${safeName}`;
@@ -562,7 +570,7 @@ copyBtn.addEventListener("click", async () => {
     copyBtn.textContent = original;
   }, 1400);
 });
-[jobName, side, copies, singlePlacement, rotationMode, sheetWidth, sheetHeight, feed, tolerance].forEach((control) => {
+[jobName, mirrorMode, copies, singlePlacement, rotationMode, sheetWidth, sheetHeight, feed, tolerance].forEach((control) => {
   control.addEventListener("input", () => state.designs.length && regenerate());
 });
 
