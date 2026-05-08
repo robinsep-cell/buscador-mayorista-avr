@@ -89,16 +89,8 @@
             </div>
           </div>
 
-          <div class="split">
-            <div class="field">
-              <label for="feed">Avance</label>
-              <input id="feed" type="number" value="450" min="1" step="1" />
-            </div>
-            <div class="field">
-              <label for="tolerance">Suavizado</label>
-              <input id="tolerance" type="number" value="0.04" min="0" step="0.01" />
-            </div>
-          </div>
+          <input id="feed" type="hidden" value="450" />
+          <input id="tolerance" type="hidden" value="0.04" />
 
           <button id="generateBtn" class="primary-btn" type="button" disabled>Generar .NC</button>
           <div class="filename-box" id="filenameBox">Archivo: -</div>
