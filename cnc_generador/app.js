@@ -471,6 +471,8 @@ function regenerate() {
     const sheetW = Number(sheetWidth.value);
     const sheetH = Number(sheetHeight.value);
     const copyCount = state.designs.length > 1 ? 1 : Number(copies.value);
+    const mirrored = side.value === "IZQ";
+    const orientationLabel = mirrored ? "INVERTIDO" : "NORMAL";
     const items = state.designs.flatMap((design) => {
       const contour = simplifyClosed(design.contour, tol);
       return Array.from({ length: copyCount }, (_, index) => ({
@@ -479,8 +481,8 @@ function regenerate() {
         original: design.contour,
       }));
     });
-    const paths = makeLayout(items, sheetW, sheetH, side.value === "IZQ", singlePlacement.value, rotationMode.value);
-    const nc = makeNc(`${jobName.value.trim()} ${paths.length} ${side.value}`.trim(), paths, Number(feed.value));
+    const paths = makeLayout(items, sheetW, sheetH, mirrored, singlePlacement.value, rotationMode.value);
+    const nc = makeNc(`${jobName.value.trim()} ${paths.length} ${orientationLabel}`.trim(), paths, Number(feed.value));
     renderPreview(paths, sheetW, sheetH);
 
     const all = paths.flatMap((item) => item.points);
@@ -491,6 +493,7 @@ function regenerate() {
     metrics.innerHTML = [
       `<span>Contorno: ${contourLabel} mm</span>`,
       `<span>Piezas: ${paths.length}</span>`,
+      `<span>Invertir: ${mirrored ? "Si" : "No"}</span>`,
       `<span>Puntos: ${simplifiedPoints}</span>`,
       `<span>Giradas: ${paths.filter((item) => item.rotated).length}</span>`,
       `<span>Z: ${Math.min(...zValues).toFixed(3)} a ${Math.max(...zValues).toFixed(3)}</span>`,
@@ -499,7 +502,7 @@ function regenerate() {
     ncOutput.value = nc;
     const blob = new Blob([nc], { type: "text/plain;charset=ascii" });
     state.ncUrl = URL.createObjectURL(blob);
-    const safeName = `${jobName.value.trim() || "MODELO"}_${paths.length}_${side.value}_PRUEBA.NC`.replace(/[^\w.-]+/g, "_");
+    const safeName = `${jobName.value.trim() || "MODELO"}_${paths.length}_${orientationLabel}_PRUEBA.NC`.replace(/[^\w.-]+/g, "_");
     downloadLink.href = state.ncUrl;
     downloadLink.download = safeName;
     downloadLink.textContent = `Descargar ${safeName}`;
