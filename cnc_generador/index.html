@@ -55,14 +55,6 @@
 
           <div class="split">
             <div class="field">
-              <label for="mirrorMode">Invertir</label>
-              <select id="mirrorMode">
-                <option value="none">No invertir</option>
-                <option value="all">Invertir todas</option>
-                <option value="alternate">Alternar: una si / una no</option>
-              </select>
-            </div>
-            <div class="field">
               <label for="copies">Piezas</label>
               <select id="copies">
                 <option value="1">1</option>
@@ -82,14 +74,8 @@
             <small class="field-help">Con varios SVG, cada archivo se pone como un molde distinto si cabe.</small>
           </div>
 
-          <div class="field">
-            <label for="rotationMode">Rotacion de piezas</label>
-            <select id="rotationMode">
-              <option value="auto" selected>Automatico: girar si conviene</option>
-              <option value="force">Forzar giro 90 grados</option>
-              <option value="alternate">Alternar: una girada / una no</option>
-              <option value="none">No girar</option>
-            </select>
+          <div id="pieceControls" class="piece-controls" hidden>
+            <div class="piece-controls-title">Ajustes por pieza</div>
           </div>
 
           <div class="split">

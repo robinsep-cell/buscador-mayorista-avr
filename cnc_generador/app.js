@@ -29,10 +29,9 @@ const svgInput = document.querySelector("#svgInput");
 const fileLabel = document.querySelector("#fileLabel");
 const statusPill = document.querySelector("#statusPill");
 const jobName = document.querySelector("#jobName");
-const mirrorMode = document.querySelector("#mirrorMode");
 const copies = document.querySelector("#copies");
 const singlePlacement = document.querySelector("#singlePlacement");
-const rotationMode = document.querySelector("#rotationMode");
+const pieceControls = document.querySelector("#pieceControls");
 const sheetWidth = document.querySelector("#sheetWidth");
 const sheetHeight = document.querySelector("#sheetHeight");
 const feed = document.querySelector("#feed");
@@ -331,39 +330,8 @@ function rotatePoints90(points) {
   return normalizePoints(rotated);
 }
 
-function chooseOrientationCombinations(items, sheetW, sheetH, mode) {
-  const variants = items.map((item, index) => {
-    const normal = { ...item, points: normalizePoints(item.points), rotated: false };
-    const rotated = { ...item, points: rotatePoints90(item.points), rotated: true };
-    if (mode === "none") return [normal];
-    if (mode === "force") return [rotated];
-    if (mode === "alternate") return [index % 2 === 1 ? rotated : normal];
-    return [normal, rotated];
-  });
-
-  let best = null;
-  const walk = (index, selected) => {
-    if (index === variants.length) {
-      const boxes = selected.map((item) => bbox(item.points));
-      const totalWidth = boxes.reduce((sum, box) => sum + box.width, 0);
-      const maxHeight = Math.max(...boxes.map((box) => box.height));
-      if (totalWidth <= sheetW && maxHeight <= sheetH) {
-        const score = totalWidth + maxHeight * 0.02 + selected.filter((item) => item.rotated).length * 0.001;
-        if (!best || score < best.score) best = { items: selected, score };
-      }
-      return;
-    }
-    variants[index].forEach((variant) => walk(index + 1, selected.concat([variant])));
-  };
-  walk(0, []);
-
-  if (best) return best.items;
-  return variants.map((variant) => variant[0]);
-}
-
-function makeLayout(items, sheetW, sheetH, placement, rotation) {
-  const oriented = chooseOrientationCombinations(items, sheetW, sheetH, rotation);
-  const prepared = oriented.map((item) => ({ ...item, box: bbox(item.points) }));
+function makeLayout(items, sheetW, sheetH, placement) {
+  const prepared = items.map((item) => ({ ...item, points: normalizePoints(item.points), box: bbox(item.points) }));
   prepared.forEach((item) => {
     if (item.box.height > sheetH) {
       throw new Error(`${item.name} mide ${item.box.height.toFixed(2)} mm de alto y supera la plancha`);
@@ -464,6 +432,59 @@ function clearDownload() {
   ncOutput.value = "";
 }
 
+function currentPieceCount() {
+  if (!state.designs.length) return 0;
+  return state.designs.length > 1 ? state.designs.length : Number(copies.value);
+}
+
+function buildPieceControls() {
+  const count = currentPieceCount();
+  if (!count) {
+    pieceControls.hidden = true;
+    pieceControls.innerHTML = '<div class="piece-controls-title">Ajustes por pieza</div>';
+    state.pieceSettings = [];
+    return;
+  }
+
+  state.pieceSettings = Array.from({ length: count }, (_, index) => ({
+    mirrored: state.pieceSettings?.[index]?.mirrored === true,
+    rotated: state.pieceSettings?.[index]?.rotated === true,
+  }));
+
+  pieceControls.hidden = false;
+  pieceControls.innerHTML = `
+    <div class="piece-controls-title">Ajustes por pieza</div>
+    ${state.pieceSettings.map((setting, index) => `
+      <div class="piece-card">
+        <div class="piece-card-title">Pieza ${index + 1}</div>
+        <div class="piece-card-actions">
+          <label class="check-field">
+            <input class="piece-mirror" data-index="${index}" type="checkbox" ${setting.mirrored ? "checked" : ""} />
+            <span>Invertir</span>
+          </label>
+          <label class="check-field">
+            <input class="piece-rotate" data-index="${index}" type="checkbox" ${setting.rotated ? "checked" : ""} />
+            <span>Girar 90°</span>
+          </label>
+        </div>
+      </div>
+    `).join("")}
+  `;
+
+  pieceControls.querySelectorAll(".piece-mirror").forEach((input) => {
+    input.addEventListener("change", () => {
+      state.pieceSettings[Number(input.dataset.index)].mirrored = input.checked;
+      regenerate();
+    });
+  });
+  pieceControls.querySelectorAll(".piece-rotate").forEach((input) => {
+    input.addEventListener("change", () => {
+      state.pieceSettings[Number(input.dataset.index)].rotated = input.checked;
+      regenerate();
+    });
+  });
+}
+
 function regenerate() {
   clearDownload();
   if (!state.designs.length) return;
@@ -472,11 +493,6 @@ function regenerate() {
     const sheetW = Number(sheetWidth.value);
     const sheetH = Number(sheetHeight.value);
     const copyCount = state.designs.length > 1 ? 1 : Number(copies.value);
-    const mirrorLabel = {
-      none: "NORMAL",
-      all: "INVERTIDO",
-      alternate: "MIXTO",
-    }[mirrorMode.value];
     const items = state.designs.flatMap((design) => {
       const contour = simplifyClosed(design.contour, tol);
       return Array.from({ length: copyCount }, (_, index) => ({
@@ -486,11 +502,15 @@ function regenerate() {
       }));
     }).map((item, index) => ({
       ...item,
-      mirrored:
-        mirrorMode.value === "all" ||
-        (mirrorMode.value === "alternate" && index % 2 === 1),
+      mirrored: state.pieceSettings?.[index]?.mirrored === true,
+      rotated: state.pieceSettings?.[index]?.rotated === true,
     }));
-    const paths = makeLayout(items, sheetW, sheetH, singlePlacement.value, rotationMode.value);
+    const transformedItems = items.map((item) => ({
+      ...item,
+      points: item.rotated ? rotatePoints90(item.points) : item.points,
+    }));
+    const mirrorLabel = items.some((item) => item.mirrored) ? "MIXTO" : "NORMAL";
+    const paths = makeLayout(transformedItems, sheetW, sheetH, singlePlacement.value);
     const nc = makeNc(`${jobName.value.trim()} ${paths.length} ${mirrorLabel}`.trim(), paths, Number(feed.value));
     renderPreview(paths, sheetW, sheetH);
 
@@ -550,10 +570,13 @@ svgInput.addEventListener("change", async () => {
     if (jobName.value === "MODELO PRUEBA") jobName.value = designs.map((design) => design.name).join("_").toUpperCase();
     generateBtn.disabled = false;
     setStatus("SVG cargado", true);
+    buildPieceControls();
     regenerate();
   } catch (error) {
     state.contour = null;
     state.designs = [];
+    state.pieceSettings = [];
+    buildPieceControls();
     generateBtn.disabled = true;
     copies.disabled = false;
     setStatus("Error SVG", false);
@@ -571,8 +594,14 @@ copyBtn.addEventListener("click", async () => {
     copyBtn.textContent = original;
   }, 1400);
 });
-[jobName, mirrorMode, copies, singlePlacement, rotationMode, sheetWidth, sheetHeight, feed, tolerance].forEach((control) => {
+[jobName, singlePlacement, sheetWidth, sheetHeight, feed, tolerance].forEach((control) => {
   control.addEventListener("input", () => state.designs.length && regenerate());
+});
+
+copies.addEventListener("input", () => {
+  if (!state.designs.length) return;
+  buildPieceControls();
+  regenerate();
 });
 
 initAuth();

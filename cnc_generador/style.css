@@ -164,6 +164,37 @@ h1 {
   gap: 10px;
 }
 
+.piece-controls {
+  display: grid;
+  gap: 8px;
+  margin: 4px 0 12px;
+}
+
+.piece-controls-title {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.piece-card {
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--black);
+}
+
+.piece-card-title {
+  margin-bottom: 8px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.piece-card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
 input,
 select,
 textarea {
