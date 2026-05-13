@@ -524,6 +524,8 @@ async function loadPricingFactors() {
         K: factor(10), minSin: minPrice(14), minCon: minPrice(15),
       };
     });
+    // Si la calculadora ya tiene datos ingresados, recalcular ahora que llegaron los factores
+    calcPrices();
   } catch (e) {
     console.warn("No se pudo cargar tabla de precios:", e);
   }
