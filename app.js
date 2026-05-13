@@ -1,8 +1,6 @@
 const SHEET_ID = "1h7VNeNZHI4zvJR9WTBXXM0BhsKu22u-GJNpT1TIh9YU";
 const URL_IMPORTADORA = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=142068239`;
 const URL_AVR = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=704848232`;
-const URL_PRECIOS = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=873306319`;
-
 // Positional column indexes (0-based, same layout in both sheets)
 const COL_STOCK   = 13; // N
 const COL_COSTO   = 35; // AJ
@@ -10,8 +8,29 @@ const COL_VSIN    = 36; // AK – Venta sin instalación
 const COL_VCON    = 37; // AL – Venta con instalación
 const COL_SIGLA   = 41; // AP
 
-// ── Calculator state ──────────────────────────────────────────────────────────
-let pricingFactors = null;
+// ── Factores de precio v6.1 (2026-05-13) ─────────────────────────────────────
+const FACTOR_C           = 2.5;   // sin instalación (todas las categorías)
+const FACTOR_D_NORMAL    = 4.0;   // con instalación normal
+const FACTOR_D_ALTA_GAMA = 4.5;   // con instalación alta gama / camión / bus
+
+const MODIFICADORES = {
+  sensor_lluvia:       20000,  // solo parabrisas
+  sistema_adas:        30000,  // solo parabrisas
+  camara_1:            25000,  // solo parabrisas
+  camara_2:            45000,  // solo parabrisas (no acumula con camara_1)
+  encapsulada:         35000,  // solo lateral y luneta con /X
+  laminada_de_fabrica:     0,  // solo puerta
+};
+
+const MIN_SIN = {
+  "Parabrisas":       73400,
+  "Luneta Portalón":  55000,
+  "Vidrio Lateral":   55200,
+  "Vidrio de Puerta": 39800,
+  "Vidrio Aleta":     24200,
+};
+
+const MIN_SOLO_INSTALACION = 24500;
 
 const CAJA_PRECIOS = {
   "Parabrisas":       { base: 45000, altaGama: 75000 },
@@ -497,39 +516,8 @@ themeToggle?.addEventListener("click", () => {
 
 initializeTheme();
 loadProducts();
-loadPricingFactors();
 
 // ── Calculator ────────────────────────────────────────────────────────────────
-async function loadPricingFactors() {
-  try {
-    const { rows } = await fetchSheet(URL_PRECIOS);
-    pricingFactors = {};
-    rows.forEach(row => {
-      const producto = (row[0] ?? "").trim();
-      if (!producto) return;
-      const factor = (col) => {
-        const v = String(row[col] ?? "").trim().replace(",", ".");
-        const n = parseFloat(v);
-        return Number.isFinite(n) ? n : 0;
-      };
-      const minPrice = (col) => {
-        // valores como "55.600" usan punto como separador de miles → quitar puntos
-        const v = String(row[col] ?? "").trim().replace(/\./g, "").replace(",", ".");
-        const n = parseInt(v, 10);
-        return Number.isInteger(n) && n > 0 ? n : 0;
-      };
-      pricingFactors[producto] = {
-        C: factor(2), D: factor(3), E: factor(4), F: factor(5),
-        G: factor(6), H: factor(7), I: factor(8), J: factor(9),
-        K: factor(10), minSin: minPrice(14), minCon: minPrice(15),
-      };
-    });
-    // Si la calculadora ya tiene datos ingresados, recalcular ahora que llegaron los factores
-    calcPrices();
-  } catch (e) {
-    console.warn("No se pudo cargar tabla de precios:", e);
-  }
-}
 
 const calcModal    = document.querySelector("#calcModal");
 const calcClose    = document.querySelector("#calcClose");
@@ -594,56 +582,52 @@ function updateCalcVisibility() {
 }
 
 function calcPrices() {
-  const costo = parseFloat(calcCosto.value);
+  const costo    = parseFloat(calcCosto.value);
   const producto = calcProducto.value;
 
   if (!costo || costo <= 0 || !producto) {
     calcResSin.textContent = "—"; calcResCon.textContent = "—"; calcResSolo.textContent = "—";
-    return;
-  }
-  if (!pricingFactors) {
-    calcStatus.textContent = "Cargando factores...";
-    calcResSin.textContent = "—"; calcResCon.textContent = "—"; calcResSolo.textContent = "—";
-    return;
-  }
-  if (!pricingFactors[producto]) {
-    calcStatus.textContent = `Sin factores para "${producto}"`;
-    calcResSin.textContent = "—"; calcResCon.textContent = "—"; calcResSolo.textContent = "—";
+    calcStatus.textContent = "";
     return;
   }
   calcStatus.textContent = "";
 
-  const f = pricingFactors[producto];
-  const traits = PRODUCT_TRAITS[producto] || {};
+  const traits   = PRODUCT_TRAITS[producto] || {};
+  const altaGama = chkAltaGama.checked;
+  const C        = FACTOR_C;
+  const D        = altaGama ? FACTOR_D_ALTA_GAMA : FACTOR_D_NORMAL;
 
-  let conFactor = f.C + f.D;
-  if (chkAltaGama.checked) conFactor += f.E;
-  if (traits.sensor && chkSensor.checked) conFactor += f.F;
-  if (traits.adas   && chkAdas.checked)   conFactor += f.G;
-  if (traits.camara) {
-    const camVal = document.querySelector('input[name="camara"]:checked')?.value;
-    if (camVal === "1") conFactor += f.H;
-    else if (camVal === "2") conFactor += f.I;
+  // Modificadores: cargos fijos en pesos que se suman SOLO a conBase
+  let cargoMods = 0;
+  if (producto === "Parabrisas") {
+    if (traits.sensor && chkSensor.checked)  cargoMods += MODIFICADORES.sensor_lluvia;
+    if (traits.adas   && chkAdas.checked)    cargoMods += MODIFICADORES.sistema_adas;
+    if (traits.camara) {
+      const camVal = document.querySelector('input[name="camara"]:checked')?.value;
+      if      (camVal === "2") cargoMods += MODIFICADORES.camara_2;
+      else if (camVal === "1") cargoMods += MODIFICADORES.camara_1;
+    }
   }
-  if (traits.encapsulada && chkEncapsulada.checked) conFactor += f.J;
-  if (traits.laminada    && chkLaminada.checked)    conFactor += f.K;
+  if ((producto === "Vidrio Lateral" || producto === "Luneta Portalón") && chkEncapsulada.checked) {
+    cargoMods += MODIFICADORES.encapsulada;
+  }
 
-  const MIN_SOLO = 24500;
-  const sinBase  = Math.max(costo * f.C, f.minSin);
-  const conBase  = Math.max(costo * conFactor, f.minCon, sinBase + MIN_SOLO);
+  const minSin   = MIN_SIN[producto] || 0;
+  const sinBase  = Math.max(costo * C, minSin);
+  const conBase  = Math.max(costo * D + cargoMods, sinBase + MIN_SOLO_INSTALACION);
   const soloInst = conBase - sinBase;
 
-  // Caja: monto fijo según producto y si es Alta Gama / Buses y Camiones
+  // Caja (cargo fijo, se suma a sin y con, no afecta soloInst)
   let cajaCosto = 0;
   if (chkCaja?.checked && CAJA_PRECIOS[producto]) {
     const cp = CAJA_PRECIOS[producto];
-    cajaCosto = (producto === "Parabrisas" && chkAltaGama.checked) ? cp.altaGama : cp.base;
+    cajaCosto = (producto === "Parabrisas" && altaGama) ? cp.altaGama : cp.base;
   }
 
   const fmt = n => "$ " + Math.round(n).toLocaleString("es-CL");
   calcResSin.textContent  = fmt(sinBase  + cajaCosto);
   calcResCon.textContent  = fmt(conBase  + cajaCosto);
-  calcResSolo.textContent = soloInst > 0 ? fmt(soloInst) : "$ 0";
+  calcResSolo.textContent = fmt(soloInst);
 }
 
 // Abrir / cerrar con native dialog
