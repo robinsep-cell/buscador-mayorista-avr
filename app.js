@@ -625,9 +625,9 @@ function calcPrices() {
   }
 
   const fmt = n => "$ " + Math.round(n).toLocaleString("es-CL");
-  calcResSin.textContent  = fmt(sinBase  + cajaCosto);
-  calcResCon.textContent  = fmt(conBase  + cajaCosto);
-  calcResSolo.textContent = fmt(soloInst);
+  calcResSin.textContent  = fmt(sinBase  + cajaCosto); // caja solo al precio sin inst.
+  calcResCon.textContent  = fmt(conBase);              // con inst. no lleva caja
+  calcResSolo.textContent = fmt(soloInst);             // diferencia pura, sin caja
 }
 
 // Abrir / cerrar con native dialog
