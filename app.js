@@ -14,12 +14,11 @@ const COL_SIGLA   = 41; // AP
 let pricingFactors = null;
 
 const PRODUCT_TRAITS = {
-  "Parabrisas":        { sensor: true,  adas: true,  camara: true,  encapsulada: false, laminada: false },
-  "Vidrio Aleta":      { sensor: false, adas: false, camara: false, encapsulada: true,  laminada: false },
-  "Vidrio de Puerta":  { sensor: false, adas: false, camara: false, encapsulada: false, laminada: true  },
-  "Vidrio Lateral":    { sensor: false, adas: false, camara: false, encapsulada: true,  laminada: false },
-  "Luneta Portalón":   { sensor: false, adas: false, camara: false, encapsulada: true,  laminada: false },
-  "Buses y Camiones":  { sensor: false, adas: false, camara: false, encapsulada: false, laminada: false },
+  "Parabrisas":      { sensor: true,  adas: true,  camara: true,  encapsulada: false, laminada: false },
+  "Vidrio Aleta":    { sensor: false, adas: false, camara: false, encapsulada: true,  laminada: false },
+  "Vidrio de Puerta":{ sensor: false, adas: false, camara: false, encapsulada: false, laminada: true  },
+  "Vidrio Lateral":  { sensor: false, adas: false, camara: false, encapsulada: true,  laminada: false },
+  "Luneta Portalón": { sensor: false, adas: false, camara: false, encapsulada: true,  laminada: false },
 };
 
 const searchInput = document.querySelector("#searchInput");
