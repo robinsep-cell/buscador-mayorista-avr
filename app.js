@@ -253,6 +253,27 @@ function pickField(impVal, avrVal) {
   return impVal && impVal.trim() !== "" ? impVal : avrVal || "";
 }
 
+// Extrae palabras clave de posición y lado de un nombre de producto
+function posKeywords(nombre) {
+  const n = normalizeText(nombre || "");
+  const kw = [];
+  if (n.includes("delantera")) kw.push("delantera");
+  if (n.includes("trasera"))   kw.push("trasera");
+  if (n.includes("derecha"))   kw.push("derecha");
+  if (n.includes("izquierda")) kw.push("izquierda");
+  if (n.includes("parabrisas")) kw.push("parabrisas");
+  if (n.includes("luneta"))    kw.push("luneta");
+  return kw;
+}
+
+// Cuántas palabras clave coinciden entre dos nombres (mayor = mejor pareja)
+function nameMatchScore(nombre1, nombre2) {
+  const kw1 = posKeywords(nombre1);
+  const kw2 = posKeywords(nombre2);
+  if (!kw1.length || !kw2.length) return 0;
+  return kw1.filter(k => kw2.includes(k)).length;
+}
+
 function mergeRows(imp, avr) {
   // Combinar códigos antiguos de ambas hojas (sin duplicados)
   const avrCodigos = avr ? siglasFromCodigoAntiguo(avr.codigoAntiguo) : [];
@@ -444,12 +465,30 @@ async function loadProducts() {
       }
 
       if (impItems.length === 1) {
-        // Un solo producto importadora con este cp → unir con el AVR que tenga (sin exigir color)
-        const avrItem = avrItems[0] || null;
-        if (avrItem) avrMatched.add(cp + "|0");
+        // Un solo producto importadora con este cp
+        let avrMatchIdx = -1;
+
+        if (avrItems.length === 1) {
+          // Solo un AVR disponible: empareja directo
+          avrMatchIdx = 0;
+        } else if (avrItems.length > 1) {
+          // Múltiples AVR: buscar el que más coincida por nombre (delantera/trasera/lado)
+          let bestScore = -1;
+          avrItems.forEach((a, i) => {
+            const score = nameMatchScore(impItems[0].nombre, a.nombre);
+            if (score > bestScore) { bestScore = score; avrMatchIdx = i; }
+          });
+          // Si no hay coincidencia de palabras clave, aún así usar el primero (mismo comportamiento anterior)
+          if (bestScore === 0) avrMatchIdx = 0;
+        }
+
+        const avrItem = avrMatchIdx >= 0 ? avrItems[avrMatchIdx] : null;
+        if (avrMatchIdx >= 0) avrMatched.add(cp + "|" + avrMatchIdx);
         merged.push(mergeRows(impItems[0], avrItem));
-        // AVR extra (raro) → filas independientes
-        avrItems.slice(1).forEach(a => merged.push(mergeRows(null, a)));
+        // AVR no emparejados → filas independientes
+        avrItems.forEach((a, i) => {
+          if (i !== avrMatchIdx) merged.push(mergeRows(null, a));
+        });
         return;
       }
 
