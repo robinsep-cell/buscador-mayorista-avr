@@ -1,6 +1,6 @@
 const SHEET_ID = "1h7VNeNZHI4zvJR9WTBXXM0BhsKu22u-GJNpT1TIh9YU";
 const URL_IMPORTADORA = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=142068239`;
-const URL_AVR = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=795430851`;
+const URL_AVR = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=704848232`;
 const URL_PRECIOS = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=873306319`;
 
 // Positional column indexes (0-based, same layout in both sheets)
