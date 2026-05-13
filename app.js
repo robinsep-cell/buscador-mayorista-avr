@@ -13,6 +13,14 @@ const COL_SIGLA   = 41; // AP
 // ── Calculator state ──────────────────────────────────────────────────────────
 let pricingFactors = null;
 
+const CAJA_PRECIOS = {
+  "Parabrisas":       { base: 45000, altaGama: 75000 },
+  "Luneta Portalón":  { base: 45000, altaGama: 45000 },
+  "Vidrio Lateral":   { base: 25000, altaGama: 25000 },
+  "Vidrio de Puerta": { base: 25000, altaGama: 25000 },
+  "Vidrio Aleta":     { base: 15000, altaGama: 15000 },
+};
+
 const PRODUCT_TRAITS = {
   "Parabrisas":      { sensor: true,  adas: true,  camara: true,  encapsulada: false, laminada: false },
   "Vidrio Aleta":    { sensor: false, adas: false, camara: false, encapsulada: true,  laminada: false },
@@ -531,6 +539,7 @@ const chkSensor    = document.querySelector("#chkSensor");
 const chkAdas      = document.querySelector("#chkAdas");
 const chkEncapsulada = document.querySelector("#chkEncapsulada");
 const chkLaminada  = document.querySelector("#chkLaminada");
+const chkCaja      = document.querySelector("#chkCaja");
 const calcResSin   = document.querySelector("#calcResSin");
 const calcResCon   = document.querySelector("#calcResCon");
 const calcResSolo  = document.querySelector("#calcResSolo");
@@ -573,6 +582,7 @@ function updateCalcVisibility() {
   if (!traits.encapsulada) resetPill(chkEncapsulada);
   if (!traits.laminada)    resetPill(chkLaminada);
   resetPill(chkAltaGama);
+  resetPill(chkCaja);
   if (!traits.camara) {
     const noCam = document.querySelector("#chkNoCam");
     noCam.checked = true;
@@ -604,8 +614,6 @@ function calcPrices() {
   const f = pricingFactors[producto];
   const traits = PRODUCT_TRAITS[producto] || {};
 
-  const sinFinal = Math.max(costo * f.C, f.minSin);
-
   let conFactor = f.C + f.D;
   if (chkAltaGama.checked) conFactor += f.E;
   if (traits.sensor && chkSensor.checked) conFactor += f.F;
@@ -619,12 +627,20 @@ function calcPrices() {
   if (traits.laminada    && chkLaminada.checked)    conFactor += f.K;
 
   const MIN_SOLO = 24500;
-  const conFinal = Math.max(costo * conFactor, f.minCon, sinFinal + MIN_SOLO);
-  const soloInst = conFinal - sinFinal;
+  const sinBase  = Math.max(costo * f.C, f.minSin);
+  const conBase  = Math.max(costo * conFactor, f.minCon, sinBase + MIN_SOLO);
+  const soloInst = conBase - sinBase;
+
+  // Caja: monto fijo según producto y si es Alta Gama / Buses y Camiones
+  let cajaCosto = 0;
+  if (chkCaja?.checked && CAJA_PRECIOS[producto]) {
+    const cp = CAJA_PRECIOS[producto];
+    cajaCosto = (producto === "Parabrisas" && chkAltaGama.checked) ? cp.altaGama : cp.base;
+  }
 
   const fmt = n => "$ " + Math.round(n).toLocaleString("es-CL");
-  calcResSin.textContent  = fmt(sinFinal);
-  calcResCon.textContent  = fmt(conFinal);
+  calcResSin.textContent  = fmt(sinBase  + cajaCosto);
+  calcResCon.textContent  = fmt(conBase  + cajaCosto);
   calcResSolo.textContent = soloInst > 0 ? fmt(soloInst) : "$ 0";
 }
 
@@ -640,7 +656,7 @@ calcModal?.addEventListener("click", e => { if (e.target === calcModal) calcModa
 calcCosto.addEventListener("input", calcPrices);
 calcProducto.addEventListener("change", updateCalcVisibility);
 
-[chkAltaGama, chkSensor, chkAdas, chkEncapsulada, chkLaminada].forEach(el => {
+[chkAltaGama, chkSensor, chkAdas, chkEncapsulada, chkLaminada, chkCaja].forEach(el => {
   el.addEventListener("change", () => { setPillState(el); calcPrices(); });
 });
 document.querySelectorAll('input[name="camara"]').forEach(r => {
