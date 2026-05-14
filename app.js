@@ -1539,13 +1539,18 @@ function calcPrices() {
       else if (camVal === "1") cargoMods += MODIFICADORES.camara_1;
     }
   }
-  if ((producto === "Vidrio Lateral" || producto === "Luneta Portalón") && chkEncapsulada.checked) {
+  if ((producto === "Vidrio Lateral" || producto === "Vidrio Aleta" || producto === "Luneta Portalón") && chkEncapsulada.checked) {
     cargoMods += MODIFICADORES.encapsulada;
   }
 
   const minSin   = MIN_SIN[producto] || 0;
   const sinBase  = Math.max(costo * C, minSin);
-  const conBase  = Math.max(costo * D + cargoMods, sinBase + MIN_SOLO_INSTALACION);
+  let   conBase  = Math.max(costo * D + cargoMods, sinBase + MIN_SOLO_INSTALACION);
+
+  // Mínimo especial para Aletas Encapsuladas
+  if (producto === "Vidrio Aleta" && chkEncapsulada.checked) {
+    conBase = Math.max(conBase, altaGama ? 195000 : 75500);
+  }
   const soloInst = conBase - sinBase;
 
   // Caja: el usuario puede activarla; ML siempre la incluye
