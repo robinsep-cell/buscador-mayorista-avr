@@ -20,6 +20,7 @@ const MODIFICADORES = {
   camara_2:            45000,  // solo parabrisas (no acumula con camara_1)
   encapsulada:         35000,  // solo lateral y luneta con /X
   laminada_de_fabrica:     0,  // solo puerta
+  pbs_alta_gama:      100000, // parabrisas alta gama / camión / bus
 };
 
 const MIN_SIN = {
@@ -1508,16 +1509,12 @@ function calcPrices() {
   const costo    = parseFloat(calcCosto.value);
   const producto = calcProducto.value;
 
-  const calcHintSin = document.getElementById("calcHintSin");
-  const calcHintCon = document.getElementById("calcHintCon");
   const calcResML   = document.getElementById("calcResML");
 
   if (!costo || costo <= 0 || !producto) {
     calcResSin.textContent = "—"; calcResCon.textContent = "—";
     calcResSolo.textContent = "—";
-    if (calcResML)   calcResML.textContent   = "—";
-    if (calcHintSin) calcHintSin.textContent = "";
-    if (calcHintCon) calcHintCon.textContent = "";
+    if (calcResML) calcResML.textContent = "—";
     calcStatus.textContent = "";
     return;
   }
@@ -1531,6 +1528,7 @@ function calcPrices() {
   // Modificadores: cargos fijos en pesos que se suman SOLO a conBase
   let cargoMods = 0;
   if (producto === "Parabrisas") {
+    if (altaGama) cargoMods += MODIFICADORES.pbs_alta_gama;
     if (traits.sensor && chkSensor.checked)  cargoMods += MODIFICADORES.sensor_lluvia;
     if (traits.adas   && chkAdas.checked)    cargoMods += MODIFICADORES.sistema_adas;
     if (traits.camara) {
@@ -1576,11 +1574,6 @@ function calcPrices() {
   calcResSolo.textContent = fmt(soloInst);
   if (calcResML) calcResML.textContent = fmt(finalML);
 
-  // Hints
-  if (calcHintSin) calcHintSin.textContent =
-    `🌐 Web/Wix: publicar como $${finalSin.toLocaleString("es-CL")}`;
-  if (calcHintCon) calcHintCon.textContent =
-    `🗣️ "Instalado le queda en ${finalCon.toLocaleString("es-CL")} pesos."`;
 }
 
 // Abrir / cerrar con native dialog
