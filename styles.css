@@ -1198,6 +1198,29 @@ html[data-theme="light"] .calc-result-value {
   color: #a1adb1;
 }
 
+.calc-result-row--ml {
+  background: rgba(255, 230, 0, 0.08);
+  border-left: 3px solid #e6b800;
+}
+.calc-result-row--ml .calc-result-value {
+  color: #b8860b;
+  font-size: 1.1rem;
+}
+
+.calc-hint {
+  font-size: 0.72rem;
+  color: var(--muted);
+  padding: 2px 14px 6px;
+  margin: 0;
+  font-style: italic;
+  min-height: 14px;
+}
+.calc-hint--con {
+  color: #63dd00;
+  font-style: normal;
+  font-weight: 600;
+}
+
 /* ── Admin hero button ── */
 .admin-hero-btn {
   flex-shrink: 0;

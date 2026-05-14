@@ -1462,12 +1462,30 @@ function updateCalcVisibility() {
   calcPrices();
 }
 
+// ── Precios psicológicos ───────────────────────────────────────────────────────
+function aplicarPsicologia(monto) {
+  if (monto < 45000) return Math.floor(monto / 1000) * 1000 + 870;
+  if (monto < 160000) {
+    const base = Math.floor(monto / 1000) * 1000;
+    return (monto % 1000) < 500 ? base + 460 : base + 850;
+  }
+  return Math.floor(monto / 1000) * 1000 + 900;
+}
+
 function calcPrices() {
   const costo    = parseFloat(calcCosto.value);
   const producto = calcProducto.value;
 
+  const calcHintSin = document.getElementById("calcHintSin");
+  const calcHintCon = document.getElementById("calcHintCon");
+  const calcResML   = document.getElementById("calcResML");
+
   if (!costo || costo <= 0 || !producto) {
-    calcResSin.textContent = "—"; calcResCon.textContent = "—"; calcResSolo.textContent = "—";
+    calcResSin.textContent = "—"; calcResCon.textContent = "—";
+    calcResSolo.textContent = "—";
+    if (calcResML)   calcResML.textContent   = "—";
+    if (calcHintSin) calcHintSin.textContent = "";
+    if (calcHintCon) calcHintCon.textContent = "";
     calcStatus.textContent = "";
     return;
   }
@@ -1498,17 +1516,34 @@ function calcPrices() {
   const conBase  = Math.max(costo * D + cargoMods, sinBase + MIN_SOLO_INSTALACION);
   const soloInst = conBase - sinBase;
 
-  // Caja (cargo fijo, se suma a sin y con, no afecta soloInst)
+  // Caja: el usuario puede activarla; ML siempre la incluye
   let cajaCosto = 0;
   if (chkCaja?.checked && CAJA_PRECIOS[producto]) {
     const cp = CAJA_PRECIOS[producto];
     cajaCosto = (producto === "Parabrisas" && altaGama) ? cp.altaGama : cp.base;
   }
+  const cajaML = CAJA_PRECIOS[producto]
+    ? ((producto === "Parabrisas" && altaGama)
+        ? CAJA_PRECIOS[producto].altaGama
+        : CAJA_PRECIOS[producto].base)
+    : 0;
+
+  // Aplicar precios psicológicos
+  const finalSin  = aplicarPsicologia(sinBase + cajaCosto);
+  const finalCon  = aplicarPsicologia(conBase);
+  const finalML   = aplicarPsicologia(sinBase + cajaML);
 
   const fmt = n => "$ " + Math.round(n).toLocaleString("es-CL");
-  calcResSin.textContent  = fmt(sinBase  + cajaCosto); // caja solo al precio sin inst.
-  calcResCon.textContent  = fmt(conBase);              // con inst. no lleva caja
-  calcResSolo.textContent = fmt(soloInst);             // diferencia pura, sin caja
+  calcResSin.textContent  = fmt(finalSin);
+  calcResCon.textContent  = fmt(finalCon);
+  calcResSolo.textContent = fmt(soloInst);
+  if (calcResML) calcResML.textContent = fmt(finalML);
+
+  // Hints
+  if (calcHintSin) calcHintSin.textContent =
+    `🌐 Web/Wix: publicar como $${finalSin.toLocaleString("es-CL")}`;
+  if (calcHintCon) calcHintCon.textContent =
+    `🗣️ "Instalado le queda en ${finalCon.toLocaleString("es-CL")} pesos."`;
 }
 
 // Abrir / cerrar con native dialog
