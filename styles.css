@@ -887,6 +887,62 @@ html[data-theme="light"] .calc-open-btn:hover {
   background: rgba(77, 182, 0, 0.2);
 }
 
+/* ── Botón info y globo de fórmulas (v7) ── */
+.calc-info-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 6px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  opacity: 0.7;
+  transition: opacity 0.15s, background 0.15s;
+}
+.calc-info-btn:hover {
+  opacity: 1;
+  background: rgba(77, 182, 0, 0.15);
+}
+.calc-info-balloon {
+  position: relative;
+  margin: 12px 20px 0;
+  padding: 14px 16px;
+  background: linear-gradient(180deg, rgba(77, 182, 0, 0.08), rgba(77, 182, 0, 0.02));
+  border: 1px solid rgba(77, 182, 0, 0.3);
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+html[data-theme="light"] .calc-info-balloon {
+  background: linear-gradient(180deg, rgba(77, 182, 0, 0.06), rgba(255, 255, 255, 1));
+}
+.calc-info-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.calc-info-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0.6;
+  line-height: 1;
+}
+.calc-info-close:hover { opacity: 1; }
+.calc-info-body p { margin: 8px 0 4px; }
+.calc-info-body ul { margin: 0 0 6px 18px; padding: 0; }
+.calc-info-body li { margin-bottom: 2px; }
+.calc-info-footnote {
+  font-size: 11px;
+  opacity: 0.6;
+  margin-top: 10px;
+  font-style: italic;
+}
+
 /* ── Calculator dialog (native <dialog> element) ── */
 .calc-dialog {
   padding: 0;

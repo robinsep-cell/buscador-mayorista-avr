@@ -8,37 +8,54 @@ const COL_VSIN    = 36; // AK – Venta sin instalación
 const COL_VCON    = 37; // AL – Venta con instalación
 const COL_SIGLA   = 41; // AP
 
-// ── Factores de precio v6.1 (2026-05-13) ─────────────────────────────────────
+// ── Factores de precio v7 (2026-05-21) ─────────────────────────────────────
 const FACTOR_C           = 2.5;   // sin instalación (todas las categorías)
 const FACTOR_D_NORMAL    = 4.0;   // con instalación normal
 const FACTOR_D_ALTA_GAMA = 4.5;   // con instalación alta gama / camión / bus
 
 const MODIFICADORES = {
-  sensor_lluvia:       20000,  // solo parabrisas
-  sistema_adas:        30000,  // solo parabrisas
-  camara_1:            25000,  // solo parabrisas
-  camara_2:            45000,  // solo parabrisas (no acumula con camara_1)
-  encapsulada:         35000,  // solo lateral y luneta con /X
+  sensor_lluvia:       20000,  // solo parabrisas (código con "P")
+  sistema_adas:        30000,  // solo parabrisas (depende del vehículo, presencial)
+  camara_1:            25000,  // solo parabrisas (código con "Z")
+  camara_2:            45000,  // solo parabrisas (código con "2Z" - no acumula con camara_1)
+  encapsulada:         35000,  // SOLO aletas y laterales con /X (lunetas y parabrisas NO se cobran)
   laminada_de_fabrica:     0,  // solo puerta
-  pbs_alta_gama:      100000, // parabrisas alta gama / camión / bus
+  alta_gama_parabrisas_lunetas: 150000, // parabrisas y lunetas alta gama / camión / bus
 };
 
 const MIN_SIN = {
-  "Parabrisas":       73400,
-  "Luneta Portalón":  55000,
-  "Vidrio Lateral":   55200,
-  "Vidrio de Puerta": 39800,
-  "Vidrio Aleta":     24200,
+  "Parabrisas":       73460,
+  "Luneta Portalón":  73460,
+  "Vidrio Lateral":   24870,
+  "Vidrio de Puerta": 39870,
+  "Vidrio Aleta":     24870,
+};
+
+const MIN_CON = {
+  "Parabrisas":       97850,
+  "Luneta Portalón":  97850,
+  "Vidrio Lateral":   48850,
+  "Vidrio de Puerta": 64460,
+  "Vidrio Aleta":     48850,
+};
+
+const MIN_CON_ENCAPSULADA = {
+  "Vidrio Aleta":     75850,
+  "Vidrio Lateral":   75850,
+};
+
+const MIN_CON_ALTA_GAMA_O_ENCAP_ALTA_GAMA = {
+  "Vidrio Aleta":    195900,
+  "Vidrio Lateral":  195900,
 };
 
 const MIN_SOLO_INSTALACION = 24500;
 
+// Caja SOLO en Mercado Libre, SOLO para parabrisas y lunetas
 const CAJA_PRECIOS = {
   "Parabrisas":       { base: 45000, altaGama: 75000 },
   "Luneta Portalón":  { base: 45000, altaGama: 45000 },
-  "Vidrio Lateral":   { base: 25000, altaGama: 25000 },
-  "Vidrio de Puerta": { base: 25000, altaGama: 25000 },
-  "Vidrio Aleta":     { base: 15000, altaGama: 15000 },
+  // Los demás tipos no llevan caja en ML
 };
 
 const PRODUCT_TRAITS = {
@@ -1495,14 +1512,14 @@ function updateCalcVisibility() {
   calcPrices();
 }
 
-// ── Precios psicológicos ───────────────────────────────────────────────────────
+// ── Precios psicológicos v7 (sin 900 - eliminado por Robinson 2026-05-21) ─────
 function aplicarPsicologia(monto) {
   if (monto < 45000) return Math.floor(monto / 1000) * 1000 + 870;
   if (monto < 160000) {
     const base = Math.floor(monto / 1000) * 1000;
     return (monto % 1000) < 500 ? base + 460 : base + 850;
   }
-  return Math.floor(monto / 1000) * 1000 + 900;
+  return Math.floor(monto / 1000) * 1000 + 850;
 }
 
 function calcPrices() {
@@ -1528,7 +1545,6 @@ function calcPrices() {
   // Modificadores: cargos fijos en pesos que se suman SOLO a conBase
   let cargoMods = 0;
   if (producto === "Parabrisas") {
-    if (altaGama) cargoMods += MODIFICADORES.pbs_alta_gama;
     if (traits.sensor && chkSensor.checked)  cargoMods += MODIFICADORES.sensor_lluvia;
     if (traits.adas   && chkAdas.checked)    cargoMods += MODIFICADORES.sistema_adas;
     if (traits.camara) {
@@ -1537,21 +1553,34 @@ function calcPrices() {
       else if (camVal === "1") cargoMods += MODIFICADORES.camara_1;
     }
   }
-  if ((producto === "Vidrio Lateral" || producto === "Vidrio Aleta" || producto === "Luneta Portalón") && chkEncapsulada.checked) {
+  // Alta gama extra de $150.000 aplica a parabrisas y lunetas (v7)
+  if ((producto === "Parabrisas" || producto === "Luneta Portalón") && altaGama) {
+    cargoMods += MODIFICADORES.alta_gama_parabrisas_lunetas;
+  }
+  // Encapsulada SOLO se cobra en aletas y laterales (v7)
+  if ((producto === "Vidrio Lateral" || producto === "Vidrio Aleta") && chkEncapsulada.checked) {
     cargoMods += MODIFICADORES.encapsulada;
   }
 
   const minSin   = MIN_SIN[producto] || 0;
   const sinBase  = Math.max(costo * C, minSin);
-  let   conBase  = Math.max(costo * D + cargoMods, sinBase + MIN_SOLO_INSTALACION);
+  const minCon   = MIN_CON[producto] || 0;
+  let   conBase  = Math.max(costo * D + cargoMods, sinBase + MIN_SOLO_INSTALACION, minCon);
 
-  // Mínimo especial para Aletas Encapsuladas
-  if (producto === "Vidrio Aleta" && chkEncapsulada.checked) {
-    conBase = Math.max(conBase, altaGama ? 195000 : 75500);
+  // Mínimos especiales aletas/laterales encapsuladas (v7)
+  if ((producto === "Vidrio Aleta" || producto === "Vidrio Lateral") && chkEncapsulada.checked) {
+    if (altaGama) {
+      conBase = Math.max(conBase, MIN_CON_ALTA_GAMA_O_ENCAP_ALTA_GAMA[producto] || 0);
+    } else {
+      conBase = Math.max(conBase, MIN_CON_ENCAPSULADA[producto] || 0);
+    }
+  } else if ((producto === "Vidrio Aleta" || producto === "Vidrio Lateral") && altaGama) {
+    conBase = Math.max(conBase, MIN_CON_ALTA_GAMA_O_ENCAP_ALTA_GAMA[producto] || 0);
   }
   const soloInst = conBase - sinBase;
 
-  // Caja: el usuario puede activarla; ML siempre la incluye
+  // Caja: SOLO se cobra a parabrisas y lunetas en ML (v7).
+  // En Wix nunca se cobra por defecto. Si el usuario marca la opción, se suma.
   let cajaCosto = 0;
   if (chkCaja?.checked && CAJA_PRECIOS[producto]) {
     const cp = CAJA_PRECIOS[producto];
@@ -1561,7 +1590,7 @@ function calcPrices() {
     ? ((producto === "Parabrisas" && altaGama)
         ? CAJA_PRECIOS[producto].altaGama
         : CAJA_PRECIOS[producto].base)
-    : 0;
+    : 0;  // Si producto NO está en CAJA_PRECIOS (puertas/laterales/aletas), caja=0
 
   // Aplicar precios psicológicos
   const finalSin  = aplicarPsicologia(sinBase + cajaCosto);
@@ -1583,6 +1612,17 @@ calcOpenBtn?.addEventListener("click", () => {
 });
 calcClose?.addEventListener("click", () => calcModal.close());
 calcModal?.addEventListener("click", e => { if (e.target === calcModal) calcModal.close(); });
+
+// ── Globo de fórmulas (info v7) ──────────────────────────────────────────────
+const calcInfoBtn     = document.getElementById("calcInfoBtn");
+const calcInfoBalloon = document.getElementById("calcInfoBalloon");
+const calcInfoClose   = document.getElementById("calcInfoClose");
+calcInfoBtn?.addEventListener("click", (e) => {
+  e.stopPropagation();
+  if (!calcInfoBalloon) return;
+  calcInfoBalloon.hidden = !calcInfoBalloon.hidden;
+});
+calcInfoClose?.addEventListener("click", () => { if (calcInfoBalloon) calcInfoBalloon.hidden = true; });
 
 // Inputs → recalcular
 calcCosto.addEventListener("input", calcPrices);

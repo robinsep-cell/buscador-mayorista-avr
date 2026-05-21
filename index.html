@@ -161,9 +161,49 @@
         <div class="calc-header">
           <div>
             <p class="calc-kicker">Herramienta de precios</p>
-            <h2 class="calc-title">Calculadora</h2>
+            <h2 class="calc-title">Calculadora <button id="calcInfoBtn" type="button" class="calc-info-btn" aria-label="Ver fórmulas" title="Ver fórmulas de precios">ℹ️</button></h2>
           </div>
           <button id="calcClose" class="calc-close" type="button" aria-label="Cerrar">✕</button>
+        </div>
+
+        <!-- Globo con fórmulas (v7 - 2026-05-21) -->
+        <div id="calcInfoBalloon" class="calc-info-balloon" hidden>
+          <div class="calc-info-head">
+            <strong>📐 Fórmulas vigentes (v7)</strong>
+            <button type="button" id="calcInfoClose" class="calc-info-close" aria-label="Cerrar">×</button>
+          </div>
+          <div class="calc-info-body">
+            <p><b>Multiplicadores</b></p>
+            <ul>
+              <li>Sin instalación = costo × 2,5</li>
+              <li>Con instalación normal = costo × 4</li>
+              <li>Con instalación alta gama / camión / bus = costo × 4,5</li>
+              <li>Parabrisas y lunetas alta gama: además suman +$150.000</li>
+            </ul>
+            <p><b>Modificadores (suman a "con instalación")</b></p>
+            <ul>
+              <li>Parabrisas: sensor lluvia +$20.000 · 1 cámara +$25.000 · 2 cámaras +$45.000 · ADAS +$30.000</li>
+              <li>Aletas y laterales encapsulados: +$35.000</li>
+              <li>Lunetas y parabrisas: encapsulado NO se cobra aunque tenga X</li>
+            </ul>
+            <p><b>Caja (solo Mercado Libre)</b></p>
+            <ul>
+              <li>Parabrisas normal $45.000 · alta gama $75.000</li>
+              <li>Lunetas $45.000</li>
+              <li>Puertas, laterales y aletas: NO llevan caja</li>
+              <li>Wix: nunca por defecto. Si el cliente la pide, se cotiza aparte.</li>
+            </ul>
+            <p><b>Mínimos (precio final = mayor entre fórmula y mínimo)</b></p>
+            <ul>
+              <li>Parabrisas y lunetas: sin inst. $73.460 · con inst. $97.850</li>
+              <li>Puertas: sin inst. $39.870 · con inst. $64.460</li>
+              <li>Aletas y laterales: sin inst. $24.870 · con inst. $48.850</li>
+              <li>Aletas/laterales encapsulados con inst.: $75.850</li>
+              <li>Aletas/laterales alta gama o encapsulado alta gama: $195.900</li>
+            </ul>
+            <p><b>Terminaciones psicológicas</b>: 460, 850 o 870 (no se usa 900).</p>
+            <p class="calc-info-footnote">Última actualización validada por Robinson: 2026-05-21.</p>
+          </div>
         </div>
 
         <div class="calc-body">
