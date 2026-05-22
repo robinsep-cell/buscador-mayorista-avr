@@ -2521,3 +2521,231 @@ html[data-theme="light"] .cot-open-hero-btn {
   .calc-result-row--ml .calc-result-value { font-size: 0.92rem; }
   .calc-hint { font-size: 0.62rem; padding: 0 10px 1px; }
 }
+
+/* ── Botón editar costo (admin) ─────────────────────────────────────────────── */
+.price-cell--editable {
+  position: relative;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.edit-costo-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 1px 5px;
+  font-size: 0.72rem;
+  cursor: pointer;
+  color: var(--muted);
+  opacity: 0.5;
+  transition: opacity 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+
+.edit-costo-btn:hover {
+  opacity: 1;
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* ── Modal Actualizar Costo ──────────────────────────────────────────────────── */
+.editcosto-dialog {
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 0;
+  width: min(460px, calc(100vw - 16px));
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.editcosto-dialog::backdrop {
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(4px);
+}
+
+.editcosto-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.editcosto-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.editcosto-body {
+  padding: 14px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.editcosto-info {
+  background: var(--surface-2);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.editcosto-nombre {
+  margin: 0 0 2px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.editcosto-meta {
+  margin: 0 0 2px;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.editcosto-cp {
+  margin: 0;
+  font-size: 0.73rem;
+  color: var(--muted);
+  font-family: monospace;
+}
+
+.editcosto-actual-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface-2);
+  border-radius: 10px;
+  padding: 9px 14px;
+}
+
+.editcosto-actual-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.editcosto-actual-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.editcosto-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.editcosto-opt {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+
+.editcosto-preview {
+  background: var(--surface-2);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.editcosto-preview-title {
+  margin: 0 0 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.editcosto-preview-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px 12px;
+  font-size: 0.85rem;
+}
+
+.editcosto-preview-grid span:nth-child(odd) {
+  color: var(--muted);
+  font-size: 0.78rem;
+  align-self: center;
+}
+
+.editcosto-preview-grid span:nth-child(even) {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.editcosto-server-warn {
+  background: rgba(255,170,0,0.1);
+  border: 1px solid rgba(255,170,0,0.3);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.78rem;
+  color: #ffaa00;
+}
+
+.editcosto-server-warn code {
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-size: 0.76rem;
+}
+
+.editcosto-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.editcosto-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+  border: none;
+}
+
+.editcosto-btn:hover   { opacity: 0.88; }
+.editcosto-btn:active  { transform: scale(0.98); }
+.editcosto-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.editcosto-btn--sec {
+  background: var(--surface-2);
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.editcosto-btn--pri {
+  background: var(--primary);
+  color: #0d1a00;
+}
+
+.editcosto-msg {
+  margin: 0;
+  font-size: 0.82rem;
+  min-height: 1.1em;
+  text-align: center;
+}
+
+.editcosto-msg--ok  { color: var(--primary); }
+.editcosto-msg--err { color: #ff6b6b; }
+
+@media (max-width: 480px) {
+  .editcosto-fields { grid-template-columns: 1fr; }
+  .editcosto-actions { flex-direction: column; }
+}

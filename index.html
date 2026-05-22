@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=3a1f0b2" />
+    <link rel="stylesheet" href="./styles.css?v=4c2e9f1" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   </head>
   <body>
@@ -507,9 +507,71 @@
       </div>
     </dialog>
 
+    <!-- Modal Actualizar Costo (solo admin) -->
+    <dialog id="editCostoModal" class="editcosto-dialog">
+      <div class="editcosto-header">
+        <div>
+          <p class="calc-kicker">Solo administrador</p>
+          <h2 class="editcosto-title">Actualizar Costo</h2>
+        </div>
+        <button id="editCostoClose" class="calc-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+
+      <div class="editcosto-body">
+        <!-- Info producto -->
+        <div class="editcosto-info" id="editCostoInfo">
+          <p class="editcosto-nombre" id="editCostoNombre">—</p>
+          <p class="editcosto-meta" id="editCostoMeta">—</p>
+          <p class="editcosto-cp" id="editCostoCpLabel">CP: —</p>
+        </div>
+
+        <!-- Costo actual -->
+        <div class="editcosto-actual-row">
+          <span class="editcosto-actual-label">Costo actual</span>
+          <span class="editcosto-actual-value" id="editCostoActual">—</span>
+        </div>
+
+        <!-- Inputs -->
+        <div class="editcosto-fields">
+          <div class="calc-field">
+            <label class="calc-label" for="editCostoNuevo">Nuevo costo (CLP)</label>
+            <input id="editCostoNuevo" class="calc-input" type="number" placeholder="Ej: 28000" min="1" step="100" />
+          </div>
+          <div class="calc-field">
+            <label class="calc-label" for="editCostoProveedor">Proveedor de compra <span class="editcosto-opt">(opcional)</span></label>
+            <input id="editCostoProveedor" class="calc-input" type="text" placeholder="Ej: Eguez, Importadora China…" autocomplete="off" />
+          </div>
+        </div>
+
+        <!-- Preview precios nuevos -->
+        <div class="editcosto-preview" id="editCostoPreview" hidden>
+          <p class="editcosto-preview-title">Precios resultantes</p>
+          <div class="editcosto-preview-grid">
+            <span>Sin inst.</span><span id="prevSin">—</span>
+            <span>Con inst.</span><span id="prevCon">—</span>
+            <span>ML</span><span id="prevML">—</span>
+          </div>
+        </div>
+
+        <!-- Estado servidor -->
+        <div class="editcosto-server-warn" id="editCostoServerWarn" hidden>
+          ⚠️ Servidor local no disponible. Inicia <code>python3 server_costos.py</code> en tu Mac.
+        </div>
+
+        <!-- Botones -->
+        <div class="editcosto-actions">
+          <button id="editCostoPreviewBtn" class="editcosto-btn editcosto-btn--sec" type="button">🔍 Vista previa</button>
+          <button id="editCostoSaveBtn" class="editcosto-btn editcosto-btn--pri" type="button">💾 Actualizar en sheets</button>
+        </div>
+
+        <!-- Mensaje resultado -->
+        <p class="editcosto-msg" id="editCostoMsg"></p>
+      </div>
+    </dialog>
+
     <script src="./auth.js"></script>
     <script src="./admin.js"></script>
-    <script src="./app.js?v=3a1f0b2"></script>
+    <script src="./app.js?v=4c2e9f1"></script>
     <script src="./cotizador.js?v=2bce9e6"></script>
   </body>
 </html>

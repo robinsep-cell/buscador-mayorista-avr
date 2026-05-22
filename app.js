@@ -1263,8 +1263,17 @@ function renderRows(items, tokens) {
     resultsBody.innerHTML = `<tr><td colspan="${COLSPAN}" class="empty-cell">No encontré resultados.</td></tr>`;
     return;
   }
+  const isAdmin = window.currentUser?.isAdmin === true;
   resultsBody.innerHTML = items.map(p => {
     const checked = window.cotSelection?.has(p._id) ? "checked" : "";
+    const editBtn = isAdmin && p.cp
+      ? `<button class="edit-costo-btn" title="Actualizar costo"
+           data-cp="${escapeHtml(p.cp)}"
+           data-nombre="${escapeHtml(p.nombre)}"
+           data-marca="${escapeHtml(p.marca)}"
+           data-costo="${escapeHtml(p.costo)}"
+         >✏️</button>`
+      : "";
     return `
     <tr>
       <td class="cot-check-cell"><input type="checkbox" class="cot-check" data-id="${p._id}" ${checked} /></td>
@@ -1275,7 +1284,7 @@ function renderRows(items, tokens) {
       <td>${highlight(p.color, tokens)}</td>
       <td class="${stockClass(p.stockImp)}">${highlight(p.stockImp || "0", tokens)}</td>
       <td class="${stockClass(p.stockAvr)}">${highlight(p.stockAvr || "0", tokens)}</td>
-      <td class="price-cell">${formatPrice(p.costo)}</td>
+      <td class="price-cell price-cell--editable">${formatPrice(p.costo)}${editBtn}</td>
       <td class="price-cell">${formatPrice(p.ventaSin)}</td>
       <td class="price-cell">${formatPrice(p.ventaCon)}</td>
     </tr>`;
@@ -1633,4 +1642,157 @@ calcProducto.addEventListener("change", updateCalcVisibility);
 });
 document.querySelectorAll('input[name="camara"]').forEach(r => {
   r.addEventListener("change", () => { setPillState(r); calcPrices(); });
+});
+
+// ── Actualizar Costo (solo admin) ─────────────────────────────────────────────
+const SERVER_URL       = "http://localhost:5001";
+const editCostoModal   = document.getElementById("editCostoModal");
+const editCostoClose   = document.getElementById("editCostoClose");
+const editCostoNombre  = document.getElementById("editCostoNombre");
+const editCostoMeta    = document.getElementById("editCostoMeta");
+const editCostoCpLabel = document.getElementById("editCostoCpLabel");
+const editCostoActual  = document.getElementById("editCostoActual");
+const editCostoNuevo   = document.getElementById("editCostoNuevo");
+const editCostoProveedor = document.getElementById("editCostoProveedor");
+const editCostoPreview = document.getElementById("editCostoPreview");
+const editCostoServerWarn = document.getElementById("editCostoServerWarn");
+const editCostoMsg     = document.getElementById("editCostoMsg");
+const editCostoPreviewBtn = document.getElementById("editCostoPreviewBtn");
+const editCostoSaveBtn    = document.getElementById("editCostoSaveBtn");
+const prevSin = document.getElementById("prevSin");
+const prevCon = document.getElementById("prevCon");
+const prevML  = document.getElementById("prevML");
+
+let _editCp = "";
+
+function fmtCLP(n) {
+  const v = parseInt(n, 10);
+  if (!v || v <= 0) return "—";
+  return "$ " + v.toLocaleString("es-CL");
+}
+
+function setEditMsg(txt, ok = true) {
+  editCostoMsg.textContent = txt;
+  editCostoMsg.className = "editcosto-msg " + (ok ? "editcosto-msg--ok" : "editcosto-msg--err");
+}
+
+async function checkServerOnline() {
+  try {
+    const r = await fetch(`${SERVER_URL}/ping`, { signal: AbortSignal.timeout(3000) });
+    return r.ok;
+  } catch {
+    return false;
+  }
+}
+
+// Abrir modal al hacer clic en ✏️
+document.addEventListener("click", async e => {
+  const btn = e.target.closest(".edit-costo-btn");
+  if (!btn) return;
+
+  _editCp = btn.dataset.cp || "";
+  editCostoNombre.textContent  = btn.dataset.nombre || "—";
+  editCostoMeta.textContent    = btn.dataset.marca  || "—";
+  editCostoCpLabel.textContent = "CP: " + _editCp;
+
+  const costoRaw = parseInt((btn.dataset.costo || "").replace(/\./g,""), 10);
+  editCostoActual.textContent = fmtCLP(costoRaw);
+
+  editCostoNuevo.value = costoRaw > 0 ? costoRaw : "";
+  editCostoProveedor.value = "";
+  editCostoPreview.hidden = true;
+  editCostoServerWarn.hidden = true;
+  editCostoMsg.textContent = "";
+  editCostoMsg.className = "editcosto-msg";
+  editCostoSaveBtn.disabled = false;
+  editCostoPreviewBtn.disabled = false;
+
+  // Verificar servidor
+  const online = await checkServerOnline();
+  editCostoServerWarn.hidden = online;
+
+  editCostoModal.showModal();
+  setTimeout(() => editCostoNuevo.focus(), 80);
+});
+
+editCostoClose?.addEventListener("click", () => editCostoModal.close());
+editCostoModal?.addEventListener("click", e => { if (e.target === editCostoModal) editCostoModal.close(); });
+
+editCostoPreviewBtn?.addEventListener("click", async () => {
+  const costo = parseFloat(editCostoNuevo.value);
+  if (!_editCp || !costo || costo <= 0) {
+    setEditMsg("Ingresa un costo válido.", false); return;
+  }
+  editCostoPreviewBtn.disabled = true;
+  editCostoPreviewBtn.textContent = "Calculando…";
+  editCostoMsg.textContent = "";
+
+  try {
+    const r = await fetch(`${SERVER_URL}/preview`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ cp: _editCp, costo }),
+      signal: AbortSignal.timeout(10000),
+    });
+    const data = await r.json();
+    if (!data.ok) throw new Error(data.error);
+
+    prevSin.textContent = fmtCLP(data.precios.vsin);
+    prevCon.textContent = fmtCLP(data.precios.vcon);
+    prevML.textContent  = fmtCLP(data.precios.ml);
+    editCostoPreview.hidden = false;
+    editCostoServerWarn.hidden = true;
+  } catch (err) {
+    editCostoServerWarn.hidden = false;
+    setEditMsg("No se pudo conectar al servidor local.", false);
+  } finally {
+    editCostoPreviewBtn.disabled = false;
+    editCostoPreviewBtn.textContent = "🔍 Vista previa";
+  }
+});
+
+editCostoSaveBtn?.addEventListener("click", async () => {
+  const costo = parseFloat(editCostoNuevo.value);
+  if (!_editCp || !costo || costo <= 0) {
+    setEditMsg("Ingresa un costo válido.", false); return;
+  }
+  if (!confirm(`¿Actualizar costo de "${_editCp}" a $ ${costo.toLocaleString("es-CL")}?\n\nEsto modificará ambas hojas de Google Sheets.`)) return;
+
+  editCostoSaveBtn.disabled = true;
+  editCostoSaveBtn.textContent = "Actualizando…";
+  editCostoMsg.textContent = "";
+
+  try {
+    const r = await fetch(`${SERVER_URL}/actualizar`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        cp: _editCp,
+        costo,
+        proveedor: editCostoProveedor.value.trim() || null,
+        usuario: window.currentUser?.email || null,
+      }),
+      signal: AbortSignal.timeout(30000),
+    });
+    const data = await r.json();
+    if (!data.ok) throw new Error(data.error);
+
+    // Mostrar precios resultantes
+    prevSin.textContent = fmtCLP(data.precios.vsin);
+    prevCon.textContent = fmtCLP(data.precios.vcon);
+    prevML.textContent  = fmtCLP(data.precios.ml);
+    editCostoPreview.hidden = false;
+
+    setEditMsg(`✅ Costo actualizado en ${data.sheets}. Recarga el buscador para ver los precios nuevos.`, true);
+    editCostoActual.textContent = fmtCLP(costo);
+  } catch (err) {
+    const msg = err.message?.includes("Failed to fetch") || err.message?.includes("NetworkError")
+      ? "No se pudo conectar al servidor local. ¿Está corriendo server_costos.py?"
+      : "Error: " + err.message;
+    setEditMsg(msg, false);
+    editCostoServerWarn.hidden = false;
+  } finally {
+    editCostoSaveBtn.disabled = false;
+    editCostoSaveBtn.textContent = "💾 Actualizar en sheets";
+  }
 });
