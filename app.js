@@ -61,7 +61,7 @@ const CAJA_PRECIOS = {
 const PRODUCT_TRAITS = {
   "Parabrisas":      { sensor: true,  adas: true,  camara: true,  encapsulada: false, laminada: false },
   "Vidrio Aleta":    { sensor: false, adas: false, camara: false, encapsulada: true,  laminada: false },
-  "Vidrio de Puerta":{ sensor: false, adas: false, camara: false, encapsulada: false, laminada: true  },
+  "Vidrio de Puerta":{ sensor: false, adas: false, camara: false, encapsulada: false, laminada: false },
   "Vidrio Lateral":  { sensor: false, adas: false, camara: false, encapsulada: true,  laminada: false },
   "Luneta Portalón": { sensor: false, adas: false, camara: false, encapsulada: true,  laminada: false },
 };
@@ -1813,18 +1813,18 @@ document.querySelectorAll('input[name="calcMode"]').forEach(r => {
 
 // ── Vidrio Fabricado ──────────────────────────────────────────────────────────
 const LAMINA_BASE_4M = {
-  parabrisas: 75000,
-  luneta:     45000,
-  puerta:     35000,
-  lateral:    35000,
+  parabrisas: 54000,
+  luneta:     39000,
+  puerta:     28000,
+  lateral:    25000,
   aleta:      25000,
 };
 
 function precioLaminaUnidad(tipo, altaGama, micras) {
   let base = LAMINA_BASE_4M[tipo] || 0;
   if (altaGama) base = Math.round(base * 1.5);
-  if      (micras === 8)  base = Math.round(base * 1.3);
-  else if (micras === 12) base = Math.round(base * 1.6);
+  if      (micras === 8)  base = Math.round(base * 1.2);
+  else if (micras === 12) base = Math.round(base * 1.4);
   return base;
 }
 
@@ -1931,7 +1931,7 @@ function calcLamina() {
   }
 
   if (vehiculo) {
-    const desc = Math.round(subtotal * 0.15);
+    const desc = Math.round(subtotal * 0.40);
     resDescuento.textContent = "−" + fmtCLP(desc);
     resTotal.textContent = fmtCLP(subtotal - desc);
     descRow.hidden = false;
