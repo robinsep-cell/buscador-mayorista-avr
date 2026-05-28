@@ -1796,19 +1796,19 @@ editCostoSaveBtn?.addEventListener("click", async () => {
     editCostoSaveBtn.textContent = "💾 Actualizar en sheets";
   }
 
-// ── Tabs de la calculadora ────────────────────────────────────────────────────
-function switchCalcTab(tab) {
-  ["venta","fabricado","lamina"].forEach(t => {
-    document.getElementById("calcTab" + t.charAt(0).toUpperCase() + t.slice(1))
-      ?.classList.toggle("calc-tab--active", t === tab);
+// ── Selector de modo de calculadora (radio pills, mismo estilo UI) ────────────
+function switchCalcMode(mode) {
+  document.getElementById("calcBody").hidden           = mode !== "venta";
+  document.getElementById("calcFabricadoPanel").hidden = mode !== "fabricado";
+  document.getElementById("calcLaminaPanel").hidden    = mode !== "lamina";
+  ["venta","fabricado","lamina"].forEach(m => {
+    const pill = document.getElementById("modePill" + m.charAt(0).toUpperCase() + m.slice(1));
+    pill?.classList.toggle("is-checked", m === mode);
   });
-  document.getElementById("calcBody").hidden           = tab !== "venta";
-  document.getElementById("calcFabricadoPanel").hidden = tab !== "fabricado";
-  document.getElementById("calcLaminaPanel").hidden    = tab !== "lamina";
 }
-document.getElementById("calcTabVenta")    ?.addEventListener("click", () => switchCalcTab("venta"));
-document.getElementById("calcTabFabricado")?.addEventListener("click", () => switchCalcTab("fabricado"));
-document.getElementById("calcTabLamina")   ?.addEventListener("click", () => switchCalcTab("lamina"));
+document.querySelectorAll('input[name="calcMode"]').forEach(r => {
+  r.addEventListener("change", () => switchCalcMode(r.value));
+});
 
 // ── Vidrio Fabricado ──────────────────────────────────────────────────────────
 const LAMINA_BASE_4M = {

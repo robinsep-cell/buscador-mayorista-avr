@@ -1263,33 +1263,10 @@ html[data-theme="light"] .calc-result-value {
   font-size: 1rem;
 }
 
-/* ── Tabs calculadora ── */
-.calc-tabs {
-  display: flex;
-  gap: 6px;
-  padding: 10px 20px 14px;
-  border-bottom: 1px solid var(--border);
-  flex-wrap: wrap;
+/* ── Selector de modo calculadora ── */
+.calc-mode-selector {
+  padding: 12px 20px 0;
 }
-.calc-tab {
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 5px 14px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--muted);
-  cursor: pointer;
-  transition: color .15s, background .15s, border-color .15s;
-  white-space: nowrap;
-}
-.calc-tab:hover { color: var(--text); border-color: var(--text); }
-.calc-tab--active {
-  background: var(--primary);
-  color: #fff;
-  border-color: var(--primary);
-}
-html[data-theme="light"] .calc-tab--active { color: #fff; }
 
 /* ── Lámina de Seguridad ── */
 .calc-lam-grid {

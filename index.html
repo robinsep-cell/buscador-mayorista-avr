@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=4c2e9f1" />
+    <link rel="stylesheet" href="./styles.css?v=fab2025" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   </head>
   <body>
@@ -206,14 +206,22 @@
           </div>
         </div>
 
-        <!-- Tabs calculadora -->
-        <div class="calc-tabs">
-          <button id="calcTabVenta"     class="calc-tab calc-tab--active" type="button">💰 Precio Venta</button>
-          <button id="calcTabFabricado" class="calc-tab" type="button">🔨 Vidrio Fabricado</button>
-          <button id="calcTabLamina"    class="calc-tab" type="button">🎬 Lámina Seguridad</button>
+        <!-- Selector de modo (radio pills, mismo estilo que el resto de la calculadora) -->
+        <div class="calc-mode-selector">
+          <div class="calc-pills">
+            <label class="calc-pill is-checked" id="modePillVenta">
+              <input type="radio" name="calcMode" value="venta" checked /><span>Precio Venta</span>
+            </label>
+            <label class="calc-pill" id="modePillFabricado">
+              <input type="radio" name="calcMode" value="fabricado" /><span>🔨 Fabricado</span>
+            </label>
+            <label class="calc-pill" id="modePillLamina">
+              <input type="radio" name="calcMode" value="lamina" /><span>🎬 Lámina</span>
+            </label>
+          </div>
         </div>
 
-        <!-- Tab 1: Precio Venta (existente) -->
+        <!-- Panel 1: Precio Venta (existente) -->
         <div id="calcBody" class="calc-body">
           <div class="calc-form">
 
@@ -683,7 +691,7 @@
 
     <script src="./auth.js"></script>
     <script src="./admin.js"></script>
-    <script src="./app.js?v=4c2e9f1"></script>
+    <script src="./app.js?v=fab2025"></script>
     <script src="./cotizador.js?v=2bce9e6"></script>
   </body>
 </html>
