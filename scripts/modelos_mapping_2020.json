@@ -1,0 +1,2462 @@
+[
+  {
+    "key": "TOYOTA|TY-A200|2020",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA RAIZE 5P 20- VDE (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "RENAULT|REN-CLIO-19|2021",
+    "marca": "RENAULT",
+    "vehiculo": "RENAULT CLIO V 5P 21- VDE (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "SUZUKI|SUZ-CELERIO-22|2022",
+    "marca": "SUZUKI",
+    "vehiculo": "SUZUKI CELERIO 5P 22- VDE (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "OPEL|MOKKA-21|2021",
+    "marca": "OPEL",
+    "vehiculo": "OPEL MOKKA 5P 21- PRIV (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "TOYOTA|VIOS-23|2023",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA YARIS 4P 23- VDE (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "HYUNDAI|HYU-IX25-20|2021",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI CRETA 5P 21- VDE (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "SUZUKI|MARUTI-ALTO-23|2023",
+    "marca": "SUZUKI",
+    "vehiculo": "SUZUKI ALTO 5P 23- VDE (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "PEUGEOT|PE-308-22|2022",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT 308 5P 22- PRIV (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "SKODA|FABIA-22|2022",
+    "marca": "SKODA",
+    "vehiculo": "SKODA FABIA 5P 22- VDE 1H (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "TRANSIT|CUSTOM-24-SZ|2024",
+    "marca": "TRANSIT",
+    "vehiculo": "FORD TRANSIT CUSTOM FUR 24- VDE C/SEN C/CAM C/SOP C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "JETOUR|SEMC-DX3-VCS|2020",
+    "marca": "JETOUR",
+    "vehiculo": "JETOUR X50 5P 20- VDE C/SEN C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "BMW|BMW2-F74-25-S2Z|2025",
+    "marca": "BMW",
+    "vehiculo": "BMW SERIE 2 GRAN COUPE F74 4P 25- VDE C/SEN C/CAM BIG C/M (EU)",
+    "anio_desde": "2025"
+  },
+  {
+    "key": "PEUGEOT|PE-3008-24-QSZH|2024",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT 3008/5008 5P 24- VDE C/SEN C/DEF C/CAM C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "MAXUS|MAXUS-T60-25-SZA|2025",
+    "marca": "MAXUS",
+    "vehiculo": "MAXUS T60/T90 4P 25- DEG C/SEN C/CAM C/ANT C/M (EU)",
+    "anio_desde": "2025"
+  },
+  {
+    "key": "FORD|BRONCO-SPORT-25-L-SZ|2025",
+    "marca": "FORD",
+    "vehiculo": "FORD BRONCO SPORT 5P 25- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2025"
+  },
+  {
+    "key": "EXEED|YAOGUANG-23-L-SZA-DV|2023",
+    "marca": "EXEED",
+    "vehiculo": "EXEED RX 5P 23- VDE C/SEN C/CAM C/ANT C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "HYUNDAI|HYU-SANTRO-19|2020",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI ATOS 5P 20- VDE (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "NISSAN|NI-N18|2020",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN VERSA 4P 20- VDE (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "HYUNDAI|HYU-VENUE|2020",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI VENUE 5P 20- VDE (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "JAC|JAC-S4|2020",
+    "marca": "JAC",
+    "vehiculo": "JAC S4/JS4 5P 20- VDE (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "JMC|JMC-YH7|2020",
+    "marca": "JMC",
+    "vehiculo": "JMC VIGUS 4P 20- VDE (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "TOYOTA|TY-COROLLA-CROSS-21|2021",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA COROLLA CROSS 5P 21- VDE (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "PEUGEOT|PE-LANDTREK-20|2021",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT LANDTRECK/CHANGAN HUNTER 4P 21- VDE (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "VOLVO|VOL-XC40-18|2021",
+    "marca": "VOLVO",
+    "vehiculo": "VOLVO XC40 5P 21- PRIV (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "CHERY|CHERY-T18|2020",
+    "marca": "CHERY",
+    "vehiculo": "CHERY TIGGO 8/7 PRO 5P 20- VDE 2H (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "TOYOTA|ASIA-YARIS-X-24|2024",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA YARIS CROSS 5P 24- VDE (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "JETOUR|CHERY-X70|2021",
+    "marca": "JETOUR",
+    "vehiculo": "JETOUR X70 PLUS 5P 21- VDE 2H (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "CHEVROLET|AVEO-SED-24|2024",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET SAIL 4P 24- VDE EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "JMC|JMC-YUHU9-20|2020",
+    "marca": "JMC",
+    "vehiculo": "JMC VIGUS 4P 20- VDE 2H (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "KIA|KIA-K3-24-4D|2024",
+    "marca": "KIA",
+    "vehiculo": "KIA K3 4P 24- VDE (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "CHANGAN|CS55-PLUS-21|2020",
+    "marca": "CHANGAN",
+    "vehiculo": "CHANGAN CS55 PLUS 5P 20- VDE (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "LEGACY|SUB-BW9|2021",
+    "marca": "LEGACY",
+    "vehiculo": "SUBARU LEGACY OUTBACK 21- VDE (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "FORD|RANGER-22-4D|2022",
+    "marca": "FORD",
+    "vehiculo": "FORD RANGER 4P 22- VDE 1H (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "HYUNDAI|HYU-I10-20|2021",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI GRAND I10 5P 21- VDE (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "HYUNDAI|TUCSON-21-SL|2021",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI TUCSON 5P 21- VDE LONG SIZE (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "CHEVROLET|MONTANA-23|2023",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET MONTANA 4P 23- VDE (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "HYUNDAI|HYU-CN7|2021",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI ELANTRA 4P 21- VDE (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "CHERY|CHERY-J68|2020",
+    "marca": "CHERY",
+    "vehiculo": "CHERY TIGGO 3 PRO 20- VDE 1H (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "SUBARU|CROSSTREK-24|2024",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU CROSSTREK 5P 24- VDE (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "SSANGYONG|SSY-C300|2020",
+    "marca": "SSANGYONG",
+    "vehiculo": "SSANGYONG KORANDO 5P 20- VDE (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "KIA|KMC-SELTOS-20-AA/ME|2020",
+    "marca": "KIA",
+    "vehiculo": "KIA SELTOS 5P 20- VDE (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "CHEVROLET|SGMW-510|2021",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET GROOVE 21- VDE (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "KIA|CARENS-22|2022",
+    "marca": "KIA",
+    "vehiculo": "KIA CARENS 5P 22- VDE (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "FORD|RANGER-22|2022",
+    "marca": "FORD",
+    "vehiculo": "FORD RANGER 4P 22- VDE (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "FORD|MAVERICK-22|2022",
+    "marca": "FORD",
+    "vehiculo": "FORD MAVERICK 4P 22- VDE 1H (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "SUZUKI|MA-SPRESSO|2020",
+    "marca": "SUZUKI",
+    "vehiculo": "SUZUKI S-PRESSO 5P 20- VDE (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "HYUNDAI|ACCENT-23|2023",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI ACCENT 4P 23- VDE (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "CHERY|TIGGO7-21|2020",
+    "marca": "CHERY",
+    "vehiculo": "CHERY TIGGO 7 PRO 5P 20- VDE 1H (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "MITSUBISHI|L200-24|2024",
+    "marca": "MITSUBISHI",
+    "vehiculo": "MITSUBISHI L-200 4P 24- VDE (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "LEGACY|SUB-BW9-STW|2021",
+    "marca": "LEGACY",
+    "vehiculo": "SUBARU LEGACY OUTBACK 21- PRIV (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "KIA|KIA-K3-24|2024",
+    "marca": "KIA",
+    "vehiculo": "KIA K3 4P/5P 24- VDE (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "CHEVROLET|AVEO-HBK-24|2024",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET SAIL 5P 24- VDE EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "NISSAN|QASHQAI-22|2022",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN QASHQAI 5P 22- VDE (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "KIA|SPORTAGE-22-SUV|2022",
+    "marca": "KIA",
+    "vehiculo": "KIA SPORTAGE 5P 22- VDE (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "CHERY|TIGGO-8-PRO-22|2020",
+    "marca": "CHERY",
+    "vehiculo": "CHERY TIGGO 8 PRO 5P 20- VDE 2H (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "CHEVROLET|AVEO-24|2024",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET SAIL 4P/5P 24- VDE EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "FORD|BRONCO-SPORT-21|2021",
+    "marca": "FORD",
+    "vehiculo": "FORD BRONCO SPORT 5P 21- VDE 2H (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "FORD|F150-23|2023",
+    "marca": "FORD",
+    "vehiculo": "FORD F150 2P/4P 23- VDE 2H (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "RENAULT|REN-CLIO-19-BM|2021",
+    "marca": "RENAULT",
+    "vehiculo": "RENAULT CLIO V 5P 21- VDE ENCAP (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "VOLKSWAGEN|VW-TAOS-21|2021",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN TAOS 5P 21- VDE 2H (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "HYUNDAI|HYU-TUCSON-21-SL|2021",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI TUCSON 5P 21- PRIV LONG SIZE (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "SUZUKI|DC61T|2020",
+    "marca": "SUZUKI",
+    "vehiculo": "SUZUKI CARRY 2P 20- DEG (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "NISSAN|NI-D23-21-L-S|2021",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN NAVARA 4P 21- DEG C/SEN (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "MAZDA|ISU-DMAX-21-VCP|2021",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA BT50 4P 21- DEG (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "SUZUKI|MA-SPRESSO-C|2020",
+    "marca": "SUZUKI",
+    "vehiculo": "SUZUKI S-PRESSO 5P 20- DEG (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "JMC|JMC-YH7-VCP|2020",
+    "marca": "JMC",
+    "vehiculo": "JMC VIGUS 4P 20- DEG (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "MITSUBISHI|OUTLANDER-22|2022",
+    "marca": "MITSUBISHI",
+    "vehiculo": "MITSUBISHI OUTLANDER 5P 22- PRIV (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "JMC|JMC-S350-VCPA|2020",
+    "marca": "JMC",
+    "vehiculo": "JMC VIGUS 4P 20- DEG C/ANT (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "HYUNDAI|HYU-I20-21-P|2020",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI I20 5P 20- VDE (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "CHEVROLET|SGMW-510-VC|2021",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET GROOVE 21- DEG C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "HYUNDAI|HYU-I30-17-L-VCP|2020",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI I30 20- VDE (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "CHANGAN|CAC-MD301-C|2022",
+    "marca": "CHANGAN",
+    "vehiculo": "CHANGAN STAR TRUCK PLUS 2P/4P 22- VDE (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "MAZDA|ISU-DMAX-21-VCS|2021",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA BT50 4P 21- DEG C/SEN C/SOP (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "MG|CSA-EI5-L-VCP|2020",
+    "marca": "MG",
+    "vehiculo": "MG 5 4P 20- DEG (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "NISSAN|NI-D23-21-L-SZ|2021",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN NAVARA 4P 21- DEG C/SEN C/CAM (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "PEUGEOT|PE-LANDTREK-20-VCP|2021",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT LANDTRECK/CHANGAN HUNTER 4P 21- DEG (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "CHEVROLET|AVEO-24-VC|2024",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET SAIL 4P/5P 24- DEG (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "MG|MG6-17-L-VCP|2020",
+    "marca": "MG",
+    "vehiculo": "MG 6 4P 20- DEG C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "RENAULT|7306AGSV|2020",
+    "marca": "RENAULT",
+    "vehiculo": "RENAULT DUSTER 5P 20- DEG (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "JMC|JMC-YUHU9-20-SA|2020",
+    "marca": "JMC",
+    "vehiculo": "JMC VIGUS 4P 20- DEG C/SEN (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "HYUNDAI|HYU-I10-20-CP|2021",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI GRAND I10 21- DEG (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "CITROEN|BRASIL-C3-22-CP|2024",
+    "marca": "CITROEN",
+    "vehiculo": "CITROEN C3 AIRCROSS 24- VDE C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "TOYOTA|VIOS-23-BM|2023",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA YARIS 4P 23- VDE ENCAP (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "KIA|CARENS-22-VCP|2022",
+    "marca": "KIA",
+    "vehiculo": "KIA CARENS 5P 22- DEG C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "HAVAL|HAVAL-H6-21-L-S|2021",
+    "marca": "HAVAL",
+    "vehiculo": "HAVAL H6 2.0 5P 21- DEG C/SEN (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "TOYOTA|TY-A200-2Z|2020",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA RAIZE 5P 20- VDE C/2CAM C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "RENAULT|REN-CLIO-19-VCS|2021",
+    "marca": "RENAULT",
+    "vehiculo": "RENAULT CLIO V 5P 21- VDE C/SEN C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "JETOUR|JETOUR-X70PLUS-21|2021",
+    "marca": "JETOUR",
+    "vehiculo": "JETOUR X70 PLUS 5P 21- VDE C/DEF 1H (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "PEUGEOT|PE-LANDTREK-20-VCS-1Z|2021",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT LANDTRECK/CHANGAN HUNTER 4P 21- DEG C/SEN C/CAM (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "GEELY|HAOYUE-20-L-S|2020",
+    "marca": "GEELY",
+    "vehiculo": "GEELY OKAVANGO 4P 20- VDE C/SEN (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "MITSUBISHI|L200-24-SZ|2024",
+    "marca": "MITSUBISHI",
+    "vehiculo": "MITSUBISHI L-200 4P 24- DEG C/SEN C/CAM (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "MG|MG-ZS-20-VC|2020",
+    "marca": "MG",
+    "vehiculo": "MG ZS/ZX 5P 20- DEG (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "FORD|BRONCO-21-Z|2021",
+    "marca": "FORD",
+    "vehiculo": "FORD BRONCO 5P 21- VDE C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "RENAULT|7306AGSMV1C|2020",
+    "marca": "RENAULT",
+    "vehiculo": "RENAULT DUSTER 5P 20- DEG C/SEN (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "MAZDA|ISU-DMAX-21-L-S2Z|2021",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA BT50 4P 21- VDE C/SEN C/2CAM C/SOP (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "JMC|JMC-DADAO-24|2024",
+    "marca": "JMC",
+    "vehiculo": "JMC GRAND AVENUE 4P 24- VDE C/DEF (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "GAC|GAC-GS3-VCP|2020",
+    "marca": "GAC",
+    "vehiculo": "GAC GS3/GS3 POWER 5P 20- DEG (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "HYUNDAI|HYU-VENUE-VCP|2020",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI VENUE 5P 20- DEG (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "MAZDA|DMAX-21-VCS-193MM|2021",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA BT50 4P 21- DEG C/SEN 193MM C/SOP (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "CHANGAN|OSHAN-X7-20-CP|2023",
+    "marca": "CHANGAN",
+    "vehiculo": "CHANGAN X7 PLUS 23- VDE (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "CITROEN|BERLINGO-24-SZ|2024",
+    "marca": "CITROEN",
+    "vehiculo": "CITROEN BERLINGO/PARTNER/RIFTER 24- VDE C/SEN C/CAM (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "JEEP|JEEP-AVENGER-23-SZ|2023",
+    "marca": "JEEP",
+    "vehiculo": "JEEP AVENGER 5P 23- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "CHERY|CHERY-T18-VCP|2020",
+    "marca": "CHERY",
+    "vehiculo": "CHERY TIGGO 3/4/8/7 PRO 5P 20- VDE (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "CHANGAN|CAC-CS35P-18-VCP|2020",
+    "marca": "CHANGAN",
+    "vehiculo": "CHANGAN CS35 PLUS 5P 20- DEG (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "KIA|CARENS-22-L-VCPS|2022",
+    "marca": "KIA",
+    "vehiculo": "KIA CARENS 5P 22- DEG C/SEN C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "PEUGEOT|PE-LANDTREK-20-VCS|2021",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT LANDTRECK/CHANGAN HUNTER 4P 21- DEG C/SEN (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "NISSAN|QASHQAI-22-VCP|2022",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN QASHQAI 5P 22- VDE C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "GEELY|BINYUE-21-L-VCP|2021",
+    "marca": "GEELY",
+    "vehiculo": "GEELY COOLRAY 5P 21- VDE C/M 1487x970mm (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "FORD|RANGER-22-VCP|2022",
+    "marca": "FORD",
+    "vehiculo": "FORD RANGER 4P 22- VDE C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "VOLKSWAGEN|BRZ-AMAROK-24-L-SZ|2024",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN AMAROK 4P 24- VDE C/SEN C/CAM (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "HONDA|HON-CITY-20-L-CP|2020",
+    "marca": "HONDA",
+    "vehiculo": "HONDA CITY 4P 20- VDE C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "MG|MG-ONE-22-L-SZ|2022",
+    "marca": "MG",
+    "vehiculo": "MG ONE 5P 22- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "JETOUR|DASHING-22-SZ|2022",
+    "marca": "JETOUR",
+    "vehiculo": "JETOUR DASHING 5P 22- VDE C/SEN C/CAM (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "TOYOTA|UN126-20-L-ZA|2020",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA HILUX 4P 20- DEG C/ANT C/CAM 57x52 C/SOP (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "TOYOTA|TY-COROLLA-CROSS-21-L-VCP|2021",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA COROLLA CROSS 5P 21- DEG (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "RENAULT|REN-CLIO-19-L-VCS-1Z|2021",
+    "marca": "RENAULT",
+    "vehiculo": "RENAULT CLIO V 5P 21- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "SUZUKI|GRAND-VITARA-23-VCP|2023",
+    "marca": "SUZUKI",
+    "vehiculo": "SUZUKI GRAND VITARA 5P 23- VDE (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "MAZDA|MAZ-CX30-VCS-1Z|2020",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA CX30 20- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "SKODA|FABIA-22-VC|2022",
+    "marca": "SKODA",
+    "vehiculo": "SKODA FABIA 5P 22- VDE C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "TOYOTA|TY-COROLLA-CROSS-21-L-VC-1Z|2021",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA COROLLA CROSS 5P 21- VDE C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "HAVAL|HAVAL-H6-21-L-SZ|2021",
+    "marca": "HAVAL",
+    "vehiculo": "HAVAL H6 / H6 GT 5P 21- DEG C/SEN C/CAM (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "CHANGAN|CS55-PLUS-21-VCP|2020",
+    "marca": "CHANGAN",
+    "vehiculo": "CHANGAN CS55 PLUS 5P 20- DEG (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "CHANGAN|CS55-PLUS-21-L-VCS|2020",
+    "marca": "CHANGAN",
+    "vehiculo": "CHANGAN CS55 PLUS 5P 20- DEG C/SEN (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "GREAT|CGW-PAO-21-SZ-DV|2021",
+    "marca": "GREAT",
+    "vehiculo": "GREAT WALL POER 21- DEG C/SEN C/2CAM (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "GREAT WALL|CGW-PAO-21-SZ-DV|2021",
+    "marca": "GREAT WALL",
+    "vehiculo": "GREAT WALL POER 21- DEG C/SEN C/2CAM (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "SSANGYONG|3047AGABLH|2020",
+    "marca": "SSANGYONG",
+    "vehiculo": "SSANGYONG KORANDO 5P 20- DEG C/DEF C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "RAM|TORO-22-SZ|2022",
+    "marca": "RAM",
+    "vehiculo": "RAM 1000 LARAMIE 4P 22- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "TOYOTA|COROLLA-CROSS-23-L-Z|2023",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA COROLLA CROSS 5P 23- VDE C/CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "NISSAN|NI-B18-L-VCP-EMB|2020",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN SENTRA B18 4P 20- DEG C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "SUBARU|FORESTER-22-L-S2Z|2022",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU FORESTER 5P 22- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "CHERY|TIGGO-3X-23|2023",
+    "marca": "CHERY",
+    "vehiculo": "CHERY TIGGO 2 /TIGGO 2 PRO MAX 5P 23- VDE C/DEF 1H (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "HYUNDAI|TUCSON-21-VCP|2021",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI TUCSON 5P 21- DEG (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "NISSAN|NI-N18-L-VCP|2020",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN VERSA 4P 20- DEG (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "CHERY|CHERY-T18-VCS|2020",
+    "marca": "CHERY",
+    "vehiculo": "CHERY TIGGO 3/4/8/7 PRO 5P 20- VDE C/SEN C/SOP (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "EXEED|EXEED-LX-23-VCS|2022",
+    "marca": "EXEED",
+    "vehiculo": "EXEED LX 5P 22- VDE C/SEN (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "RENAULT|SS-XM3-L-VCS-1Z|2020",
+    "marca": "RENAULT",
+    "vehiculo": "RENAULT ARKANA 5P 20- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "TOYOTA|TY-CHR-20-L-VCS-1Z|2020",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA C-HR 5P 20- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "AUDI|AU-A1-19-VCS|2020",
+    "marca": "AUDI",
+    "vehiculo": "AUDI A1 5P 20- VDE C/SEN C/SOP (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "FOTON|TUNLAND-22-VCPEA|2022",
+    "marca": "FOTON",
+    "vehiculo": "FOTON TUNLAND G7/G9/F9 G4P 22- VDE C/ANT (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "FORD|RANGER-22-SZ|2022",
+    "marca": "FORD",
+    "vehiculo": "FORD RANGER 4P 22- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "HYUNDAI|HYU-CN7-L-VCS-HS-1Z|2021",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI ELANTRA 4P 21- DEG C/SEN C/HS C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "RAM|TORO-22-CS|2022",
+    "marca": "RAM",
+    "vehiculo": "RAM 1000 LARAMIE 4P 22- VDE C/SEN C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "AUDI|AU-A1-21-SZ|2020",
+    "marca": "AUDI",
+    "vehiculo": "AUDI A1 5P 20- VDE C/SEN C/CAM C/SOP (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "GEELY|GEELY-NL3B-20-VCP|2021",
+    "marca": "GEELY",
+    "vehiculo": "GEELY AZKARRA 21- DEG (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "BYD|BYD-YUANUP-24-L-VCP|2024",
+    "marca": "BYD",
+    "vehiculo": "BYD YUAN PRO 5P 24- VDE C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "HYUNDAI|HYU-CN7-L-VCP|2021",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI ELANTRA 4P 21- DEG (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "NISSAN|QASHQAI-J12-22|2022",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN QASHQAI 5P 22- PRIV C/DEF 1H (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "HYUNDAI|PALISADE-20-VC|2020",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI PALISADE 5P 20- DEG (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "TOYOTA|PRADO-24-L-VCH|2024",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA LAND CRUISER PRADO 5P 24- VDE C/PINTURA (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "KIA|KMC-SONET-21-P|2021",
+    "marca": "KIA",
+    "vehiculo": "KIA SONET 5P 21- DEG (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "SSANGYONG|SSY-C300-20-L-CPSH-HS|2020",
+    "marca": "SSANGYONG",
+    "vehiculo": "SSANGYONG KORANDO 5P 20- DEG C/SEN C/DEF (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "SKODA|KODIAQ-16-VCS|2020",
+    "marca": "SKODA",
+    "vehiculo": "SKODA KODIAQ 20- VDE C/SEN C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "AEOLUS|AEOLUS-HAOHAN-23-L-1Z|2023",
+    "marca": "AEOLUS",
+    "vehiculo": "AEOLUS HAOHAN 5P 23- VDE C/CAM (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "SKODA|SKD-KODIAQ-20-VCS-1Z|2020",
+    "marca": "SKODA",
+    "vehiculo": "SKODA KODIAQ 20- VDE C/SEN C/CAM (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "MG|MG-ONE-22-VCP|2022",
+    "marca": "MG",
+    "vehiculo": "MG ONE 5P 22- VDE C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "SSANGYONG|SSY-TORRES-23-L-SZ|2022",
+    "marca": "SSANGYONG",
+    "vehiculo": "SSANGYONG TORRES 22- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "GEELY|BOYUE-20-S2Z|2021",
+    "marca": "GEELY",
+    "vehiculo": "GEELY AZKARRA 21- DEG C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "MITSUBISHI|REN-MSUV-19-VCS-1Z|2023",
+    "marca": "MITSUBISHI",
+    "vehiculo": "MITSUBISHI ASX 5P/CAPTUR 5P 23- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "PEUGEOT|JUMPY-24-SZ|2024",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT EXPERT/TRAVELLER 24- DEG C/SEN C/CAM (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "BMW|BMW-F44-VCS|2020",
+    "marca": "BMW",
+    "vehiculo": "BMW SERIE 2 GRAN COUPE F44 4P 20- VDE C/SEN C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "GAC|GAC-GS4-20-VCS|2020",
+    "marca": "GAC",
+    "vehiculo": "GAC GS4 5P 20- DEG C/SEN (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "JETOUR|JETOUR-X90-19-CA|2021",
+    "marca": "JETOUR",
+    "vehiculo": "JETOUR X90 PLUS 5P 21- VDE C/ANT C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "CHEVROLET|CHEV-TAHOE-21-VCS-1Z|2021",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET TAHOE/SUBURBAN 5P 21- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "TOYOTA|COROLLA-CROSS-21-L-S|2021",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA COROLLA CROSS 5P 21- DEG C/SEN C/SOP (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "JETOUR|JETOUR-X70-21-VCP|2021",
+    "marca": "JETOUR",
+    "vehiculo": "JETOUR X70 PLUS 5P 21- VDE C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "CHEVROLET|SILVERADO-22-SZ|2021",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET SILVERADO 2P/4P 21- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "BAIC|BAIC-X7-20-SZ|2022",
+    "marca": "BAIC",
+    "vehiculo": "BAIC X7 22- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "MG|MG-GT-21-L-VCP|2021",
+    "marca": "MG",
+    "vehiculo": "MG GT 5P 21- VDE C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "GEELY|HAOYUE-20-L-SZ|2020",
+    "marca": "GEELY",
+    "vehiculo": "GEELY OKAVANGO 4P 20- VDE C/SEN C/CAM (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "TOYOTA|PRADO-24-VCP|2024",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA LAND CRUISER PRADO 5P 24- VDE C/CALUGA (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "FORD|DW02546-VCPS-1Z|2020",
+    "marca": "FORD",
+    "vehiculo": "FORD ESCAPE 5P 20- VDE C/SEN C/CAM C/SOP (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "MG|MG-GT-21-L-1Z|2021",
+    "marca": "MG",
+    "vehiculo": "MG GT 5P 21- VDE C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "PEUGEOT|PE-308-22-SZ|2022",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT 308 5P 22- VDE C/SEN C/CAM C/SOP (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "HYUNDAI|HYU-IX25-20-VCP|2021",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI CRETA 5P 21- DEG (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "MG|MG5-21-L-VCP|2021",
+    "marca": "MG",
+    "vehiculo": "MG 5 4P 21- VDE C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "MG|MG5-21-L-1Z|2021",
+    "marca": "MG",
+    "vehiculo": "MG 5 4P 21- VDE C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "ZXAUTO|CZX-G9-24-VCPA|2024",
+    "marca": "ZXAUTO",
+    "vehiculo": "ZXAUTO GRANDLION 4P 24- VDE C/ANT (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "FORD|MAVERICK-22-Z|2022",
+    "marca": "FORD",
+    "vehiculo": "FORD MAVERICK 4P 22- VDE C/CAM C/SOP (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "FORD|TERRITORY-23-VC|2023",
+    "marca": "FORD",
+    "vehiculo": "FORD TERRITORY 5P 23- VDE C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "JETOUR|JETOUR-T2-24-CS|2024",
+    "marca": "JETOUR",
+    "vehiculo": "JETOUR T2 5P 24- VDE C/SEN C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "VOLKSWAGEN|TIGUAN-20-SZ|2020",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN TIGUAN/TERRACO 20- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "DONGFENG|CDFM-T5EVO-21-SZ|2022",
+    "marca": "DONGFENG",
+    "vehiculo": "DONGFENG T5 EVO 22- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "HONDA|CIVIC-22-L-SZ|2022",
+    "marca": "HONDA",
+    "vehiculo": "HONDA CIVIC 4P 22- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "TOYOTA|ASIA-YARIS-X-24-CP|2024",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA YARIS CROSS 5P 24- VDE C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "HYUNDAI|ACCENT-23-VCP|2023",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI ACCENT 4P 23- VDE C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "MAXUS|MAXUS-D60-19-VC|2022",
+    "marca": "MAXUS",
+    "vehiculo": "MAXUS D60/EUNIQ 6 5P 22- DEG C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "HYUNDAI|HYU-FSUV-20-L-VCS-HS-1Z|2020",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI PALISADE 5P 20- DEG C/SEN C/CAM (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "HYUNDAI|HYU-I10-EU-20-L-VCP|2020",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI I10 5P 20- VDE (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "JETOUR|JETOUR-X90-21-L-SZ-DV|2021",
+    "marca": "JETOUR",
+    "vehiculo": "JETOUR X90 PLUS 5P 21- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "JETOUR|JETOUR-X70-21-VCS|2021",
+    "marca": "JETOUR",
+    "vehiculo": "JETOUR X70 PLUS 5P 21- VDE C/SEN C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "PEUGEOT|DUCATO-23-SZ|2023",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT BOXER/DUCATO/JUMPER 23- VDE C/SEN C/CAM (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "PEUGEOT|DUCATO-25-SZ|2025",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT BOXER/DUCATO/JUMPER 25- VDE C/SEN C/CAM (EU)",
+    "anio_desde": "2025"
+  },
+  {
+    "key": "KIA|SPORTAGE-22-VCP|2022",
+    "marca": "KIA",
+    "vehiculo": "KIA SPORTAGE 5P 22- DEG C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "SUBARU|OUTLANDER-22-VCP|2022",
+    "marca": "SUBARU",
+    "vehiculo": "MITSUBISHI OUTLANDER 5P 22- VDE C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "GEELY|BINYUE-23-L-SZ|2021",
+    "marca": "GEELY",
+    "vehiculo": "GEELY COOLRAY 5P 21- VDE C/SEN C/CAM C/M 1487x970mm (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "SSANGYONG|3047AGABLCHM|2020",
+    "marca": "SSANGYONG",
+    "vehiculo": "SSANGYONG KORANDO 5P 20- DEG C/S C/D C/CAM C/SOP (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "NISSAN|NI-R53-L-SZ|2022",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN PATHFINDER 5P 22- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "NISSAN|NI-N18-L-VC-1Z|2020",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN VERSA 4P 20- VDE C/CAM C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "JETOUR|DASHING-22-S|2022",
+    "marca": "JETOUR",
+    "vehiculo": "JETOUR DASHING 5P 22- VDE C/SEN (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "GREAT|TANK-500-22-L-S2Z|2022",
+    "marca": "GREAT",
+    "vehiculo": "GREAT WALL TANK 500 5P 22- VDE C/SEN C/2CAM C/SOP ( (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "BYD|ATTO-2-22-VCP|2022",
+    "marca": "BYD",
+    "vehiculo": "BYD DOLPHIN 5P 22- VDE C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "KIA|KMC-SP2-L-VCS|2020",
+    "marca": "KIA",
+    "vehiculo": "KIA SELTOS 5P 20- VDE C/SEN C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "HYUNDAI|SANTAFE-24-L-SZ|2024",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI SANTA FE 5P 24- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "SKODA|FABIA-22-SZ|2022",
+    "marca": "SKODA",
+    "vehiculo": "SKODA FABIA 5P 22- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "PEUGEOT|DUCATO-22-SZ|2022",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT BOXER/DUCATO/JUMPER 22- VDE C/SEN C/CAM (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "CHANGAN|CS55-PLUS-21-L-SZ|2020",
+    "marca": "CHANGAN",
+    "vehiculo": "CHANGAN CS55 PLUS 5P 20- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "HYUNDAI|STARIA-22-VCP|2022",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI STARIA 5P 22- DEG C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "HYUNDAI|ELANTRA-21-L-VCS|2021",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI ELANTRA 4P 21- DEG C/SEN C/SOP (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "KIA|SPORTAGE-22-L-VCS|2022",
+    "marca": "KIA",
+    "vehiculo": "KIA SPORTAGE 5P 22- DEG C/SEN C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "BAIC|BAIC-X55-22-SZ|2022",
+    "marca": "BAIC",
+    "vehiculo": "BAIC X55 PLUS 22- VDE C/SEN C/CAM (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "FOTON|TUNLAND-22-L-SZEA|2022",
+    "marca": "FOTON",
+    "vehiculo": "FOTON TUNLAND G7/G9/F9 4P 22- VDE C/SEN C/C C/ANT (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "KIA|KIA-K3-24-VCP|2024",
+    "marca": "KIA",
+    "vehiculo": "KIA K3 4P/5P 24- VDE C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "GAC|GAC-GS3-23-SZ|2023",
+    "marca": "GAC",
+    "vehiculo": "GAC GS3/EMZOOM 5P 23- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "JEEP|COMPASS-22-VCS|2020",
+    "marca": "JEEP",
+    "vehiculo": "JEEP COMPASS 5P 20- DEG C/SEN C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "VOLKSWAGEN|VW-TAOS-21-VCS|2021",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN TAOS/ ATECA / KAROQ 5P 21- VDE C/SEN (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "SUBARU|FORESTER-22-L-2Z|2022",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU FORESTER 5P 22- VDE C/2CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "FORD|EXPEDITION-22-SZ|2022",
+    "marca": "FORD",
+    "vehiculo": "FORD EXPEDITION 5P 22- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "SUBARU|CROSSTREK-24-BM|2024",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU CROSSTREK 5P 24- VDE ENCAP (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "CHANGAN|UNI-K-21-VCS|2021",
+    "marca": "CHANGAN",
+    "vehiculo": "CHANGAN UNI-K 5P 21- VDE C/SEN C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "CHERY|TIGGO-8-PRO-22-S2Z|2021",
+    "marca": "CHERY",
+    "vehiculo": "CHERY TIGGO 8 PRO 21- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "KIA|KMC-MQ4-VCP|2021",
+    "marca": "KIA",
+    "vehiculo": "KIA SORENTO 5P 21- DEG C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "NISSAN|XTRAIL-T33-21-VCP|2021",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN XTRAIL T33 5P 21- VDE C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "SSANGYONG|REXTON-21-L-SZH|2021",
+    "marca": "SSANGYONG",
+    "vehiculo": "SSANGYONG REXTON/MUSSO 21- DEG C/SEN C/CAM C/HS C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "VOLKSWAGEN|VW-ATLAS-24|2024",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN ATLAS 24- VDE C/DEF (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "OPEL|MOKKA-21-SZ|2021",
+    "marca": "OPEL",
+    "vehiculo": "OPEL MOKKA 5P 21- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "JETOUR|JETOUR-X70-21-S2Z|2021",
+    "marca": "JETOUR",
+    "vehiculo": "JETOUR X70 PLUS 5P 21- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "HYUNDAI|SANTAFE-24-VCP|2024",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI SANTA FE 5P 24- VDE C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "HAVAL|HAVAL-JOLION-21-L-SZ|2021",
+    "marca": "HAVAL",
+    "vehiculo": "HAVAL JOLION 5P 21- VDE C/SEN C/CAM S/SOP C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "ZXAUTO|CZX-G9-24-VCPSA|2024",
+    "marca": "ZXAUTO",
+    "vehiculo": "ZXAUTO GRANDLION 4P 24- VDE C/SEN C/ANT (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "EXEED|CHERY-LX-T1C-2Z|2022",
+    "marca": "EXEED",
+    "vehiculo": "EXEED LX 5P 22- DEG C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "FORD|EXPEDITION-25-SZ1B|2025",
+    "marca": "FORD",
+    "vehiculo": "FORD EXPEDITION 5P 25- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2025"
+  },
+  {
+    "key": "FORD|TERRITORY-23-VCS|2023",
+    "marca": "FORD",
+    "vehiculo": "FORD TERRITORY 5P 23- VDE C/SEN C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "FORD TERRITORY|TERRITORY-23-VCS|2023",
+    "marca": "FORD TERRITORY",
+    "vehiculo": "FORD TERRITORY 5P 23- VDE C/SEN C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "PEUGEOT|PE-3008-24-QSZ|2024",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT 3008/5008 5P 24- VDE C/SEN C/CAM (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "GREAT WALL|CGW-PAO-21-L-VCS-DV|2021",
+    "marca": "GREAT WALL",
+    "vehiculo": "GREAT WALL POER 21- DEG C/SEN C/CAM (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "GREAT|CGW-PAO-21-L-VCS-DV|2021",
+    "marca": "GREAT",
+    "vehiculo": "GREAT WALL POER 21- DEG C/SEN GOTA C/CAM (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "TOYOTA|COROLLA-CROSS-21-L-SZ|2021",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA COROLLA CROSS 5P 21- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "SUZUKI SWIFT|SWIFT-24-1Z|2024",
+    "marca": "SUZUKI SWIFT",
+    "vehiculo": "SUZUKI SWIFT 5P 24- VDE C/CAM C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "JMC|JMC-DADAO-24-VCA|2024",
+    "marca": "JMC",
+    "vehiculo": "JMC AVENUE 4P 24- VDE C/ANT C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "JETOUR|JETOUR-X90-19-CSA|2021",
+    "marca": "JETOUR",
+    "vehiculo": "JETOUR X90 PLUS 5P 21- VDE C/SEN C/ANT C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "FORD|F150-21-SZ|2021",
+    "marca": "FORD",
+    "vehiculo": "FORD F150 2P/4P 21- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "FORD|TERRITORY-23-Z|2023",
+    "marca": "FORD",
+    "vehiculo": "FORD TERRITORY 5P 23- VDE C/CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "AUDI|AU-Q3S-20-VCS|2020",
+    "marca": "AUDI",
+    "vehiculo": "AUDI Q3 SPORTBACK 5P 20- DEG C/SEN C/SOP (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "GREAT|CGW-PAO-23-SZ-DV|2023",
+    "marca": "GREAT",
+    "vehiculo": "GREAT WALL POER 23- DEG C/SEN C/2CAM (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "KIA|SPORTAGE-22-L-SZ|2022",
+    "marca": "KIA",
+    "vehiculo": "KIA SPORTAGE 5P 22- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "MAZDA|FW05340-VCSH|2020",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA CX30 20- VDE C/SEN C/DEF C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "TOYOTA|RAV4-22-L-SZ|2022",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA RAV4 5P 22- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "FOTON|FOTON-GTL-12-1Z|2023",
+    "marca": "FOTON",
+    "vehiculo": "FOTON AUMAN 2P CAM 23- VDE C/CAM (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "CUPRA|CUPRA-FORMENTOR-20-VCS|2020",
+    "marca": "CUPRA",
+    "vehiculo": "CUPRA FORMENTOR 5P 20- VDE C/SEN C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "EXEED|EXEED-VX-20-S2ZH|2022",
+    "marca": "EXEED",
+    "vehiculo": "EXEED VX 5P 22- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "BYD|SONG-PRO-23-1Z-DV|2023",
+    "marca": "BYD",
+    "vehiculo": "BYD SONG PRO 5P 23- VDE C/CAM C/DV C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "BMW|BMW-X3-21-SZ|2021",
+    "marca": "BMW",
+    "vehiculo": "BMW X3 G01 5P 21- VDE C/SEN C/CAM C/DEF C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "GAC|GAC-GS8-22-SZ|2022",
+    "marca": "GAC",
+    "vehiculo": "GAC GS8 5P 22- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "KIA|KIA-K3-24-L-1Z|2024",
+    "marca": "KIA",
+    "vehiculo": "KIA K3 4P/5P 24- VDE C/CAM C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "HYUNDAI|TUCSON-21-L-SZ|2021",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI TUCSON 5P 21- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "JAECOO|JAECOO-J6-24-L-SZ|2024",
+    "marca": "JAECOO",
+    "vehiculo": "JAECOO J6 5P 24- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "SUBARU|CROSSTREK-24-L-3ZH|2024",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU CROSSTREK 5P 24- VDE C/3CAM C/DEF C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "JAC|JAC-K7|2020",
+    "marca": "JAC",
+    "vehiculo": "JAC GALLOP K7 CAM 20- VDE (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "FORD|TERRITORY-23-SZ|2023",
+    "marca": "FORD",
+    "vehiculo": "FORD TERRITORY 5P 23- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "JAECOO|JAECOO-J7-24-S2Z|2024",
+    "marca": "JAECOO",
+    "vehiculo": "JAECOO J7 5P 24- VDE C/SEN C/2CAM S/SOP C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "MERCEDES|W907-24-SZ|2024",
+    "marca": "MERCEDES",
+    "vehiculo": "MERCEDES BENZ SPRINTER W907 24- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "MERCEDES|W907-25-1B-SZ|2025",
+    "marca": "MERCEDES",
+    "vehiculo": "MERCEDES BENZ SPRINTER W907 25- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2025"
+  },
+  {
+    "key": "FORD|ESCAPE-USA-23-L-SZ|2023",
+    "marca": "FORD",
+    "vehiculo": "FORD ESCAPE 5P 23- VDE C/SEN C/CAM C/SOP (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "MG|MG-ZS2-25-L-SZ|2025",
+    "marca": "MG",
+    "vehiculo": "MG ZS 5P 25- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2025"
+  },
+  {
+    "key": "BMW|BMW-4-4D-22-VCS|2022",
+    "marca": "BMW",
+    "vehiculo": "BMW SERIE 4 GRAN COUPE G26 4P 22- VDE C/SEN C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "MERCEDES BENZ|W247-VCPS|2020",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ CLASE B/GLA W247 5P 20- VDE C/SEN C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "NISSAN|NI-B18-L-VCP-1Z|2020",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN SENTRA B18 4P 20- VDE C/CAM C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "MERCEDES BENZ|W247-VCS-1Z|2020",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ CLASE B/GLA W247 20- VDE C/S C/C C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "SSANGYONG|3047AGABLCH|2020",
+    "marca": "SSANGYONG",
+    "vehiculo": "SSANGYONG KORANDO 5P 20- DEG C/DEF C/CAM (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "MITSUBISHI|XFORCE-24-CPS|2024",
+    "marca": "MITSUBISHI",
+    "vehiculo": "MITSUBISHI OUTLANDER SPORT 5P 24- VDE C/SEN C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "HONDA|CRV-23-VCP|2023",
+    "marca": "HONDA",
+    "vehiculo": "HONDA CR-V 5P 23- VDE C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "HONDA|ZRV-23-SZ|2023",
+    "marca": "HONDA",
+    "vehiculo": "HONDA ZRV 5P 23- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "KIA|KMC-MQ4-L-VCS-HS-1Z|2024",
+    "marca": "KIA",
+    "vehiculo": "KIA SORENTO 5P 24- VDE C/SEN C/HS C/CAM C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "CHEVROLET|TAHOE-23-SZ|2023",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET TAHOE/SUBURBAN 5P 23- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "KIA|KMC-MQ4-L-VCS-HS-1Z|2021",
+    "marca": "KIA",
+    "vehiculo": "KIA SORENTO 5P 21- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "SUZUKI|SWIFT-24-ZA|2024",
+    "marca": "SUZUKI",
+    "vehiculo": "SUZUKI SWIFT 5P 24- VDE C/CAM C/ANT C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "KIA|SPORTAGE-22-SUV-BM|2022",
+    "marca": "KIA",
+    "vehiculo": "KIA SPORTAGE 5P 22- PRIV ENCAP (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "NISSAN|QASHQAI-22-L-S|2022",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN QASHQAI 5P 22- VDE C/SEN C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "HONDA|PILOT-23-L-SZH|2023",
+    "marca": "HONDA",
+    "vehiculo": "HONDA PILOT 5P 23- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "MITSUBISHI|OUTLANDER-22-CR|2022",
+    "marca": "MITSUBISHI",
+    "vehiculo": "MITSUBISHI OUTLANDER 5P 22- PRIV ENCAP (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "FORD|MAVERICK-22-FZ|2022",
+    "marca": "FORD",
+    "vehiculo": "FORD MAVERICK 4P 22- VDE S/DEF MANUAL (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "SEAT|SEAT-LEON-20-VCS|2020",
+    "marca": "SEAT",
+    "vehiculo": "SEAT LEON 5P 20- VDE C/SEN C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "NISSAN|NI-T33-21-VCP-1Z|2021",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN XTRAIL T33 5P 21- VDE C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "CHANGAN|UNI-K-21-SZ|2021",
+    "marca": "CHANGAN",
+    "vehiculo": "CHANGAN UNI-K 5P 21- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "VOLKSWAGEN|VW-ATLAS-21-SZ|2021",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN ATLAS 21- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "SUBARU|OUTLANDER-22-L-SZ|2022",
+    "marca": "SUBARU",
+    "vehiculo": "MITSUBISHI OUTLANDER 5P 22- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "MITSUBISHI|OUTLANDER-22-L-SZ|2022",
+    "marca": "MITSUBISHI",
+    "vehiculo": "MITSUBISHI OUTLANDER 5P 22- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "FORD|MUSTANG-24-L-SZ|2024",
+    "marca": "FORD",
+    "vehiculo": "FORD MUSTANG 2P/CAB 24- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "NISSAN|XTRAIL-21-SSZ|2021",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN XTRAIL T33 5P 21- VDE C/2SEN C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "CITROEN|CI-C4-SUV-20-QSZ|2020",
+    "marca": "CITROEN",
+    "vehiculo": "CITROEN C4 5P 20- VDE C/SEN C/CAM DIAG C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "LAND ROVER|LR-L550-21-VCS-2Z|2021",
+    "marca": "LAND ROVER",
+    "vehiculo": "LAND ROVER DISCOVERY SPORT 21- VDE C/S C/2C C/D C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "JMC|JMC-DADAO-24-L-VCSA|2024",
+    "marca": "JMC",
+    "vehiculo": "JMC AVENUE 4P 24- VDE C/SEN C/ANT C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "CITROEN|BERLINGO-24-SZH|2024",
+    "marca": "CITROEN",
+    "vehiculo": "CITROEN BERLINGO/PARTNER/RIFTER 24- VDE C/SEN C/CAM C/DEF C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "FORD|F150-23-SZ|2023",
+    "marca": "FORD",
+    "vehiculo": "FORD F150 2P/4P 23- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "JEEP|COMPASS-22-SZ|2022",
+    "marca": "JEEP",
+    "vehiculo": "JEEP COMMANDER 22- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "BMW|BMW-F44-VCS-1Z|2020",
+    "marca": "BMW",
+    "vehiculo": "BMW SERIE 2 GRAN COUPE F44 4P 20- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "BMW|BMW-4-4D-22-SZ|2022",
+    "marca": "BMW",
+    "vehiculo": "BMW SERIE 4 GRAN COUPE G26 4P 22- VDE C/SEN C/C C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "BMW|BMW-4-4D-22-S3Z|2022",
+    "marca": "BMW",
+    "vehiculo": "BMW SERIE 4 GRAN COUPE G26 4P 22- VDE C/SEN C/3C C/M(EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "SUBARU|FORESTER-25-L-S3ZH|2025",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU FORESTER 5P 25- VDE C/SEN C/DEF C/3CAM C/M (EU)",
+    "anio_desde": "2025"
+  },
+  {
+    "key": "SUBARU|FORESTER-25-L-S3Z|2025",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU FORESTER 5P 25- VDE C/SEN C/3CAM C/M (EU)",
+    "anio_desde": "2025"
+  },
+  {
+    "key": "OMODA|OMODA-5-23-L-VCS|2023",
+    "marca": "OMODA",
+    "vehiculo": "OMODA C5 5P 23- VDE C/SEN C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "TOYOTA|ASIA-YARIS-X-24-2Z|2024",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA YARIS CROSS 5P 24- VDE C/2CAM C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "HYUNDAI|ACCENT-23-L-1Z|2023",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI ACCENT 4P 23- VDE C/CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "JAECOO|JAECOO-J7-24-S2ZA|2024",
+    "marca": "JAECOO",
+    "vehiculo": "JAECOO J7 5P 24- VDE C/SEN C/2CAM C/ANT S/SOP C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "TOYOTA|PRADO-24-SZ|2024",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA LAND CRUISER PRADO 5P 24- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "SKODA|SKD-KAMIQ-21-SZ|2021",
+    "marca": "SKODA",
+    "vehiculo": "SKODA KAMIQ 5P 21- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "BMW|BMW-2-CPE-22-S|2022",
+    "marca": "BMW",
+    "vehiculo": "BMW SERIE 2 COUPE G42 2P 22- VDE C/SEN C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "MAZDA|MAZ-3-24-SZ|2024",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA 3 5P 24- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "HAVAL|HAVAL-JOLION-21-L-VCPS|2021",
+    "marca": "HAVAL",
+    "vehiculo": "HAVAL JOLION 5P 21- DEG C/SEN C/SOP (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "OPEL|MOKKA-21-QSZ|2021",
+    "marca": "OPEL",
+    "vehiculo": "OPEL MOKKA 5P 21- VDE C/SEN C/CAM DESP C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "JETOUR|JETOUR-T2-24-L-S2Z|2024",
+    "marca": "JETOUR",
+    "vehiculo": "JETOUR T2 5P 24- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "FORD|F150-24-SZ-4P|2024",
+    "marca": "FORD",
+    "vehiculo": "FORD F150 2P/4P 24- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "TOYOYA|4RUNNER-25-L-ZH|2025",
+    "marca": "TOYOYA",
+    "vehiculo": "TOYOYA 4RUNNER 5P 25- VDE C/CAM C/DEF C/M (EU)",
+    "anio_desde": "2025"
+  },
+  {
+    "key": "FIAT|FIAT-500-CAB-20-L-SZ|2020",
+    "marca": "FIAT",
+    "vehiculo": "FIAT 500 CAB 20- VDE C/SEN C/CAM /C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "SEAT|SEAT-LEON-20-VCS-1Z|2020",
+    "marca": "SEAT",
+    "vehiculo": "SEAT LEON 5P 20- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "MERCEDES BENZ|W247-VCS-3Z|2020",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ CLASE B/GLA W247 20- VDE C/S C/3C C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "HONDA|HRV-22-VCP|2023",
+    "marca": "HONDA",
+    "vehiculo": "HONDA HRV 5P 23- VDE C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "VOLKSWAGEN|VW-TAOS-21-SZ|2021",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN TAOS/ ATECA / KAROQ 5P 21- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "VOLVO|VOL-XC40-21-SZ|2021",
+    "marca": "VOLVO",
+    "vehiculo": "VOLVO XC40 5P 21- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "IVECO|SWAY-24-SZ|2024",
+    "marca": "IVECO",
+    "vehiculo": "IVECO SWAY CAM 24- DEG C/SEN C/CAM CUADRADA (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "VOLVO|VOL-EX90-24-SZ|2024",
+    "marca": "VOLVO",
+    "vehiculo": "VOLVO EX90 5P 24- VDE C/SEN C/CAM S/SOP C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "HYUNDAI|HYU-SANTAFE-21-L-SZ|2021",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI SANTA FE 5P 21- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "EXEED|EXEED-TX-21-S2Z|2022",
+    "marca": "EXEED",
+    "vehiculo": "EXEED TXL 22- DEG C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "NISSAN|QASHQAI-22-L-SZ|2022",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN QASHQAI 5P 22- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "KIA|KMC-K5-20-L-VCS|2020",
+    "marca": "KIA",
+    "vehiculo": "KIA OPTIMA 4P 20- VDE C/SEN (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "RENAULT|REN-T460-20-SZ|2021",
+    "marca": "RENAULT",
+    "vehiculo": "RENAULT C430/K460/T460 CAM 21- DEG C/SEN C/CAM SMALL(EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "GEELY|HAOYUE-23-L-SZ|2023",
+    "marca": "GEELY",
+    "vehiculo": "GEELY OKAVANGO 4P 23- VDE C/SEN C/CAM (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "BMW|BMW-X3-22-S3Z|2021",
+    "marca": "BMW",
+    "vehiculo": "BMW X3 G01 5P 21- VDE C/SEN C/3CAM C/DEF C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "FORD|TRANSIT-HIGH-24-SZ-FH|2024",
+    "marca": "FORD",
+    "vehiculo": "FORD TRANSIT VAN 24- (CAB ALTA) VDE C/SEN C/CAM (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "LEXUS|UX-19-L-SH|2020",
+    "marca": "LEXUS",
+    "vehiculo": "LEXUS UX 5P 20- VDE C/SEN C/DEF C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "FIAT|FIAT-500-HBK-20-L-SZ|2020",
+    "marca": "FIAT",
+    "vehiculo": "FIAT 500 3P 20- VDE C/SEN C/CAM /C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "FORD|MAVERICK-25-1Z|2025",
+    "marca": "FORD",
+    "vehiculo": "FORD MAVERICK 4P 25- VDE C/ BIG CAM C/SOP (EU)",
+    "anio_desde": "2025"
+  },
+  {
+    "key": "BMW|BMW2-F74-25-S2Z-3L|2025",
+    "marca": "BMW",
+    "vehiculo": "BMW SERIE 2 GRAN COUPE F74 4P 25- VDE C/SEN C/CAM SMALL C/M (EU)",
+    "anio_desde": "2025"
+  },
+  {
+    "key": "FORD|BRONCO-SPORT-21-L-SZ|2021",
+    "marca": "FORD",
+    "vehiculo": "FORD BRONCO SPORT 5P 21- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "MAXUS|MAXUS-G90-22-SZ|2022",
+    "marca": "MAXUS",
+    "vehiculo": "MAXUS G90 VAN 22- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "HYUNDAI|TUCSON-21-LWB|2021",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI TUCSON 5P 21- PRIV C/DEF LONG SIZE C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "HAVAL|HAVAL-DARGO-20-S|2022",
+    "marca": "HAVAL",
+    "vehiculo": "HAVAL DARGO 5P 22- DEG C/SEN C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "GREAT|TANK-300-21-L-S2Z|2021",
+    "marca": "GREAT",
+    "vehiculo": "GREAT WALL TANK 300 5P 21- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "PEUGEOT|PE-2008-25-SZ|2025",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT 2008 5P 25- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2025"
+  },
+  {
+    "key": "JAGUAR|JA-FPACE-21-VCS-2Z|2021",
+    "marca": "JAGUAR",
+    "vehiculo": "JAGUAR F-PACE 5P 21- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "JEEP|GRAND-CHEROKEE-22-L-SZ|2022",
+    "marca": "JEEP",
+    "vehiculo": "JEEP GRAND CHEROKEE 5P 22- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "GAC|GAC-EMKOO-22-SZ|2022",
+    "marca": "GAC",
+    "vehiculo": "GAC EMKOO 5P 22- VDE C/SEN C/CAM (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "LAND ROVER|RR-L551-21-S2Z|2021",
+    "marca": "LAND ROVER",
+    "vehiculo": "LAND ROVER EVOQUE 5P 21- VDE C/SEN C/2CAM (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "MERCEDES|W206C-21-SZ|2021",
+    "marca": "MERCEDES",
+    "vehiculo": "MERCEDES BENZ CLASE C W206 21- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "FORD|DW02542-VCS-1Z|2020",
+    "marca": "FORD",
+    "vehiculo": "FORD TRANSIT VAN 20- CAB ALTA DEG C/S C/CAM C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "SUZUKI JIMNY|JIMNY-24-2Z|2024",
+    "marca": "SUZUKI JIMNY",
+    "vehiculo": "SUZUKI JIMNY 5P 24- VDE C/2CAM C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "FORD|3773AGSCMVZ|2020",
+    "marca": "FORD",
+    "vehiculo": "FORD TRANSIT VAN 14- CAB ALTA DEG C/S C/CAM C/D C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "CUPRA|CUPRA-FORMENTOR-20-VCS-1Z|2020",
+    "marca": "CUPRA",
+    "vehiculo": "CUPRA FORMENTOR 5P 20- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "MG|MARVEL-21-SZ|2021",
+    "marca": "MG",
+    "vehiculo": "MG MARVEL 5P 21- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "HONDA|CRV-23-SZ|2023",
+    "marca": "HONDA",
+    "vehiculo": "HONDA CR-V 5P 23- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "VOLVO|FH-20-SZ|2020",
+    "marca": "VOLVO",
+    "vehiculo": "VOLVO FH13 20- VDE C/SEN MID C/CAM SMALL C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "BMW|BMW-2-CPE-22-SZ|2022",
+    "marca": "BMW",
+    "vehiculo": "BMW SERIE 2 COUPE G42 2P 22- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "BYD|ATTO-3-24-L-2Z|2023",
+    "marca": "BYD",
+    "vehiculo": "BYD YUAN PLUS 5P 23- VDE C/CAM C/DV C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "OMODA|OMODA-5-23-SZ|2023",
+    "marca": "OMODA",
+    "vehiculo": "OMODA C5 5P 23- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "VOLVO|FH-23-SZ|2023",
+    "marca": "VOLVO",
+    "vehiculo": "VOLVO FH13 23- VDE C/SEN MID C/CAM SMALL C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "VOLVO|FH-24-SZ|2024",
+    "marca": "VOLVO",
+    "vehiculo": "VOLVO FH13 24- VDE C/SEN LEFT C/CAM BIG C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "BYD SHARK|SHARK-25-L-SZ-DV|2025",
+    "marca": "BYD SHARK",
+    "vehiculo": "BYD SHARK 4P 25- VDE C/SEN C/2CAM (EU)",
+    "anio_desde": "2025"
+  },
+  {
+    "key": "CHANGAN|UNI-T-20-SSZ|2020",
+    "marca": "CHANGAN",
+    "vehiculo": "CHANGAN UNI-T 20- DEG C/2SEN C/CAM C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "BYD|SONG-PLUS-23-L-S2Z|2023",
+    "marca": "BYD",
+    "vehiculo": "BYD SONG PLUS 5P 23- VDE C/SEN C/CAM C/DV C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "MAZDA|CX60-23-SZ|2023",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA CX60/CX90 5P 23- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "LEXUS|RX-23-L-SZ|2020",
+    "marca": "LEXUS",
+    "vehiculo": "LEXUS RX 4P 20- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "MERCEDES BENZ|W206C-23-SZ|2023",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ CLASE C W206C 4P 23- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "CITROEN|CI-DS3-22-QSZ|2022",
+    "marca": "CITROEN",
+    "vehiculo": "CITROEN DS3 CROSSBACK 5P 22- VDE C/S C/CAM DIAG C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "CHANGAN|UNI-T-22-SSZ|2020",
+    "marca": "CHANGAN",
+    "vehiculo": "CHANGAN UNI-T 22- DEG C/2SEN C/CAM C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "CHERY|FULWIN-T9-25-L-SZA-DV|2025",
+    "marca": "CHERY",
+    "vehiculo": "CHERY TIGGO 9 5P 25- VDE C/SEN C/2CAM C/ANT C/M (EU)",
+    "anio_desde": "2025"
+  },
+  {
+    "key": "KIA|TASMAN-26-L-S2Z|2026",
+    "marca": "KIA",
+    "vehiculo": "KIA TASMAN 4P 26- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2026"
+  },
+  {
+    "key": "AUDI|AU-Q7-22-SZ|2022",
+    "marca": "AUDI",
+    "vehiculo": "AUDI Q7 5P 22- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "VOLVO|VOL-S60-22-SZ|2022",
+    "marca": "VOLVO",
+    "vehiculo": "VOLVO V60/S60 4P/5P 22- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "LEXUS|NX-22-L-SZ|2022",
+    "marca": "LEXUS",
+    "vehiculo": "LEXUS NX 5P 22- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "JAECOO|JAECOO-J8-24-L-SZ-DV|2024",
+    "marca": "JAECOO",
+    "vehiculo": "JAECOO J8 5P 24- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "CITROEN|CI-C4-SUV-20-SZ|2020",
+    "marca": "CITROEN",
+    "vehiculo": "CITROEN C4 5P 20- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "HONDA|HRV-22-SZ|2023",
+    "marca": "HONDA",
+    "vehiculo": "HONDA HRV 5P 23- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "AUDI|AU-A3-20-VCS-1Z|2020",
+    "marca": "AUDI",
+    "vehiculo": "AUDI A3 4P/5P 20- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "BMW|BMW-X4-22-S3Z|2022",
+    "marca": "BMW",
+    "vehiculo": "BMW X4 G02 5P 22- VDE C/SEN C/3CAM C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "CITROEN|CI-C4-SUV-25-QSZ|2025",
+    "marca": "CITROEN",
+    "vehiculo": "CITROEN C4 5P 25- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2025"
+  },
+  {
+    "key": "RENAULT|REN-T460-24-SZ|2024",
+    "marca": "RENAULT",
+    "vehiculo": "RENAULT C430/K460/T460 CAM 24- DEG C/SEN C/CAM (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "VOLKSWAGEN|VW-ATLAS-24-SZ|2024",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN ATLAS 24- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "SMART|SMART#1-23-L-SZ|2023",
+    "marca": "SMART",
+    "vehiculo": "SMART #1 5P 23- VDE C/SEN C/CAM (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "KIA|KMC-CARNIVAL-21-L-VC-1Z|2021",
+    "marca": "KIA",
+    "vehiculo": "KIA GRAND CARNIVAL 5P 21- DEG C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "KIA|KMC-CARNIVAL-21-L-VCS-1Z|2021",
+    "marca": "KIA",
+    "vehiculo": "KIA GRAND CARNIVAL 5P 21- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "BMW|BMW-X1-23-S3Z|2023",
+    "marca": "BMW",
+    "vehiculo": "BMW X1 U11 5P 23- VDE C/SEN C/3CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "SUBARU|CROSSTREK-24-L-S3Z|2024",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU CROSSTREK 5P 24- VDE C/SEN C/3CAM C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "BMW|BMW-X1-23-S2Z|2023",
+    "marca": "BMW",
+    "vehiculo": "BMW X1 U11 5P 23- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "FORD|EXPLORER-25-L-SZ|2025",
+    "marca": "FORD",
+    "vehiculo": "FORD EXPLORER 5P 25- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2025"
+  },
+  {
+    "key": "BMW|BMW-X1-23-SZ|2023",
+    "marca": "BMW",
+    "vehiculo": "BMW X1 U11 5P 23- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "FORD|MAVERICK-22-FZ-POWER|2022",
+    "marca": "FORD",
+    "vehiculo": "FORD MAVERICK 4P 22- VDE S/DEF ELECTRICA (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "SUBARU|OUTBACK-21-L-S2ZH|2021",
+    "marca": "SUBARU",
+    "vehiculo": "LEGACY OUTBACK 21- VDE C/SEN C/2CAM C/DEF C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "LAND ROVER|DEFENDER-24-S2Z|2021",
+    "marca": "LAND ROVER",
+    "vehiculo": "LAND ROVER DEFENDER 5P 21- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "VOLVO|XC60-21-SZ|2021",
+    "marca": "VOLVO",
+    "vehiculo": "VOLVO XC60 21- VDE C/S C/CAM C/DEF C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "HONDA|PILOT-23-Z|2023",
+    "marca": "HONDA",
+    "vehiculo": "HONDA PILOT 5P 23- VDE C/CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "SUBARU|CROSSTREK-24-L-S3ZH|2024",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU CROSSTREK/IMPREZA 24- VDE C/S C/DEF C/3C C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "SUBARU|ASCENT-23-L-S3ZH|2023",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU EVOLTIS 5P 23- VDE C/SEN C/DEF C/3CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "MERCEDES BENZ|GLC-23-S2Z|2023",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ GLC CLASS 5P 23- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "VOLVO|VOL-EX30-24-L-SZ|2024",
+    "marca": "VOLVO",
+    "vehiculo": "VOLVO EX30 5P 24- VDE C/SEN 121MM C/CAM S/SOP C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "VOLVO|VOL-EX30-24-L-SZ2L|2024",
+    "marca": "VOLVO",
+    "vehiculo": "VOLVO EX30 5P 24- VDE C/SEN 89MM C/CAM S/SOP C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "VOLVO XC|XC90-22-SZ|2022",
+    "marca": "VOLVO XC",
+    "vehiculo": "VOLVO XC90 5P 22- VDE C/SEN C/CAM C/DEF C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "MERCEDES|GLE-CPE-20-VCSH-1Z|2020",
+    "marca": "MERCEDES",
+    "vehiculo": "MERCEDES BENZ GLE COUPE C167 20- VDE C/S C/C C/D C/M(EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "MERCEDES|GLE-CPE-20-S2ZH|2020",
+    "marca": "MERCEDES",
+    "vehiculo": "MERCEDES BENZ GLE COUPE C167 20-VDE C/S C/2C C/D C/M(EU)",
+    "anio_desde": "2020"
+  },
+  {
+    "key": "VOLVO|VOL-XC40-21-SZH|2021",
+    "marca": "VOLVO",
+    "vehiculo": "VOLVO XC40 5P 21- DEG C/SEN C/CAM C/DEF C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "TRANSIT|CUSTOM-24-SZH|2024",
+    "marca": "TRANSIT",
+    "vehiculo": "FORD TRANSIT CUSTOM FUR 24- VDE C/S C/CAM C/D C/SOP C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "TESLA|TESLA-Y-22-L-ZH|2022",
+    "marca": "TESLA",
+    "vehiculo": "TESLA Y 5P 22- VDE C/CAM C/DEF PLANO C/M (EU)",
+    "anio_desde": "2022"
+  },
+  {
+    "key": "TESLA|TESLA-Y-23-L-ZH|2023",
+    "marca": "TESLA",
+    "vehiculo": "TESLA Y 5P 23- VDE C/CAM C/DEF CURVO C/M (EU)",
+    "anio_desde": "2023"
+  },
+  {
+    "key": "TESLA|TESLA-3-24-L-SZH|2024",
+    "marca": "TESLA",
+    "vehiculo": "TESLA 3 4P 24- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "LAND ROVER|7049AGACHMVZ1L|2021",
+    "marca": "LAND ROVER",
+    "vehiculo": "LAND ROVER EVOQUE 5P 21- VDE C/SEN C/2CAM C/DEF C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "LAND ROVER|LR-L462-21-S2ZH|2021",
+    "marca": "LAND ROVER",
+    "vehiculo": "LAND ROVER DISCOVERY V 5P 21- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "TESLA|TESLA-Y-24-L-ZH|2024",
+    "marca": "TESLA",
+    "vehiculo": "TESLA Y 5P 24- VDE C/CAM C/DEF CURVO 2 C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "BYD|SHARK-25-L-SZ-DV|2025",
+    "marca": "BYD",
+    "vehiculo": "BYD SHARK 4P 25- VDE C/SEN C/2CAM HUD (EU)",
+    "anio_desde": "2025"
+  },
+  {
+    "key": "LAND ROVER|RR-VELAR-23-S2ZH|2021",
+    "marca": "LAND ROVER",
+    "vehiculo": "LAND ROVER RANGE ROVER VELAR 21- VDE C/SEN C/DEF C/2CAM C/M (EU)",
+    "anio_desde": "2021"
+  },
+  {
+    "key": "FORD|DW02959-HUD|2024",
+    "marca": "FORD",
+    "vehiculo": "FORD F150 2P/4P 24- VDE C/SEN C/CAM HUD C/M (EU)",
+    "anio_desde": "2024"
+  },
+  {
+    "key": "RANGE|RR-SPORT-24-S2Z|2024",
+    "marca": "RANGE",
+    "vehiculo": "RANGE ROVER SPORT L461 5P 24- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2024"
+  }
+]

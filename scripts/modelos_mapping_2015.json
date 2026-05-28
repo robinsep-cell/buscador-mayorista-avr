@@ -1,0 +1,3014 @@
+[
+  {
+    "key": "KIA|KMC-JA|2017",
+    "marca": "KIA",
+    "vehiculo": "KIA MORNING 5P 17- VDE C/DEF 1H (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "SUBARU|SUB-G5-HBK|2017",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU IMPREZA/XV 5P 17- VDE C/DEF (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "SUZUKI|MA-ZC83S-SED|2017",
+    "marca": "SUZUKI",
+    "vehiculo": "SUZUKI DZIRE 4P 17- VDE C/DEF (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "KIA|KMC-YB-SED|2017",
+    "marca": "KIA",
+    "vehiculo": "KIA RIO 4 4P 17- VDE C/DEF (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "TOYOTA|TY-AS50|2019",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA RAV4 5P 19- PRIV C/DEF (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "TOYOTA|TY-NSP151-H5|2018",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA YARIS 5P 18- VDE (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "TOYOTA|UN126-4D|2016",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA HILUX 4P 16- VDE (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "CITROEN|2763RGSV3FVWZ|2019",
+    "marca": "CITROEN",
+    "vehiculo": "CITROEN BERLINGO/PARTNER/RIFTER 19- VDE (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CHEVROLET|SAIL-15|2016",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET SAIL 4P 16- VDE C/DEF (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "KIA|KMC-YB-H5|2017",
+    "marca": "KIA",
+    "vehiculo": "KIA RIO 5 5P 17- VDE (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "VOLKSWAGEN|TCROSS-19-SL|2019",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN T-CROSS 19- VDE LONG 1H (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "VOLKSWAGEN|TIGUAN-17|2017",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN TIGUAN 5P SUV 17- VDE 2H (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "TOYOTA|TY-NSP151|2018",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA YARIS 4P 18- VDE (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "HONDA|FV26563|2016",
+    "marca": "HONDA",
+    "vehiculo": "HONDA PILOT 5P 16- PRIV (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "HONDA|FV27047|2016",
+    "marca": "HONDA",
+    "vehiculo": "HONDA RIDGELINE 4P 16- PRIV (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "HYUNDAI|HYU-AD|2016",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI ELANTRA 4P 16- VDE C/DEF (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "JEEP|WRANGLER-18|2019",
+    "marca": "JEEP",
+    "vehiculo": "JEEP WRANGLER SAHARA/RUBICOM 3P/5P 19- PRIV C/DEF C/M 4H (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "BMW|BMW-X1-16|2016",
+    "marca": "BMW",
+    "vehiculo": "BMW X1 F48 5P SUV 16- PRIV C/DEF 1H (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "TOYOTA|GN160|2016",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA FORTUNER 5P 16- VDE C/DEF (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "MITSUBISHI|L200-16|2016",
+    "marca": "MITSUBISHI",
+    "vehiculo": "MITSUBISHI l-200 4P 16- VDE C/DEF (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "SUBARU|SUB-G5-SED|2017",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU IMPREZA 4P 17- VDE (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "NISSAN|FV27086|2016",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN KICKS 5D SUV 16- VDE (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "CHEVROLET|CHEV-ONIX-H5-13|2016",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET ONIX/PRISMA 4P/ 5P 16- VDE (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "CHEVROLET|CHEV-ONIX-20-HBK|2019",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET ONIX 5P 19- VDE C/DEF (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CHEVROLET|CHEV-ONIX-20|2019",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET ONIX 4P 19- VDE C/DEF (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CHEVROLET|CHEV-N400-19|2019",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET N400 MAX 3P 19- VDE S/DEF (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MITSUBISHI|MIT-SUV-18|2018",
+    "marca": "MITSUBISHI",
+    "vehiculo": "MITSUBISHI ECLIPSE CROSS 5P 18- PRIV C/DEF SUPERIOR 1H (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "KIA|KMC-YP|2015",
+    "marca": "KIA",
+    "vehiculo": "KIA GRAND CARNIVAL 15- PRIV (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "MAXUS|LDV-T60|2016",
+    "marca": "MAXUS",
+    "vehiculo": "MAXUS T60/T90 4P 16- VDE C/DEF (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "RAM|MOBI|2016",
+    "marca": "RAM",
+    "vehiculo": "FIAT MOBI 5P 16- VDE C/DEF (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "FIAT|CRONOS-18|2017",
+    "marca": "FIAT",
+    "vehiculo": "FIAT CRONOS 4P 17- VDE C/DEF (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "JEEP|WRANGLER-18-5D|2019",
+    "marca": "JEEP",
+    "vehiculo": "JEEP WRANGLER SAHARA/RUBICOM/GLADIATOR 3P/5P 19- PRIV (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "BMW|BMW-X3-18|2017",
+    "marca": "BMW",
+    "vehiculo": "BMW X3 G01 5P 17- PRIV C/DEF C/ANT 1H (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "JEEP|DD12883|2017",
+    "marca": "JEEP",
+    "vehiculo": "JEEP COMPASS 5P SUV 17- PRIV (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "SUBARU|SUB-BN9|2015",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU LEGACY 4P 15- PRIV (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "HONDA|CRV-17|2017",
+    "marca": "HONDA",
+    "vehiculo": "HONDA CR-V 17- PRIV C/DEF 1H (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "TOYOTA|TY-F800|2018",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA RUSH 5P 18- DEG (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "VOLKSWAGEN|VW-FSUV-17|2017",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN ATLAS 17- PRIV LAM (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "CHANGAN|CAC-CX70|2016",
+    "marca": "CHANGAN",
+    "vehiculo": "CHANGAN CX70 5P 16- VDE C/DEF (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "KIA|KMC-QL|2016",
+    "marca": "KIA",
+    "vehiculo": "KIA SPORTAGE 5P SUV 16- PRIV C/DEF (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "SUBARU|SUB-G5|2017",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU IMPREZA/XV 4P/5P 17- VDE (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "SUZUKI|YSA|2017",
+    "marca": "SUZUKI",
+    "vehiculo": "SUZUKI SWIFT 5P 17- PRIV C/DEF (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "SUBARU|SUB-SK5|2019",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU FORESTER 5P 19- PRIV C/DEF (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "FIAT|ARGO-17|2017",
+    "marca": "FIAT",
+    "vehiculo": "FIAT ARGO 5P 17- VDE C/DEF (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "FIAT|NEW|2017",
+    "marca": "FIAT",
+    "vehiculo": "FIAT ARGO/CRONOS/PULSE 5P 17- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "FORD|MUSTANG-18-L-SZ|2018",
+    "marca": "FORD",
+    "vehiculo": "FORD MUSTANG 2P/CAB 18- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "VOLKSWAGEN|TCROSS-19|2019",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN T-CROSS 19- VDE C/DEF 1H (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "HYUNDAI|HYU-TM|2019",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI SANTA FE 5P 19- PRIV C/DEF (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CHERY|CHERY-A19|2017",
+    "marca": "CHERY",
+    "vehiculo": "CHERY ARRIZO 3 17- VDE C/DEF (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "NISSAN|NI-D23|2018",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN NP300 (MB CLASE X 18-) 4P 15- VDE C/DEF (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "CHERY|CHERY-A16|2017",
+    "marca": "CHERY",
+    "vehiculo": "CHERY ARRIZO 3 4P 17- VDE C/DEF (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "CHERY|CHERY-3X|2016",
+    "marca": "CHERY",
+    "vehiculo": "CHERY TIGGO 2 /TIGGO 2 PRO 5P 16- VDE C/DEF 1H (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "CHEVROLET|EQUINOX-17|2017",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET EQUINOX 5D 17- PRIV C/DEF (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "GREAT WALL|CGW-WIN7|2018",
+    "marca": "GREAT WALL",
+    "vehiculo": "GREAT WALL WINGLE 7 4P 18- VDE C/DEF (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "PEUGEOT|PE-208-H5-19|2019",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT 208 /OPEL CORSA 5P 19- VDE 2H (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CITROEN|2763RGSV3FD|2019",
+    "marca": "CITROEN",
+    "vehiculo": "CITROEN BERLINGO/PARTNER/RIFTER 19- VDE 2H (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "HONDA|FD26558|2016",
+    "marca": "HONDA",
+    "vehiculo": "HONDA PILOT/RIDGELINE 5P 16- VDE (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "SSANGYONG|REXTON-18|2018",
+    "marca": "SSANGYONG",
+    "vehiculo": "SSANGYONG REXTON 5P SUV 18- PRIV C/DEF (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "JETOUR|CHERY-X70|2019",
+    "marca": "JETOUR",
+    "vehiculo": "JETOUR X70 5P 19- VDE C/DEF 1H (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "SUZUKI|WB32S|2016",
+    "marca": "SUZUKI",
+    "vehiculo": "SUZUKI BALENO 5P 16- PRIV C/DEF 1H (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "FORD|JMC-S330|2019",
+    "marca": "FORD",
+    "vehiculo": "FORD TERRITORY 5P 19- VDE C/DEF 1H (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CHEVROLET|SPIN-13|2015",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET SPIN 5P 15- VDE C/DEF 1H (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "JEEP|DQ12885|2017",
+    "marca": "JEEP",
+    "vehiculo": "LATERAL TRASERO DERECHO JEEP COMPASS 5P SUV 17- PRIV (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "JEEP|DQ12884|2017",
+    "marca": "JEEP",
+    "vehiculo": "LATERAL TRASERO IZQUIERDO JEEP COMPASS 5P SUV 17- PRIV (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "GREAT WALL|HAVAL-H6-17|2019",
+    "marca": "GREAT WALL",
+    "vehiculo": "GREAT WALL HAVAL H6 19- PRIV (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CHEVROLET|SGMW-530|2019",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET CAPUERTA TRASERA IZQUIERDAVA 5P 19- VDE C/DEF (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "SUZUKI|SUZ-JB64|2018",
+    "marca": "SUZUKI",
+    "vehiculo": "SUZUKI JIMNY 3P/5P 18- VDE (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MITSUBISHI|MIT-XPD-17|2017",
+    "marca": "MITSUBISHI",
+    "vehiculo": "MITSUBISHI XPANDER 5P 17- PRIV C/DEF (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "VOLKSWAGEN|TIGUAN-17-SL|2017",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "LATERAL TRASERO DERECHO VOLKSWAGEN TIGUAN 5P SUV (7 PASAJEROS) 17- PRIV ENCAP (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "SUBARU|SUB-BS9-STW|2015",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU LEGACY SW/OUTBACK 15- PRIV C/DEF (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "HYUNDAI|BAIC-REINA|2018",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI VERNA 4P 18- VDE C/DEF (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "CHANGAN|CAC-CS15|2016",
+    "marca": "CHANGAN",
+    "vehiculo": "CHANGAN CS15 5P 16- PRIV C/DEF 1H (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "GREAT WALL|CGW-PAO-19|2019",
+    "marca": "GREAT WALL",
+    "vehiculo": "GREAT WALL POER 19- VDE C/DEF (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "GREAT|CGW-PAO-19|2019",
+    "marca": "GREAT",
+    "vehiculo": "GREAT WALL POER 19- PRIV C/DEF (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "KIA|KMC-YB|2017",
+    "marca": "KIA",
+    "vehiculo": "KIA RIO 4/RIO 5 4P/5P 17- VDE (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "JEEP|DD12880|2017",
+    "marca": "JEEP",
+    "vehiculo": "JEEP COMPASS 5P SUV 17- VDE (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "KIA|KMC-PEGAS|2017",
+    "marca": "KIA",
+    "vehiculo": "KIA SOLUTO 4P 17- VDE C/DEF (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "PEUGEOT|3008-16|2017",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT 3008 5P SUV 17- PRIV C/DEF (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "MAZDA|CX5-17|2017",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA CX5 5P SUV 17- VDE LAM (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "MAZDA|CX3|2016",
+    "marca": "MAZDA",
+    "vehiculo": "LATERAL TRASERO IZQUIERDO MAZDA CX3 5P SUV 16- PRIV (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "FORD|DD12400|2016",
+    "marca": "FORD",
+    "vehiculo": "FORD F150 4P 16- PRIV 2H (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "VOLKSWAGEN|VW-JETTA-19|2018",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN BORA/VENTO/JETTA 4P 18- VDE C/DEF (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "CHANGAN|CAC-A600|2016",
+    "marca": "CHANGAN",
+    "vehiculo": "CHANGAN A500/A600 5P 16- VDE C/DEF (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "DONGFENG|CDFM-AX4|2018",
+    "marca": "DONGFENG",
+    "vehiculo": "DONGFENG 5P AX4 18- VDE C/DEF (Ho)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "HYUNDAI|HYU-HC|2018",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI ACCENT 4P 18- VDE (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MAXUS|LDV-V90-19|2019",
+    "marca": "MAXUS",
+    "vehiculo": "MAXUS V90 19- VDE (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "PEUGEOT|2756RGSV5FD|2016",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT EXPERT 16- VDE 2H (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "CITROEN|2755RGSR5FD|2015",
+    "marca": "CITROEN",
+    "vehiculo": "CITROEN C4 CACTUS 5P 15- VDE 2H (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "SSANGYONG|REXTON-18-P4|2018",
+    "marca": "SSANGYONG",
+    "vehiculo": "SSANGYONG MUSSO 4P SUV 18- PRIV (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MG|MG-ZS-17|2018",
+    "marca": "MG",
+    "vehiculo": "MG ZS 5P SUV 18- VDE C/DEF (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MAHINDRA|IN-KUV100|2016",
+    "marca": "MAHINDRA",
+    "vehiculo": "MAHINDRA KUV100 5P 16- VDE 2H (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "CHEVROLET|DD13102|2019",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET SILVERADO 2P/4P 19- VDE 1H (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MERCEDES BENZ|W177-H5|2019",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ A200 5P W177 19- PRIV 1H (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CITROEN|CIT-BERLINGO-18-WK|2019",
+    "marca": "CITROEN",
+    "vehiculo": "IZQUIERDA CITROEN BERLINGO/PARTNER/RIFTER 19- VDE C/DEF (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "PEUGEOT|PE-2008-19|2019",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT 2008 5P 19- PRIV C/DEF C/M 1H (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "TOYOTA|UN126|2016",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA HILUX 4P 16- VDE C/DEF (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "PEUGEOT|2756BGSVR1H|2016",
+    "marca": "PEUGEOT",
+    "vehiculo": "DERECHA PEUGEOT EXPERT 16- VDE C/DEF 1H (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "PEUGEOT|2756BGSVL1H|2016",
+    "marca": "PEUGEOT",
+    "vehiculo": "IZQUIERDA PEUGEOT EXPERT 16- VDE C/DEF 1H (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "RAM|MOBI-C|2016",
+    "marca": "RAM",
+    "vehiculo": "FIAT MOBI 5P 16- /RAM 700 3P 21- VDE (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "CHEVROLET|TRACKER-19|2019",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET TRACKER 5P 19- PRIV C/DEF 1H (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CHEVROLET|CHEV|2015",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET N300 (LIFAN FOISON CARGO 15-) 11- DEG (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "CHEVROLET|DD13105|2019",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET SILVERADO 4P 19- PRIV LARGA 2H (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "JAC|JAC-T6-VP|2015",
+    "marca": "JAC",
+    "vehiculo": "JAC T6/T8 4P 15- DEG (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "FORD|DD12393|2016",
+    "marca": "FORD",
+    "vehiculo": "FORD F150 2P/4P 16- VDE LAM (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "NISSAN|NI-D23-CP|2015",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN NP300 4P 15- DEG (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "CITROEN|2755LGSR5RDO|2015",
+    "marca": "CITROEN",
+    "vehiculo": "CITROEN C4 CACTUS 5P 15- PRIV (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "CHEVROLET|SGMW-HV-19-VC|2019",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET N400 MAX 3P 19- DEG (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "NISSAN|FB27088|2016",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN KICKS 5D SUV 16- VDE C/DEF 1H (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "FOTON|FOTON-V5|2015",
+    "marca": "FOTON",
+    "vehiculo": "FOTON MIDI EXTRA CARGO V5 15- DEG (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "BAIC|BAIC-BC306Z|2015",
+    "marca": "BAIC",
+    "vehiculo": "BAIC PLUS CARGO 15- VDE (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "BRILLIANCE|JBC-T32|2019",
+    "marca": "BRILLIANCE",
+    "vehiculo": "BRILLIANCE T30/T32/T50/T52/X30 2P/4P/FUR 19- DEG (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "TOYOTA|UN126-L-VP|2016",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA HILUX 4P 16- DEG (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "VOLKSWAGEN|GOL-HBK-17-WK|2017",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN GOL G5 5P 17- VDE C/DEF (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "FAW|FAW-V80-P|2015",
+    "marca": "FAW",
+    "vehiculo": "FAW MAMUT V80/T80 15- VDE (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "JAC|JAC-S2-VP|2017",
+    "marca": "JAC",
+    "vehiculo": "JAC S2/JS2 5P 14- DEG C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "KYC|CAC-X5|2019",
+    "marca": "KYC",
+    "vehiculo": "KYC X5 PLUS 2P/4P/FUR 19- DEG (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CHEVROLET|PRISMA-SED-13|2016",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET PRISMA 4P 16- VDE C/DEF (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "SUBARU|SUB-G5-SED-NH|2017",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU IMPREZA 4P 17- VDE C/DEF (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "NISSAN|KICKS-L-VCP|2016",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN KICKS 5P 16- VDE C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "HYUNDAI|BAIC-REINA-VCP|2018",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI VERNA 4P 18- DEG (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "HYUNDAI|HYU-HC-SED|2018",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI ACCENT 4P 18- VDE C/DEF (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "VOLKSWAGEN|8649AGSVZ|2019",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN T-CROSS 19- VDE (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MITSUBISHI|FE710|2016",
+    "marca": "MITSUBISHI",
+    "vehiculo": "MITSUBISHI CANTER FUSO 16- DEG CAB ANGOSTA 153*75 (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "RENAULT|KWID-CP|2016",
+    "marca": "RENAULT",
+    "vehiculo": "RENAULT KWID 16- VDE C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "CHEVROLET|CHEV-ONIX-HBK-13|2016",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET ONIX 5P 16- VDE C/DEF (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "MITSUBISHI|L200-16-VP|2016",
+    "marca": "MITSUBISHI",
+    "vehiculo": "MITSUBISHI L-200 KATANA 4P 16- VDE (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "HYUNDAI|HYU-HC-VCP|2018",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI ACCENT-HC 4P 18- VDE (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MAXUS|SAIC-C100|2016",
+    "marca": "MAXUS",
+    "vehiculo": "MAXUS C35/YUEJIN C100 2P 16- DEG CHICO (160 X 80,5) (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "KIA|KMC-JA-WK|2017",
+    "marca": "KIA",
+    "vehiculo": "KIA MORNING 5P 17- VDE C/DEF (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "KYC|CAC-T3-19|2019",
+    "marca": "KYC",
+    "vehiculo": "KYC GRAN MAMUT 2P/4P/FUR 19- DEG (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "FORD|FIESTA-17-VCS|2017",
+    "marca": "FORD",
+    "vehiculo": "FORD FIESTA 5P 17- VDE C/SEN (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "JEEP|DB12887|2017",
+    "marca": "JEEP",
+    "vehiculo": "JEEP COMPASS 5P SUV 17- PRIV C/DEF C/ANT 1H (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "MAZDA|CX3-L-VCPS|2016",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA CX3 5P 16- VDE C/SEN C/SOP (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "JEEP|WRANGLER-18-3D|2019",
+    "marca": "JEEP",
+    "vehiculo": "LATERAL TRASERO DERECHO JEEP WRANGLER SAHARA/RUBICOM/GLADIATOR 3P 19- PRIV (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "TOYOTA|TY-NSP151-HBK|2018",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA YARIS 5P 18- VDE C/DEF (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MAXUS|LDV-T60-CSA|2016",
+    "marca": "MAXUS",
+    "vehiculo": "MAXUS T60/T90 4P 16- DEG C/SEN C/ANT C/SOP C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "MAXUS|LDV-T60-CPA|2016",
+    "marca": "MAXUS",
+    "vehiculo": "MAXUS T60/T90/MG EXTENDER 16- DEG C/ANT (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "FOTON|FOTON-T3|2016",
+    "marca": "FOTON",
+    "vehiculo": "FOTON MIDI T3 2P PICK UP 16- VDE (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "VOLKSWAGEN|VW-PICKUP-12-VCS|2017",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN AMAROK 2P/4P 17- VDE C/SEN GOTA C/SOP (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "CHEVROLET|CHEV-ONIX-13-VC|2016",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET ONIX/PRISMA4/ 5P 16- DEG (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "MAHINDRA|IN-KUV100-VCP|2016",
+    "marca": "MAHINDRA",
+    "vehiculo": "MAHINDRA KUV100 5P 16- DEG (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "PEUGEOT|PE-208-HBK-19|2019",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT 208 5P 19- PRIV C/DEF 1H (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "TOYOTA|TY-NSP151-SED|2018",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA YARIS 4P 18- VDE C/DEF (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "KIA|KMC-YB-HBK|2017",
+    "marca": "KIA",
+    "vehiculo": "KIA RIO 5 5P 17- VDE C/DEF (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "FOTON|FOTON-M1-P|2019",
+    "marca": "FOTON",
+    "vehiculo": "FOTON TM3 2P/4P 19- DEG C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CHEVROLET|DW02165|2015",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET COLORADO/GMC CANYON 4P 15- DEG C/M USA (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "FIAT|ARGO-17-C|2017",
+    "marca": "FIAT",
+    "vehiculo": "FIAT ARGO/CRONOS/PULSE 5P 17- DEG C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "CITROEN|BERLINGO-18-5H|2019",
+    "marca": "CITROEN",
+    "vehiculo": "CITROEN BERLINGO/PARTNER/RIFTER 19- VDE C/DEF 5H (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "KIA|KMC-JA-L-VCP|2017",
+    "marca": "KIA",
+    "vehiculo": "KIA MORNING 5P 17- VDE (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "ZX|CZX-TP16-VCP|2016",
+    "marca": "ZX",
+    "vehiculo": "ZX AUTO TERRALORD 16- VDE (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "SUZUKI|YL7-V|2015",
+    "marca": "SUZUKI",
+    "vehiculo": "SUZUKI CELERIO 5P 15- DEG (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "VOLKSWAGEN|TIGUAN-17-VCS|2017",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN TIGUAN/TARRACO 17- DEG C/SEN C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "JMC|JMC-N800M-C|2015",
+    "marca": "JMC",
+    "vehiculo": "JMC CONQUER CAM 15- DEG (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "HYUNDAI|HYU-KONA-18-VCP|2018",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI KONA 18- DEG (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MAZDA|MAZ-2-15-VCP|2015",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA 2 15- DEG (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "SUZUKI|MA-ZC83S-SED-C|2017",
+    "marca": "SUZUKI",
+    "vehiculo": "SUZUKI DZIRE 4P 17- DEG (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "JEEP|WRANGLER-18-V|2019",
+    "marca": "JEEP",
+    "vehiculo": "JEEP WRANGLER 3P/5P 19- VDE (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "HYUNDAI|VELOSTER-19-L-VCP|2019",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI VELOSTER 19- DEG C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CHANGAN|CAC-CS55-VCP|2017",
+    "marca": "CHANGAN",
+    "vehiculo": "CHANGAN CS55 5P 17- DEG (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "PEUGEOT|2756BGSV|2016",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT EXPERT 16- VDE C/DEF 1H (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "CHEVROLET|SAIL-15-L-VP|2015",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET SAIL 4P 15- DEG (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "CITROEN|2763AGSVZ|2019",
+    "marca": "CITROEN",
+    "vehiculo": "CITROEN BERLINGO/PARTNER/RIFTER 19- VDE C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CHANGAN|CAC-CS35-17|2017",
+    "marca": "CHANGAN",
+    "vehiculo": "CHANGAN CS35 5P 17- VDE C/DEF 1H (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "JAC|JAC-N125-CP|2015",
+    "marca": "JAC",
+    "vehiculo": "JAC K5/X200/X330 2P/4P 15- DEG CAB ANCHA (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "VOLKSWAGEN|VW-POLO-18-VCP|2018",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN POLO/NIVUS 5P 18- DEG CAL/ABAJO C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MG|CSA-RX5-VCP|2016",
+    "marca": "MG",
+    "vehiculo": "MG RX5/GS 5P 16- VDE (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "GEELY|GEELY-GS-16-VCP|2016",
+    "marca": "GEELY",
+    "vehiculo": "GEELY GS 5P 16- VDE (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "VOLKSWAGEN|VW-POLO-SED-18-VCP|2018",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKWAGEN POLO/VIRTUS 4P 18- VDE CAL/ARRIBA C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "KIA|KMC-PEGAS-VCP|2017",
+    "marca": "KIA",
+    "vehiculo": "KIA SOLUTO 4P 17- VDE (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "DONGFENG|CDFM-S500-L-CP|2015",
+    "marca": "DONGFENG",
+    "vehiculo": "DONGFENG S500 / SX6 15- DEG (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "TOYOTA|UN126-L-CPA-1Z|2016",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA HILUX 4P 16- VDE C/ANT C/CAM 44x43 C/SOP (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "DONGFENG|CDFM-X5-17-L-CP|2017",
+    "marca": "DONGFENG",
+    "vehiculo": "DONGFENG SX5 5P 17- VDE (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "NISSAN|NI-J11-VCP|2015",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN QASHQAI 5P 15- VDE (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "DOOGE|DW02446-VC|2018",
+    "marca": "DOOGE",
+    "vehiculo": "DOOGE JOURNEY 5P 18- VDE C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "SUZUKI|YSA-V|2017",
+    "marca": "SUZUKI",
+    "vehiculo": "SUZUKI SWIFT 5P 17- VDE (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "CHERY|CHERY-M19-VP|2016",
+    "marca": "CHERY",
+    "vehiculo": "CHERY ARRIZO 5 16- VDE (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "GREAT WALL|CGW-WIN7-VCSA|2018",
+    "marca": "GREAT WALL",
+    "vehiculo": "GREAT WALL WINGLE 7 4P 18- DEG C/SEN C/ANT (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "KIA|KMC-QL-L-VCPS-HS|2016",
+    "marca": "KIA",
+    "vehiculo": "KIA SPORTAGE 5P 16- DEG C/SEN C/SOP (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "DONGFENG|CDFM-AX4-L-VCP|2018",
+    "marca": "DONGFENG",
+    "vehiculo": "DONGFENG 5P AX4 18- VDE (Ho)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MG|MG3-17|2017",
+    "marca": "MG",
+    "vehiculo": "MG MG 3 5P 17- VDE C/DEF 1H (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "KIA|KMC-YB-VCP|2017",
+    "marca": "KIA",
+    "vehiculo": "KIA RIO 4P/5P 17- VDE C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "FORD|FMC-MSUV-18-VCP|2018",
+    "marca": "FORD",
+    "vehiculo": "FORD ECOSPORT STORM 5P 18- DEG (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "FORD|FMC-MSUV-18-VCS|2018",
+    "marca": "FORD",
+    "vehiculo": "FORD ECOSPORT STORM 5P 18- DEG C/SEN (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "HONDA|2SV-L-VCP|2016",
+    "marca": "HONDA",
+    "vehiculo": "HONDA CIVIC 16- DEG (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "HYUNDAI|HYU-AD-VCP|2016",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI ELANTRA 4P 16- VDE (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "KIA|KMC-QL-VCP|2016",
+    "marca": "KIA",
+    "vehiculo": "KIA SPORTAGE 5P 16- DEG C/SOP (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "CITROEN|2755BGSRI|2015",
+    "marca": "CITROEN",
+    "vehiculo": "CITROEN C4 CACTUS 5P 15- VDE C/DEF 1H (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "CHANGAN|CAC-A600-VCP|2016",
+    "marca": "CHANGAN",
+    "vehiculo": "CHANGAN A500/A600 5P 16- DEG (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "CHERY|CHERY-3X-VCPA|2016",
+    "marca": "CHERY",
+    "vehiculo": "CHERY TIGGO 2 5P 16- DEG C/ANT (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "CHANGAN|CAC-CX70-CP|2016",
+    "marca": "CHANGAN",
+    "vehiculo": "CHANGAN CX70 5P 16- DEG (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "PEUGEOT|PE-2008-19-QSZ|2019",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT 2008 19- VDE C/SEN C/CAM DIAG C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "SUZUKI|FF21S-V|2016",
+    "marca": "SUZUKI",
+    "vehiculo": "SUZUKI IGNIS 5P 16- DEG C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "JEEP|DW02417-VA|2019",
+    "marca": "JEEP",
+    "vehiculo": "JEEP WRANGLER 3P/5P 19- DEG C/ANT (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CHERY|CHERY-3X-20-VCSA|2016",
+    "marca": "CHERY",
+    "vehiculo": "CHERY TIGGO 2/TIGGO 2 PRO 5P 16- DEG C/S C/ANT C/SOP(EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "SUZUKI|MA-ERTIGA-19|2019",
+    "marca": "SUZUKI",
+    "vehiculo": "SUZUKI ERTIGA/XL7 5P 19- DEG (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "VOLKSWAGEN|VW-POLO-18-VCS|2018",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN POLO 4P/ NIVUS 5P 18- VDE C/SEN (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MAZDA|BT50-16-VCS|2016",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA BT50/RANGER 4P 16- DEG C/SEN C/SOP (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "TOYOTA|TY-AS50-CM|2019",
+    "marca": "TOYOTA",
+    "vehiculo": "LATERAL TRASERO DERECHO TOYOTA RAV4 5P 19- PRIV C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CHERY|CHERY-A13-PA|2016",
+    "marca": "CHERY",
+    "vehiculo": "CHERY TIGGO 2 FULLWIN 5P 16- DEG C/ANT (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "VOLKSWAGEN|GOLF-VII-17-VCS|2017",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN GOLF A7 5P 17- DEG C/SEN RECTO (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "FORD|JMC-S330-VCP|2019",
+    "marca": "FORD",
+    "vehiculo": "FORD TERRITORY 5P 19- DEG (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "HONDA|FB26566|2016",
+    "marca": "HONDA",
+    "vehiculo": "HONDA PILOT 5P 16- PRIV C/DEF (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "HYUNDAI|HYU-QT-CP|2016",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI MIGHTY HD7EX8/EX916- DEG (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "TOYOTA|TY-AS50-VCP|2019",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA RAV4 5P 19- DEG C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "BAIC|BAIC-C33D-VCP|2017",
+    "marca": "BAIC",
+    "vehiculo": "BAIC X25 17- DEG (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "KIA|KMC-DE-L-VCPS-HS-1Z|2017",
+    "marca": "KIA",
+    "vehiculo": "KIA NIRO 5P 17- DEG C/S C/HS C/CAM (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "SUBARU|7942AGSCM|2015",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU LEGACY 4P/SW 15- VDE C/SEN C/2CAM (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "GREAT WALL|HAVAL-H2-14-L-VCS|2016",
+    "marca": "GREAT WALL",
+    "vehiculo": "HAVAL H2 5P 16- VDE C/SEN (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "CHEVROLET|SPIN-13-VCP|2015",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET SPIN 5P 15- VDE C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "CHEVROLET|SPIN-16-VCS|2015",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET SPIN 5P 15- VDE C/SEN C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "CHERY|CHERY-T15-VCS|2016",
+    "marca": "CHERY",
+    "vehiculo": "CHERY TIGGO 7 5P 16- DEG C/SEN C/SOP (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "TESLA|TESLA-3-17|2017",
+    "marca": "TESLA",
+    "vehiculo": "TESLA 3 4P 17- VDE C/DEF LAM (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "CHEVROLET|DW02166|2015",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET COLORADO/GMC CANYON 15- DEG C/CAM C/M USA (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "GAC|GAC-GA4-VCP|2018",
+    "marca": "GAC",
+    "vehiculo": "GAC GA4 5P 18- DEG (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "JAC|JAC-M4-VCPA|2016",
+    "marca": "JAC",
+    "vehiculo": "JAC REFINE 16- DEG C/ANT (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "CHANGAN|CAC-CS75-VCP|2016",
+    "marca": "CHANGAN",
+    "vehiculo": "CHANGAN CS75 5P 16- DEG (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "MG|MG-HS-18-VCP|2018",
+    "marca": "MG",
+    "vehiculo": "MG HS 5P 18- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "VOLKSWAGEN|VW-DT17|2017",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN DELIVERY 2P 17- VDE C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "FORD|DW02153|2016",
+    "marca": "FORD",
+    "vehiculo": "FORD F150 2P/4P 16- VDE (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "SSANGYONG|SSY-X100-CP|2015",
+    "marca": "SSANGYONG",
+    "vehiculo": "SSANGYONG TIVOLI 5P 15- DEG (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "HONDA|FW04536-VCP|2017",
+    "marca": "HONDA",
+    "vehiculo": "HONDA CR-V 5P 17- DEG C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "GREAT WALL|HAVAL-H6-17-VCS|2019",
+    "marca": "GREAT WALL",
+    "vehiculo": "Great Wall Haval H6 19- DEG C/SEN C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CHEVROLET|CHEV-ONIX-20-L-VP|2019",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET ONIX 4P/5P 19- DEG C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CHEVROLET|CHEV-J400-VC|2017",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET CRUZE 4P 17- DEG (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "MAZDA|FW04735-VCPS|2017",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA CX5 5P 17- VDE C/SEN DESPLAZADO C/SOP (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "SUZUKI|WB32S-VCP|2016",
+    "marca": "SUZUKI",
+    "vehiculo": "SUZUKI BALENO/FRONX 5P 16- VDE (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "NISSAN|KICKS-L-VC-1Z|2016",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN KICKS 5P 16- VDE C/CAM C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "MAZDA|CX5-17-A|2017",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA CX5 5P SUV 17- PRIV C/DEF (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "VOLKSWAGEN|VW-JETTA-19-BM|2018",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "LATERAL TRASERO DERECHO VOLKSWAGEN BORA/VENTO/JETTA 4P 18- VDE C/M NEGRA (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "AUDI|AU-A4-16-VCS|2015",
+    "marca": "AUDI",
+    "vehiculo": "AUDI A4 4P 15- DEG C/SEN C/SOP (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "TOYOTA|KE160-L-VCP|2016",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA COROLLA 4P 16- DEG C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "CHERY|HERY-A19-CP|2017",
+    "marca": "CHERY",
+    "vehiculo": "CHERY ARRIZO 3 17- DEG (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "GREAT WALL|HAVAL-H6-17-LB|2019",
+    "marca": "GREAT WALL",
+    "vehiculo": "GREAT WALL HAVAL H6 19- VDE C/DEF 1H (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CHERY|CHERY-A16-P|2017",
+    "marca": "CHERY",
+    "vehiculo": "CHERY ARRIZO 3 4P 15- DEG C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "VOLKSWAGEN|CADDY-16-VCS|2015",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN CADDY 15- DEG C/SEN C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "FORD|BT50-15-VCS-1Z|2015",
+    "marca": "FORD",
+    "vehiculo": "FORD RANGER 4P 15- DEG C/SEN C/CAM (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "FORD|DW02132|2016",
+    "marca": "FORD",
+    "vehiculo": "FORD F150 2P/4P 16- VDE C/ANT C/SEN C/CAM C/SOP (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "CHEVROLET|CHEV-J400-VC-1Z|2017",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET CRUZE 4P 17- DEG C/CAM (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "TOYOTA|TY-KE210-L-VCP|2018",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA COROLLA SPORT/AURIS 5P 18- DEG C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "NISSAN|6084AGAMVZ95|2015",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN QASHQAI 5P 15- VDE C/SEN SMALL C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "LIFAN|CLF-X50-VCP|2017",
+    "marca": "LIFAN",
+    "vehiculo": "LIFAN X50 5P 17- DEG (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "FORD|JMC-S330-VCS|2019",
+    "marca": "FORD",
+    "vehiculo": "FORD TERRITORY 5P 19- DEG C/SEN (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "VOLKSWAGEN|VW-JETTA-19-VCS|2018",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN BORA/VENTO/JETTA 4P 18- DEG C/SEN C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "HYUNDAI|HYU-AE-L-VCP|2017",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI IONIQ 5P 17- DEG (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "BMW|BMW-X1-16-VCS|2016",
+    "marca": "BMW",
+    "vehiculo": "BMW X1 F48 5P 16- VDE C/SEN C/SOP (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "BAIC|BAIC-BJ40-10-CPA|2016",
+    "marca": "BAIC",
+    "vehiculo": "BAIC BJ40 16- VDE (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "BAIC|BAIC-BJ40-16-CSA-1Z|2016",
+    "marca": "BAIC",
+    "vehiculo": "BAIC BJ40 16- VDE C/SEN C/CAM (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "JEEP|WRANGLER-18-Z|2019",
+    "marca": "JEEP",
+    "vehiculo": "JEEP WRANGLER 3P/5P 19- VDE C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "RAM|TORO-C|2016",
+    "marca": "RAM",
+    "vehiculo": "RAM 1000 LARAMIE 4P 16- VDE (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "TOYOTA|TY-KE210-L-VCPS|2018",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA COROLLA 4P 18- C/SEN C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "SUBARU|SUB-BN9-L-VCPSH|2015",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU LEGACY 4P/SW 15- VDE C/SEN C/DEF C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "PEUGEOT|2756AGSVZ|2016",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT EXPERT/TRAVELLER 16- DEG (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "PEUGEOT|2756AGSIMVZ1C|2016",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT EXPERT/TRAVELLER 16- DEG C/SEN C/SOP (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "VOLKSWAGEN|VW-JETTA-19-VCP|2018",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN BORA/VENTO/JETTA 4P 18- DEG (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "SUBARU|SUB-SK5-L-VCP|2019",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU FORESTER 5P 19- DEG (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "KIA|KMC-BD-VCP|2019",
+    "marca": "KIA",
+    "vehiculo": "KIA CERATO 4P 19- DEG C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "HONDA|FW04238|2016",
+    "marca": "HONDA",
+    "vehiculo": "HONDA RIDGELINE 16- VDE C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "MAXUS|MAXUS-EV30-19-VA|2019",
+    "marca": "MAXUS",
+    "vehiculo": "MAXUS EV30 2P 19- DEG C/ANT (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MAXUS|MAXUS-EV30-19-SA|2019",
+    "marca": "MAXUS",
+    "vehiculo": "MAXUS EV30 2P 19- DEG C/SEN C/ANT (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MINI|2484AGSMVZ|2017",
+    "marca": "MINI",
+    "vehiculo": "MINI COUNTRYMAN F60 5P 17- VDE C/SEN C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "DONGFENG|CDFM-580-VCP|2016",
+    "marca": "DONGFENG",
+    "vehiculo": "DONGFENG DFSK 580 5P 16- VDE (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "BAIC|BAIC-C51E-VCP|2015",
+    "marca": "BAIC",
+    "vehiculo": "BAIC X55 5P 15- DEG (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "CHEVROLET|CHEV-SUV-17-VCS-1Z|2017",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET EQUINOX 5D 17- VDE C/SEN C/CAM C/SOP (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "GREAT WALL|HAVAL-H6-17-VCS-1Z|2019",
+    "marca": "GREAT WALL",
+    "vehiculo": "GREAT WALL HAVAL H6 5P 19- VDE C/SEN C/CAM C/SOP (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CHEVROLET|CHEV-ONIX-16-VCS|2016",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET ONIX/PRISMA 4P/5P 16- DEG C/SEN C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "AUDI|AU-A5-17-VCS|2017",
+    "marca": "AUDI",
+    "vehiculo": "Audi A5 2P/5P 17- DEG C/SEN C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "CHANGAN|CAC-CS15-VCP|2016",
+    "marca": "CHANGAN",
+    "vehiculo": "CHANGAN CS15 5P 16- DEG (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "MG|MG-ZS-20-L-VCS|2018",
+    "marca": "MG",
+    "vehiculo": "MG ZS/ZX 5P 18- VDE C/SEN C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "TOYOTA|ZVW50-L-VCP|2016",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA PRIUS 4P 16- VDE (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "JEEP|DW02220-VCS-HS|2017",
+    "marca": "JEEP",
+    "vehiculo": "JEEP GRAND CHEROKEE 5P 17- DEG C/SEN GOTA C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "MITSUBISHI|MIT-SUV-18-L-VCP|2018",
+    "marca": "MITSUBISHI",
+    "vehiculo": "MITSUBISHI ECLIPSE CROSS 5P 18- VDE (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "BAIC|BAIC-X35-VCP|2015",
+    "marca": "BAIC",
+    "vehiculo": "BAIC X35 5P 15- DEG (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "NISSAN|NI-J11-VCS|2015",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN QASHQAI 5P 15- VDE C/SEN (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "CHEVROLET|CHEV-MSUV-16-L-VCS-1Z|2015",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET COLORADO 15- VDE C/SEN C/CAM C/SOP (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "VOLKSWAGEN|VW-JETTA-19-CM|2018",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "LATERAL TRASERO DERECHO VOLKSWAGEN BORA/VENTO/JETTA 4P 18- VDE C/M CHROMO (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "SEAT|IBIZA-18-VCP|2018",
+    "marca": "SEAT",
+    "vehiculo": "SEAT IBIZA 5P 18- DEG (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "SEAT|IBIZA-18-VCS|2018",
+    "marca": "SEAT",
+    "vehiculo": "SEAT IBIZA 5P 18- DEG C/SEN C/SOP (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MAZDA|CX3-16-L-VCS-1Z|2016",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA CX3 5P 16- VDE C/SEN C/CAM C/SOP (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "MAZDA|CX3-A|2016",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA CX3 5P SUV 16- PRIV C/DEF 1H (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "VOLKSWAGEN|8649AGSMVZ|2019",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN T-CROSS 19- VDE C/SEN (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "VOLVO|XC90-16|2016",
+    "marca": "VOLVO",
+    "vehiculo": "VOLVO XC90 5P 16- PRIV C/DEF 1H (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "HYUNDAI|HYU-TM-VC-1Z|2019",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI SANTA FE 5P 19- DEG C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MG|MG-ZS-17-VCP|2018",
+    "marca": "MG",
+    "vehiculo": "MG ZS/ZX 5P 18- DEG (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "DONGFENG|CDFM-580-17-VCPS|2016",
+    "marca": "DONGFENG",
+    "vehiculo": "DONGFENG DFSK 580 5P 16- VDE C/SEN (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "FORD|BT50-18-VCS-1Z|2018",
+    "marca": "FORD",
+    "vehiculo": "FORD RANGER RAPTOR 4P 18- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "FORD|BT50-18-VC-1Z|2018",
+    "marca": "FORD",
+    "vehiculo": "FORD RANGER RAPTOR 4P 18- DEG C/CAM C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "CITROEN|2755AGSMVZ|2015",
+    "marca": "CITROEN",
+    "vehiculo": "CITROEN C4 CACTUS 5P 15- DEG C/SEN C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "CITROEN|2755AGACIMVZ95|2015",
+    "marca": "CITROEN",
+    "vehiculo": "CITROEN C4 CACTUS 5P 15- DEG C/SEN C/CAM C/SOP (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "MAXUS|LDV-T60-CSA-1Z|2016",
+    "marca": "MAXUS",
+    "vehiculo": "MAXUS T60/T90 4P 16- DEG C/SEN C/CAM C/ANT C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "FORD|MUSTANG-15-L-VCS|2015",
+    "marca": "FORD",
+    "vehiculo": "FORD MUSTANG 2P/CAB 15- VDE C/SEN (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "CHERY|CHERY-A19-CPS|2017",
+    "marca": "CHERY",
+    "vehiculo": "CHERY ARRIZO 3 17- DEG C/SEN (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "KIA|KMC-YP-1H|2015",
+    "marca": "KIA",
+    "vehiculo": "KIA GRAND CARNIVAL 15- PRIV C/DEF (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "SEAT|7622AGAMVZ6Z|2017",
+    "marca": "SEAT",
+    "vehiculo": "SEAT ARONA 5P 17- DEG C/SEN (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "SEAT|7622AGAVZ6Z|2017",
+    "marca": "SEAT",
+    "vehiculo": "SEAT ARONA 5P 17- DEG (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "VOLKSWAGEN|GOLF-VII-17-VCS-1Z|2017",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN GOLF A7 5P 17- DEG C/SEN RECTO C/CAM C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "CHEVROLET|DW02532-VC-1Z|2019",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET BLAZER 5P 19- VDE C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "NISSAN|TZ52-L-VC-1Z|2015",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN MURANO 5P 15- DEG C/CAM C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "SUBARU|7943AGSMPV|2017",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU IMPREZA/XV 4P/5P 17- DEG C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "SUBARU|SUB-BN9-18-L-VCPSH|2015",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU LEGACY 4P/SW 15- VDE C/SEN C/CAM C/DEF C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "CHEVROLET|CHEV-CPE-16-VC-1Z|2016",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET CAMARO 2P 16- DEG C/CAM C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "GEELY|GEELY-SX11-VCP|2019",
+    "marca": "GEELY",
+    "vehiculo": "GEELY COOLRAY 5P 19- DEG (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "HYUNDAI|HYU-TM-L-VCPS-MAX|2019",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI SANTA FE 5P 19- DEG C/SEN C/SOP (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CHEVROLET|SGMW-530-VVC|2019",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET CAPTIVA 5P 19- VDE C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "BRILLIANCE|JBC-KONECT-19-VC|2019",
+    "marca": "BRILLIANCE",
+    "vehiculo": "BRILLIANCE KONECT 5P 19- DEG (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "GREAT WALL|CGW-PAO-19-VCP|2019",
+    "marca": "GREAT WALL",
+    "vehiculo": "GREAT WALL POER 19- DEG C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "TOYOTA|FW04798-VCH-1Z|2019",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA COROLLA 4P 19- DEG C/CAM C/DEF C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MERCEDES BENZ|W177-VCS|2019",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ A200 5P W177 19- DEG C/SEN C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MAZDA|CX9-17-L-VCS-1Z|2016",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA CX9 5P 16- VDE C/SEN C/CAM (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "SUBARU|SUB-G5-L-VCPS|2017",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU IMPREZA/XV 4P/5P 17- VDE C/SEN C/SOP (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "RAM|TORO-L-CS|2016",
+    "marca": "RAM",
+    "vehiculo": "RAM 1000 LARAMIE 4P 16- VDE C/SEN (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "HYUNDAI|H350-CP|2016",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI H350/SOLATI/FUR/VAN 16- DEG C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "TOYOTA|UN126-19-L-VCPA-1Z|2019",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA HILUX 4P 19- DEG C/ANT C/CAM 57x52 C/SOP (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MITSUBISHI|L200-16-L-VCPS|2016",
+    "marca": "MITSUBISHI",
+    "vehiculo": "MITSUBISHI L-200 KATANA 4P 16- DEG C/SEN C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "MAXUS|SAIC-C300|2016",
+    "marca": "MAXUS",
+    "vehiculo": "MAXUS C35/YUEJIN C300 2P 16- DEG MED (176,6x80,7) (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "SUBARU|IMPREZA-17-L-S2Z-M011|2017",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU IMPREZA/XV 4P/5P 17- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "SUBARU IMPREZA|IMPREZA-17-L-VCPS-M011|2017",
+    "marca": "SUBARU IMPREZA",
+    "vehiculo": "SUBARU IMPREZA/XV 4P/5P 17- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "CHEVROLET|DW02413-VC-1Z|2018",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET TRAVERSE 5P 18- DEG C/CAM C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "HYUNDAI|HYU-IG-L-VCPS-HS|2017",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI AZERA 17- DEG C/SEN C/HS (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "MAZDA|MAZ-2-15-L-VCPS|2015",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA 2 15- DEG C/SEN C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "HYUNDAI|HYU-IG-VCP|2017",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI AZERA 17- DEG (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "PEUGEOT|PE-3008-17-L-VCS-1Z|2017",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT 3008/5008/C5 AIRCROSS 5P 17- VDE C/S C/C C/M(EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "BMW|BMW-G20-VCS|2019",
+    "marca": "BMW",
+    "vehiculo": "BMW SERIE 3 G20/G21 4P/5P 19- DEG C/SEN C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "PEUGEOT|PE-308-18-VCS-1Z|2018",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT 308 5P 18- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "JEEP|AJ21AGSMV|2017",
+    "marca": "JEEP",
+    "vehiculo": "JEEP COMPASS 5P 17- DEG C/SEN C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "SUBARU|SUB-SK5-L-VCPS-2Z|2019",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU FORESTER 19- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "SSANGYONG|REXTON-18-L-VCPH|2018",
+    "marca": "SSANGYONG",
+    "vehiculo": "SSANGYONG REXTON / MUSSO 18- DEG C/DEF C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MERCEDES BENZ|W176-15-VCS|2016",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ A200/GLA/CLA W176 16- DEG C/SEN C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "SSANGYONG|REXTON-18-L-VCPSH|2018",
+    "marca": "SSANGYONG",
+    "vehiculo": "SSANGYONG REXTON / MUSSO 5P 18- DEG C/SEN C/DEF C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "SUBARU|SUB-SK5-L-VCPS|2019",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU FORESTER 19- VDE C/SEN C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "DODGE|DW02453-VCS|2018",
+    "marca": "DODGE",
+    "vehiculo": "DODGE RAM 1500 4P 18- VDE C/SEN C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MAN|4911AGNCM|2015",
+    "marca": "MAN",
+    "vehiculo": "MAN TGA/TGL SMALL 15- DEG C/SEN C/CAM C/SOP (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "MAZDA|CX9-17-L-VCPS|2016",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA CX9 5P 16- VDE C/SEN C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "GREAT WALL|CGW-PAO-19-VCS|2019",
+    "marca": "GREAT WALL",
+    "vehiculo": "GREAT WALL POER 19- DEG C/SEN C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "TOYOTA|TY-AS50-VC-1Z|2019",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA RAV4 19- DEG C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "JETOUR|CHERY-X70-CP|2019",
+    "marca": "JETOUR",
+    "vehiculo": "JETOUR X70 5P 19- DEG (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "FORD|DW02194|2016",
+    "marca": "FORD",
+    "vehiculo": "FORD EDGE 5P 16- DEG C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "HONDA|2SV-L-VCPS|2016",
+    "marca": "HONDA",
+    "vehiculo": "HONDA CIVIC 16- DEG C/SEN C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "CITROEN|2763AGSCMVZ|2019",
+    "marca": "CITROEN",
+    "vehiculo": "BERLINGO/PARTNER/RIFTER 19- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "HYUNDAI|H350-L-CPS-1Z|2016",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI H350/SOLATI/FUR/VAN 16- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "FORD|EXPEDITION-18-SZ|2018",
+    "marca": "FORD",
+    "vehiculo": "FORD EXPEDITION 5P 18- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "FIAT|FIAT-PULSE-22-SZ|2017",
+    "marca": "FIAT",
+    "vehiculo": "FIAT ARGO/CRONOS/PULSE 5P 17- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "KIA|KMC-YP-L-VCP|2015",
+    "marca": "KIA",
+    "vehiculo": "KIA GRAND CARNIVAL 15- VDE C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "FORD|DW02260-VCS-1Z|2017",
+    "marca": "FORD",
+    "vehiculo": "FORD FUSION 4P 17- VDE C/SEN C/CAM C/SOP (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "HYUNDAI|H350-L-CPS|2016",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI H350/SOLATI/FUR/VAN 16- DEG C/SEN C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "RENAULT|7305AGAMVW1T|2016",
+    "marca": "RENAULT",
+    "vehiculo": "RENAULT KOLEOS 16- DEG C/SEN (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "FORD|EDGE-15-L-SZ|2016",
+    "marca": "FORD",
+    "vehiculo": "FORD EDGE 5P 16- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "TOYOTA|TY-KE210-L-VCS-1Z|2018",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA COROLLA 4P 18- C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "CHEVROLET|DW02497-VC|2019",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET SILVERADO 2P/4P 19- VDE (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CHEVROLET|CHEV-TRACKER-19-VP|2019",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET TRACKER 5P 19- DEG (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "TOYOTA|TY-F800-CR|2018",
+    "marca": "TOYOTA",
+    "vehiculo": "LATERAL TRASERO DERECHO TOYOTA RUSH 5P 18- PRIV ENCAP (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "TOYOTA|RH300-VCP|2019",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA HIACE 19- DEG C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "SEAT|7619AGSMVZ8K|2016",
+    "marca": "SEAT",
+    "vehiculo": "SEAT LEON 5P 16- VDE C/SEN C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "HYUNDAI|HYU-TM-VCP|2019",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI SANTA FE 5P 19- DEG (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MAXUS|LDV-G10-VCA|2017",
+    "marca": "MAXUS",
+    "vehiculo": "MAXUS G10 17- DEG C/ANT C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "DONGFENG|CDFM-S560-VCP|2018",
+    "marca": "DONGFENG",
+    "vehiculo": "DONGFENG 560 5P 18- DEG C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "DONGFENG|CDFM-S560-VCPS|2018",
+    "marca": "DONGFENG",
+    "vehiculo": "DONGFENG 560 5P 18- DEG C/SEN C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "NISSAN|6077AGACIMVZ1D|2018",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN LEAF 5P 18- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MAZDA|MAZ-6-18-L-VCS|2018",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA 6 4P 18- VDE C/SEN CENTRO C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "TOYOTA|ZVW50-L-VCPS|2016",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA PRIUS 4P 16- VDE C/SEN (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "MAHINDRA|IN-KUV100-19|2016",
+    "marca": "MAHINDRA",
+    "vehiculo": "MAHINDRA KUV100 5P 16- VDE C/DEF (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "PEUGEOT|PE-208-19-VC|2019",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT 208 / OPEL CORSA 5P 19- VDE C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MITSUBISHI|MIT-SUV-18-L-VCPS|2018",
+    "marca": "MITSUBISHI",
+    "vehiculo": "MITSUBISHI ECLIPSE CROSS 5P 18- VDE C/SEN C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "CHEVROLET|CRUZE-19-L-Z|2019",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET CRUZE 4P 19- DEG C/CAM GRANDE (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MITSUBISHI|MIT-XPD-17-L-VP|2017",
+    "marca": "MITSUBISHI",
+    "vehiculo": "MITSUBISHI XPANDER 5P 17- DEG C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "CHEVROLET|DW02411-VC|2018",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET TRAVERSE 5P 18- DEG C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "LEXUS|NX-15-L-VCPS|2015",
+    "marca": "LEXUS",
+    "vehiculo": "LEXUS NX200 5P 15- VDE C/SEN C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "GEELY|GEELY-SX11-VCS-1Z|2019",
+    "marca": "GEELY",
+    "vehiculo": "GEELY COOLRAY 5P 19- DEG C/SEN C/CAM (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "BMW|BMW-X3-18-VCS|2017",
+    "marca": "BMW",
+    "vehiculo": "BMW X3 G01 5P 17- DEG C/SEN C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "AUDI|AU-Q5-17-VCS|2017",
+    "marca": "AUDI",
+    "vehiculo": "Audi Q5 5P 17- DEG C/SEN C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "MITSUBISHI|MIT-SUV-18-L-VCS-1Z|2018",
+    "marca": "MITSUBISHI",
+    "vehiculo": "MITSUBISHI ECLIPSE CROSS 5P 18- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "HONDA|FW04539-VCPS|2017",
+    "marca": "HONDA",
+    "vehiculo": "HONDA CR-V 17- DEG C/SEN C/SOP (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "SUBARU|SUB-BN9-L-17-VCPS-2Z|2017",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU LEGACY 4P/SW 17- VDE C/SEN C/3CAM C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "MAXUS|SAIC-C500|2016",
+    "marca": "MAXUS",
+    "vehiculo": "MAXUS C35L/YUEJIN C500/NJ914 2P 16- DEG (193,3x80,8)(EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "CHANGAN|CAC-ALSVIN-18-VCP|2018",
+    "marca": "CHANGAN",
+    "vehiculo": "CHANGAN ALSVIN 4P 18- VDE (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "FREIGHTLINER|DW02649-CSS-1Z|2017",
+    "marca": "FREIGHTLINER",
+    "vehiculo": "FREIGHTLINER CASCADIA 17- VDE C/2SEN C/CAM C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "MG|MG-ZS-20-L-VCS-1Z|2018",
+    "marca": "MG",
+    "vehiculo": "MG ZS/ZX 5P 18- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "VOLKSWAGEN|VW-B8-VCS|2015",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN PASSAT 4P 15- VDE C/SEN (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "PEUGEOT|PE-508-18-VCS-1Z|2018",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT 508 4P 18- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MITSUBISHI|XPANDER-17-L-VS|2017",
+    "marca": "MITSUBISHI",
+    "vehiculo": "MITSUBISHI XPANDER 5P 17- DEG C/SEN C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "HONDA|FW04240|2016",
+    "marca": "HONDA",
+    "vehiculo": "HONDA PILOT 5P 16- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "HONDA|FW04242-VCPS-1Z|2016",
+    "marca": "HONDA",
+    "vehiculo": "HONDA RIDGELINE 16- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "PEUGEOT|PE-208-19-VCS-1Z|2019",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT 208/OPEL CORSA 5P 19- VDE C/SEN C/CAM C/SOP (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "AUDI|AU-Q2-17-VCS|2017",
+    "marca": "AUDI",
+    "vehiculo": "Audi Q2 5P 17- DEG C/SEN C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "JEEP|CHEROKEE-19-L-QSH|2019",
+    "marca": "JEEP",
+    "vehiculo": "JEEP CHEROKEE LONGITUDE 5P 19- DEG C/SEN C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "PEUGEOT|PE-208-21-QSZ|2019",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT 208/OPEL CORSA 5P 19- VDE C/S C/C DIAG C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "GEELY|GEELY-NL3-18-VCP|2018",
+    "marca": "GEELY",
+    "vehiculo": "GEELY X7 5P 18- DEG C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MAZDA|MAZ-3-19-VCS|2019",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA 3 19- DEG C/SEN C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "LEXUS|RX-16-L-VCPS|2016",
+    "marca": "LEXUS",
+    "vehiculo": "LEXUS RX 350/450 5P 16- DEG C/SEN (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "GEELY|GEELY-NL3-18-VCS|2018",
+    "marca": "GEELY",
+    "vehiculo": "GEELY X7 5P 18- DEG C/SEN C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "AUDI|AU-Q7-16-VCS|2015",
+    "marca": "AUDI",
+    "vehiculo": "Audi Q7 5P 15- DEG C/SEN C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "BMW|BMW-X2-18-VCS|2019",
+    "marca": "BMW",
+    "vehiculo": "BMW X2 F39 5P 19- VDE C/SEN C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MITSUBISHI|L200-18-L-VCS-1Z|2016",
+    "marca": "MITSUBISHI",
+    "vehiculo": "MITSUBISHI L-200 KATANA 4P 16- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "CITROEN|CI-DS7-VCS-1Z|2018",
+    "marca": "CITROEN",
+    "vehiculo": "CITROEN DS7 CROSSBACK 5P 18- VER C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "HONDA|CRV-17-L-VCSH-1Z|2017",
+    "marca": "HONDA",
+    "vehiculo": "HONDA CR-V 17- DEG C/SEN C/CAM C/DEF C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "MAZDA|CX5-17-L-VCS-1Z|2017",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA CX5 5P 17- DEG C/SEN C/CAM C/HUD C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "GREAT WALL|CGW-PAO-19-VCS-1Z|2019",
+    "marca": "GREAT WALL",
+    "vehiculo": "GREAT WALL POER 19- DEG C/SEN C/CAM (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "VOLKSWAGEN|VW-SUV-19-VCS-1Z|2019",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN TOUAREG 19- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "BMW|BMW-X5-19-VCS|2019",
+    "marca": "BMW",
+    "vehiculo": "BMW X5 G05 19- DEG C/SEN C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "VOLKSWAGEN|VW-FSUV-17-VCS|2018",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN ATLAS 18- DEG C/SEN C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MERCEDES BENZ|W253-VCS|2015",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ CLASE GLC W253 5P 15- DEG C/SEN C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "CHEVROLET|EQUINOX-17-BM|2017",
+    "marca": "CHEVROLET",
+    "vehiculo": "LATERAL TRASERO DERECHO CHEVROLET EQUINOX 5D 17- PRIV ENCAP (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "MERCEDES BENZ|W470-VCS-1Z|2018",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ CLASE X 4P 18- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MAZDA|MAZ-6-18-L-VCS-1Z|2018",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA 6 4P 18- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MERCEDES BENZ|W167-VCS-1Z|2019",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ GLE W167 5P 19- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MERCEDES|W907-CS|2018",
+    "marca": "MERCEDES",
+    "vehiculo": "MERCEDES BENZ SPRINTER W907 18- DEG C/SEN C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MAXUS|LDV-D90-17-VVCSA-1Z|2017",
+    "marca": "MAXUS",
+    "vehiculo": "MAXUS D90 5P 17- DEG C/SEN C/CAM C/ANT C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "FORD|3581AGSMVZ6T|2016",
+    "marca": "FORD",
+    "vehiculo": "FORD ESCAPE 5P 16- VDE C/SEN DESP C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "HYUNDAI|HYU-AE-L-VCPS-HS|2017",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI IONIQ 5P 17- DEG C/SEN C/HSEN (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "BMW|BMW-X6-15-VCS|2015",
+    "marca": "BMW",
+    "vehiculo": "BMW X6 F16 5P 15- DEG C/SEN C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "VOLKSWAGEN|8627AGACMVZ1C|2017",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN TIGUAN/TARRACO 17- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "CITROEN|2763AGRCHMVZ|2019",
+    "marca": "CITROEN",
+    "vehiculo": "BERLINGO/PARTNER/RIFTER 19-DEG C/S C/CAM C/DEF C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MERCEDES BENZ|W907-CSH-1Z|2018",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ SPRINTER W907 18- DEG C/S C/C C/D C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MERCEDES BENZ|5397AGSMVZ|2015",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ CLASE GLC COUPE 5P 15- VDE C/SEN C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "AUDI|AU-Q7-16-VCS-1Z|2015",
+    "marca": "AUDI",
+    "vehiculo": "AUDI Q7 5P 15- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "MITSUBISHI|GF7-19-L-VCS-1Z|2019",
+    "marca": "MITSUBISHI",
+    "vehiculo": "MITSUBISHI OUTLANDER 19- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "NISSAN|TZ52-L-SH|2015",
+    "marca": "NISSAN",
+    "vehiculo": "NISSAN MURANO 5P 15- VDE C/SEN C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "SSANGYONG|REXTON-18-L-VCPS-HS-1Z|2018",
+    "marca": "SSANGYONG",
+    "vehiculo": "SSANGYONG REXTON/MUSSO 18- DEG C/SEN C/CAM C/HS C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "PEUGEOT|PE-2008-19-VCS-1Z|2019",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT 2008 19- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "PEUGEOT|3750AGNCMVWZ1L|2019",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT BOXER/DUCATO/JUMPER 19- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "FIAT|3375AGSMVZ1C|2016",
+    "marca": "FIAT",
+    "vehiculo": "FIAT TIPO 4P/5P 16- DEG C/SEN C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "FORD|DW02366-VCPSH-1ZLFW|2019",
+    "marca": "FORD",
+    "vehiculo": "FORD F150 2P/4P 19- VDE C/SEN C/DEF C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "VOLKSWAGEN|VW-SUV-19-VCS|2019",
+    "marca": "VOLKSWAGEN",
+    "vehiculo": "VOLKSWAGEN TOUAREG 19- VDE C/SEN C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MERCEDES BENZ|5444AGNGNCM2L|2019",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ ACTROS 19- DEG C/S C/C 231X93 P/ANCHA (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "HYUNDAI|HYU-TM-L-VCS-HS-1Z|2019",
+    "marca": "HYUNDAI",
+    "vehiculo": "HYUNDAI SANTA FE 5P 19- DEG C/S C/HS C/CAM HUD C/SOP(EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "TOYOTA|TY-AS50-L-VCS-1Z|2019",
+    "marca": "TOYOTA",
+    "vehiculo": "TOYOTA RAV4 5P 19- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "BMW|BMW-X2-18-VCS-1Z|2019",
+    "marca": "BMW",
+    "vehiculo": "BMW X2 F39 5P 19- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "SCANIA|SCANIA-16|2016",
+    "marca": "SCANIA",
+    "vehiculo": "SCANIA SERIE 6 P/G/R/S 16- DEG (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "VOLVO|VOL-V60-19-VCS-1Z|2019",
+    "marca": "VOLVO",
+    "vehiculo": "VOLVO V60/S60 4P/5P 19- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MAZDA|MAZ-6-16-L-VCS-1Z|2016",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA 6 4P 16- DEG C/SEN C/CAM DIAG C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "MERCEDES BENZ|5397AGSCMVZ|2015",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ CLASE GLC COUPE 5P 15- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "BMW|BMW-X5-19-VCSH-1Z|2019",
+    "marca": "BMW",
+    "vehiculo": "BMW X5 G05 19- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "AUDI|AU-Q3-19-VCS|2019",
+    "marca": "AUDI",
+    "vehiculo": "AUDI Q3 5P 19- VDE C/SEN C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MAZDA|CX9-17-L-VCS-3Z|2016",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA CX9 5P 16- VDE C/SEN C/3CAM C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "FORD|DW02492VCPH1ZLFW/H/X|2019",
+    "marca": "FORD",
+    "vehiculo": "FORD F150 2P/4P 19- VDE C/DEF C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "JEEP|GLADIATOR-20-FZ|2019",
+    "marca": "JEEP",
+    "vehiculo": "JEEP WRANGLER GLALETA DELANTERA IZQUIERDAATOR 3P 19- PRIV C/DEF 4H C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "BMW|BMW-F40-VCS|2019",
+    "marca": "BMW",
+    "vehiculo": "BMW SERIE 1 F40 5P 19- DEG C/SEN C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MERCEDES BENZ|W253-VCSH-1Z|2015",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ GLC W253 5P 15- DEG C/S C/CAM C/D C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "BMW|BMW-X3-18-VCSH-2Z|2017",
+    "marca": "BMW",
+    "vehiculo": "BMW X3 G01 5P 17- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "MERCEDES BENZ|W213-20-VCS-1Z-DV|2016",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ E-CLASS W213 16- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "PEUGEOT|2756AGSCHIMVZ1C|2016",
+    "marca": "PEUGEOT",
+    "vehiculo": "PEUGEOT EXPERT/TRAVELLER 16- DEG C/S C/D C/CAM C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "IVECO|SWAY-19-L-SZ-2360MM|2019",
+    "marca": "IVECO",
+    "vehiculo": "IVECO SWAY CAM 19- DEG C/SEN C/CAM REDONDA (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "FREIGHTLINER|DW02409-C-1Z|2017",
+    "marca": "FREIGHTLINER",
+    "vehiculo": "FREIGHTLINER CASCADIA 17- VDE C/CAM (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "KIA|KMC-NIRO-17-L-VCPS-HS|2017",
+    "marca": "KIA",
+    "vehiculo": "KIA NIRO 5P 17- DEG C/SEN C/HS C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "BMW|BMW-X6-15-VCS-1Z|2015",
+    "marca": "BMW",
+    "vehiculo": "BMW X6 F16 5P 15- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "SCANIA|SCANIA-16-L-S|2016",
+    "marca": "SCANIA",
+    "vehiculo": "SCANIA SERIE 6 P/G/R/S 16- VDE C/SEN C/SOP (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "MAXUS|LDV-V90-19-SZA|2019",
+    "marca": "MAXUS",
+    "vehiculo": "MAXUS V90 19- DEG C/SEN C/CAM C/ANT (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "BMW|BMW-X5-19-VCS-3Z|2019",
+    "marca": "BMW",
+    "vehiculo": "BMW X5 G05 19- VDE C/SEN C/3CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MERCEDES BENZ|W205-18-VCS-1Z|2018",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ C-CLASS W205 4P 18- VDE C/S C/CAM C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "INFINITY QX|QX60-VCS-1Z|2016",
+    "marca": "INFINITY QX",
+    "vehiculo": "INFINITY QX60 5P 16- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "VOLVO|FH-18-CS-1Z|2018",
+    "marca": "VOLVO",
+    "vehiculo": "VOLVO FH13 18- VDE C/SEN C/CAM SMALL (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "MERCEDES BENZ|W292-VCSH-1Z|2015",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ GLE C292 5P 15- VDE C/S C/CAM C/D C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "MERCEDES BENZ|W447-L-CSA|2015",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ VITO V220 15- DEG C/SEN C/ANT C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "SUBARU|SUB-SK5-CM|2019",
+    "marca": "SUBARU",
+    "vehiculo": "LATERAL TRASERO DERECHO SUBARU FORESTER 5P 19- PRIV ENCAP (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MERCEDES BENZ|W292-VCSH-2Z-AA|2015",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ GLE C292 5P 15-VDE C/S C/2CAM C/D C/M (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "MERCEDES|W238-VCS|2017",
+    "marca": "MERCEDES",
+    "vehiculo": "MERCEDES BENZ E CLASS COUPE W238 17- VDE C/SEN C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "MAZDA|MAZ-3-19-VCS-1Z|2019",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA 3 19- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "BMW|BMW-G30-20-VCS-1Z|2017",
+    "marca": "BMW",
+    "vehiculo": "BMW SERIE 5 G30/G31 4P/5P 17- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "BMW|BMW-G30-VCS|2017",
+    "marca": "BMW",
+    "vehiculo": "BMW SERIR 5 G30/G31 4P/5P 17- DEG C/SEN C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "MERCEDES BENZ|W166-16-VCSHA-1Z|2016",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ GLE W166 16- DEG C/S C/C C/A C/D C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "FORD|3773AGSCHMVZ6P|2019",
+    "marca": "FORD",
+    "vehiculo": "FORD TRANSIT VAN 19- (CAB ALTA) VDE C/2SEN C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "RENAULT|REN-T460-19-SZ|2019",
+    "marca": "RENAULT",
+    "vehiculo": "RENAULT C430/K460/T460 CAM 19- DEG C/SEN C/CAM SMALL(EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "VOLVO|XC90-16-VCSH-1Z|2016",
+    "marca": "VOLVO",
+    "vehiculo": "VOLVO XC90 5P 16- DEG C/SEN C/CAM C/DEF C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "MITSUBISHI|GF7-16-L-SZH|2016",
+    "marca": "MITSUBISHI",
+    "vehiculo": "MITSUBISHI OUTLANDER 16- DEG C/S RECT C/CAM C/D C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "MERCEDES|W205-18-VCS-2Z|2018",
+    "marca": "MERCEDES",
+    "vehiculo": "MERCEDES BENZ C-CLASS W205 4P 18- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "CHEVROLET|CHEV-TRACKER-19-VCS-1Z|2019",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET TRACKER 5P 19- DEG C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CHEVROLET|DW02499-VCHS1ZLFW|2019",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET SILVERADO 2P/4P 19- VDE C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "BMW|BMW-X4-19-VCS|2018",
+    "marca": "BMW",
+    "vehiculo": "BMW X4 G02 5P 18- VDE C/SEN C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "BMW|BMW-F40-VCS-1Z|2019",
+    "marca": "BMW",
+    "vehiculo": "BMW SERIE 1 F40 5P 19- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "PORSCHE|PORS-MSUV-18-VCS-1Z|2018",
+    "marca": "PORSCHE",
+    "vehiculo": "PORSCHE MACAN 5P 18- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "BMW|BMW-G20-VCS-1Z|2019",
+    "marca": "BMW",
+    "vehiculo": "BMW SERIE 3 G20/G21 4P/5P 19- VDE C/SEN C/CAM (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "DODGE|DW02454-VCS-1Z|2018",
+    "marca": "DODGE",
+    "vehiculo": "DODGE RAM 1500 4P 18- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "CITROEN|CI-DS3-19-VCS-1Z|2019",
+    "marca": "CITROEN",
+    "vehiculo": "CITROEN DS3 CROSSBACK 5P 19- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "BMW|BMW-G30-20-VCS-3Z|2017",
+    "marca": "BMW",
+    "vehiculo": "BMW SERIE 5 G30/G31 4P/5P 17- VDE C/SEN C/3CAM C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "SUBARU|FW04952-VCPH-2Z|2019",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU EVOLTIS 5P 19- VDE C/DEF C/2CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MAZDA|CX9-19-L-VCS-1Z|2019",
+    "marca": "MAZDA",
+    "vehiculo": "MAZDA CX9 5P 19- VDE C/SEN C/CAM HUD C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "SUBARU|FW04830-VCPSH-2Z|2019",
+    "marca": "SUBARU",
+    "vehiculo": "SUBARU EVOLTIS 5P 19- VDE C/SEN C/DEF C/2CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "BMW|BMW-X4-19-VCS-2Z|2018",
+    "marca": "BMW",
+    "vehiculo": "BMW X4 G02 5P 18- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "AUDI|AU-Q7-19-VCS-1Z|2019",
+    "marca": "AUDI",
+    "vehiculo": "AUDI Q7 5P 19- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "MERCEDES BENZ|W167-VCS-2Z|2019",
+    "marca": "MERCEDES BENZ",
+    "vehiculo": "MERCEDES BENZ GLE W167 5P 19- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "LAND ROVER|RR-L551-VCS-2Z|2019",
+    "marca": "LAND ROVER",
+    "vehiculo": "LAND ROVER EVOQUE 5P 19- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "BMW|BMW-X5-19-VCSH-3Z|2019",
+    "marca": "BMW",
+    "vehiculo": "BMW X5 G05 19- DEG C/SEN C/3CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "VOLVO|VOL-XC40-18-VCSH-1Z|2018",
+    "marca": "VOLVO",
+    "vehiculo": "VOLVO XC40 5P 18- DEG C/SEN C/CAM C/DEF C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "VOLVO FH|FM-16-L-S-1Z|2016",
+    "marca": "VOLVO FH",
+    "vehiculo": "VOLVO FH12 16- VDE C/SEN C/CAM (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "LAND ROVER|LR-L462-VCS-2Z|2017",
+    "marca": "LAND ROVER",
+    "vehiculo": "LAND ROVER DISCOVERY V 5P 17- DEG C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "FORD|DW02555-VCSH-1Z|2019",
+    "marca": "FORD",
+    "vehiculo": "FORD EDGE 19- DEG C/SEN C/CAM C/DEF C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "AUDI|AU-Q8-19-VCS-1Z|2019",
+    "marca": "AUDI",
+    "vehiculo": "AUDI Q8 5P 19- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "TESLA|TESLA-3-17-CM|2017",
+    "marca": "TESLA",
+    "vehiculo": "LATERAL TRASERO DERECHO TESLA 3 4P 17- VDE C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "LAND ROVER|L494-15-VCSH|2015",
+    "marca": "LAND ROVER",
+    "vehiculo": "LAND ROVER RANGE ROVER SPORT L494 15- DEG C/S C/D CM(EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "PORSCHE|CAYENNE-CPE-19-VCS-1Z|2019",
+    "marca": "PORSCHE",
+    "vehiculo": "PORSCHE CAYENNE COUPE 5P 19- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "CITROEN|2753A-VCPS|2015",
+    "marca": "CITROEN",
+    "vehiculo": "CITROEN GRAND C4 PICASSO 15- VDE C/SEN C/SOP (EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "LAND ROVER|7045AGSCHMVWZ97|2015",
+    "marca": "LAND ROVER",
+    "vehiculo": "LAND ROVER RANGE ROVER L494 15- VDE C/S C/2C C/D C/M(EU)",
+    "anio_desde": "2015"
+  },
+  {
+    "key": "JAGUAR|F-PACE-16-VCS-2Z|2018",
+    "marca": "JAGUAR",
+    "vehiculo": "JAGUAR F-PACE 18- VDE C/SEN C/2CAM C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "VOLVO|8846AGCCGHMVZ1M|2018",
+    "marca": "VOLVO",
+    "vehiculo": "VOLVO XC60 18- VDE C/S C/CAM C/DEF C/M (EU)",
+    "anio_desde": "2018"
+  },
+  {
+    "key": "PORSCHE|CAYENNE-19-VCS-1Z|2019",
+    "marca": "PORSCHE",
+    "vehiculo": "PORSCHE CAYENNE 5P 19- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "AUDI|AU-Q5-17-VCSH-1Z|2017",
+    "marca": "AUDI",
+    "vehiculo": "AUDI Q5 5P 17- DEG C/SEN C/CAM C/DEF C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "FORD|DB12399-FZ|2016",
+    "marca": "FORD",
+    "vehiculo": "FORD F150 4P 16- PRIV C/DEF C/3V ELECTRICA C/M (EU)",
+    "anio_desde": "2016"
+  },
+  {
+    "key": "CHEVROLET|DB13110-FZ|2019",
+    "marca": "CHEVROLET",
+    "vehiculo": "CHEVROLET SILVERADO 4P 19- PRIV C/DEF ELECTRIC C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "TESLA|TESLA-3-17-L-SZ|2017",
+    "marca": "TESLA",
+    "vehiculo": "TESLA 3 4P 17- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "LAND ROVER|7046AGACHMOVZ15|2019",
+    "marca": "LAND ROVER",
+    "vehiculo": "LAND ROVER DISCOVERY SPORT 19- VDE C/SEN C/2CAM C/DEF C/M (EU)",
+    "anio_desde": "2019"
+  },
+  {
+    "key": "TESLA|TESLA-3-23-L-SZH|2017",
+    "marca": "TESLA",
+    "vehiculo": "TESLA 3 4P 23- VDE C/SEN C/CAM C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "LAND ROVER|RR-L560-VCSH-2Z|2017",
+    "marca": "LAND ROVER",
+    "vehiculo": "LAND ROVER RANGE ROVER VELAR 17- VDE C/SEN C/DEF C/2CAM C/M (EU)",
+    "anio_desde": "2017"
+  },
+  {
+    "key": "LAND ROVER|7046ACDCHMOUV1Z|2015",
+    "marca": "LAND ROVER",
+    "vehiculo": "LAND ROVER DISCOVERY SPORT 15-VDE C/S C/2C C/D C/M (EU)",
+    "anio_desde": "2015"
+  }
+]
