@@ -1263,6 +1263,74 @@ html[data-theme="light"] .calc-result-value {
   font-size: 1rem;
 }
 
+/* ── Tabs calculadora ── */
+.calc-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 10px 20px 14px;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.calc-tab {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color .15s, background .15s, border-color .15s;
+  white-space: nowrap;
+}
+.calc-tab:hover { color: var(--text); border-color: var(--text); }
+.calc-tab--active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+html[data-theme="light"] .calc-tab--active { color: #fff; }
+
+/* ── Lámina de Seguridad ── */
+.calc-lam-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 8px 0 12px;
+}
+.calc-lam-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 10px;
+  background: var(--bg2, rgba(255,255,255,.04));
+  border-radius: 8px;
+}
+.calc-lam-row label {
+  font-size: 0.87rem;
+  color: var(--text);
+}
+.calc-lam-qty {
+  width: 58px;
+  text-align: center;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 6px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+.calc-lam-detalle { margin-bottom: 8px; }
+.calc-lam-det-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.81rem;
+  color: var(--muted);
+  padding: 2px 0;
+  border-bottom: 1px dotted var(--border);
+}
+
 /* hints removed — vertical space saved */
 
 /* ── Admin hero button ── */

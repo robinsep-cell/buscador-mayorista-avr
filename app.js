@@ -1795,4 +1795,166 @@ editCostoSaveBtn?.addEventListener("click", async () => {
     editCostoSaveBtn.disabled = false;
     editCostoSaveBtn.textContent = "💾 Actualizar en sheets";
   }
+
+// ── Tabs de la calculadora ────────────────────────────────────────────────────
+function switchCalcTab(tab) {
+  ["venta","fabricado","lamina"].forEach(t => {
+    document.getElementById("calcTab" + t.charAt(0).toUpperCase() + t.slice(1))
+      ?.classList.toggle("calc-tab--active", t === tab);
+  });
+  document.getElementById("calcBody").hidden           = tab !== "venta";
+  document.getElementById("calcFabricadoPanel").hidden = tab !== "fabricado";
+  document.getElementById("calcLaminaPanel").hidden    = tab !== "lamina";
+}
+document.getElementById("calcTabVenta")    ?.addEventListener("click", () => switchCalcTab("venta"));
+document.getElementById("calcTabFabricado")?.addEventListener("click", () => switchCalcTab("fabricado"));
+document.getElementById("calcTabLamina")   ?.addEventListener("click", () => switchCalcTab("lamina"));
+
+// ── Vidrio Fabricado ──────────────────────────────────────────────────────────
+const LAMINA_BASE_4M = {
+  parabrisas: 75000,
+  luneta:     45000,
+  puerta:     35000,
+  lateral:    35000,
+  aleta:      25000,
+};
+
+function precioLaminaUnidad(tipo, altaGama, micras) {
+  let base = LAMINA_BASE_4M[tipo] || 0;
+  if (altaGama) base = Math.round(base * 1.5);
+  if      (micras === 8)  base = Math.round(base * 1.3);
+  else if (micras === 12) base = Math.round(base * 1.6);
+  return base;
+}
+
+function calcFabricado() {
+  const costo    = parseFloat(document.getElementById("fabCosto").value);
+  const producto = document.getElementById("fabProducto").value;
+  const conLam   = document.getElementById("fabChkLamina")?.checked;
+  const altaGama = document.getElementById("fabChkAltaGama")?.checked;
+  const micrasEl = document.querySelector('input[name="fabMicras"]:checked');
+  const micras   = parseInt(micrasEl?.value || "4");
+
+  const resPrecio = document.getElementById("fabResPrecio");
+  const resLamina = document.getElementById("fabResLamina");
+  const resTotal  = document.getElementById("fabResTotal");
+  const laminaRow = document.getElementById("fabLaminaRow");
+  const totalRow  = document.getElementById("fabTotalRow");
+
+  resPrecio.textContent = "—";
+  resLamina.textContent = "—";
+  resTotal.textContent  = "—";
+  laminaRow.hidden = true;
+  totalRow.hidden  = true;
+
+  if (!costo || costo <= 0 || !producto) return;
+
+  const precioFab = Math.round(costo * 2.5);
+  resPrecio.textContent = fmtCLP(precioFab);
+
+  if (conLam) {
+    const costoLam = precioLaminaUnidad(producto, altaGama, micras);
+    resLamina.textContent = fmtCLP(costoLam);
+    resTotal.textContent  = fmtCLP(precioFab + costoLam);
+    laminaRow.hidden = false;
+    totalRow.hidden  = false;
+  }
+}
+
+document.getElementById("fabCosto")?.addEventListener("input", calcFabricado);
+document.getElementById("fabProducto")?.addEventListener("change", () => {
+  const v = document.getElementById("fabProducto").value;
+  document.getElementById("fabLaminaOpts").hidden = !v;
+  calcFabricado();
+});
+document.getElementById("fabChkLamina")?.addEventListener("change", () => {
+  const checked = document.getElementById("fabChkLamina").checked;
+  document.getElementById("fabPillLamina")?.classList.toggle("is-checked", checked);
+  document.getElementById("fabMicrasGroup").hidden = !checked;
+  calcFabricado();
+});
+document.getElementById("fabChkAltaGama")?.addEventListener("change", () => {
+  const checked = document.getElementById("fabChkAltaGama").checked;
+  document.getElementById("fabPillAltaGama")?.classList.toggle("is-checked", checked);
+  calcFabricado();
+});
+document.querySelectorAll('input[name="fabMicras"]').forEach(r => {
+  r.addEventListener("change", () => {
+    document.querySelectorAll('input[name="fabMicras"]').forEach(rb =>
+      rb.closest(".calc-pill")?.classList.toggle("is-checked", rb.checked)
+    );
+    calcFabricado();
+  });
+});
+
+// ── Lámina de Seguridad ───────────────────────────────────────────────────────
+const LAMINA_TIPOS = [
+  { id: "lamQPar", tipo: "parabrisas", label: "Parabrisas" },
+  { id: "lamQLun", tipo: "luneta",     label: "Luneta" },
+  { id: "lamQPue", tipo: "puerta",     label: "Vidrio de Puerta" },
+  { id: "lamQLat", tipo: "lateral",    label: "Vidrio Lateral" },
+  { id: "lamQAle", tipo: "aleta",      label: "Vidrio Aleta" },
+];
+
+function calcLamina() {
+  const altaGama = document.getElementById("lamChkAltaGama")?.checked;
+  const vehiculo = document.getElementById("lamChkVehiculo")?.checked;
+  const micrasEl = document.querySelector('input[name="lamMicras"]:checked');
+  const micras   = parseInt(micrasEl?.value || "4");
+
+  const detalleEl    = document.getElementById("lamDetalle");
+  const resSubtotal  = document.getElementById("lamResSubtotal");
+  const resDescuento = document.getElementById("lamResDescuento");
+  const resTotal     = document.getElementById("lamResTotal");
+  const descRow      = document.getElementById("lamDescRow");
+
+  let subtotal = 0;
+  const lineas = [];
+
+  LAMINA_TIPOS.forEach(({ id, tipo, label }) => {
+    const qty = parseInt(document.getElementById(id)?.value) || 0;
+    if (qty <= 0) return;
+    const unitario = precioLaminaUnidad(tipo, altaGama, micras);
+    subtotal += unitario * qty;
+    lineas.push(`<div class="calc-lam-det-row"><span>${label} ×${qty}</span><span>${fmtCLP(unitario * qty)}</span></div>`);
+  });
+
+  detalleEl.innerHTML = lineas.join("");
+  resSubtotal.textContent = lineas.length ? fmtCLP(subtotal) : "—";
+
+  if (!lineas.length) {
+    resDescuento.textContent = "—";
+    resTotal.textContent = "—";
+    descRow.hidden = true;
+    return;
+  }
+
+  if (vehiculo) {
+    const desc = Math.round(subtotal * 0.15);
+    resDescuento.textContent = "−" + fmtCLP(desc);
+    resTotal.textContent = fmtCLP(subtotal - desc);
+    descRow.hidden = false;
+  } else {
+    descRow.hidden = true;
+    resTotal.textContent = fmtCLP(subtotal);
+  }
+}
+
+["lamQPar","lamQLun","lamQPue","lamQLat","lamQAle"].forEach(id =>
+  document.getElementById(id)?.addEventListener("input", calcLamina)
+);
+["lamChkAltaGama","lamChkVehiculo"].forEach(id => {
+  const el = document.getElementById(id);
+  el?.addEventListener("change", () => {
+    el.closest(".calc-pill")?.classList.toggle("is-checked", el.checked);
+    calcLamina();
+  });
+});
+document.querySelectorAll('input[name="lamMicras"]').forEach(r => {
+  r.addEventListener("change", () => {
+    document.querySelectorAll('input[name="lamMicras"]').forEach(rb =>
+      rb.closest(".calc-pill")?.classList.toggle("is-checked", rb.checked)
+    );
+    calcLamina();
+  });
 });

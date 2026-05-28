@@ -206,7 +206,15 @@
           </div>
         </div>
 
-        <div class="calc-body">
+        <!-- Tabs calculadora -->
+        <div class="calc-tabs">
+          <button id="calcTabVenta"     class="calc-tab calc-tab--active" type="button">💰 Precio Venta</button>
+          <button id="calcTabFabricado" class="calc-tab" type="button">🔨 Vidrio Fabricado</button>
+          <button id="calcTabLamina"    class="calc-tab" type="button">🎬 Lámina Seguridad</button>
+        </div>
+
+        <!-- Tab 1: Precio Venta (existente) -->
+        <div id="calcBody" class="calc-body">
           <div class="calc-form">
 
             <div class="calc-field">
@@ -286,6 +294,110 @@
             </div>
           </div>
         </div>
+
+        <!-- Tab 2: Vidrio Fabricado -->
+        <div id="calcFabricadoPanel" class="calc-body" hidden>
+          <div class="calc-form">
+            <p class="calc-kicker" style="margin-bottom:10px">Solo puertas y aletas NO encapsuladas · Costo × 2,5</p>
+            <div class="calc-field">
+              <label class="calc-label" for="fabCosto">Costo de fabricación (CLP)</label>
+              <input id="fabCosto" class="calc-input" type="number" placeholder="Ej: 30000" min="0" step="100" />
+            </div>
+            <div class="calc-field">
+              <label class="calc-label" for="fabProducto">Tipo de vidrio</label>
+              <select id="fabProducto" class="calc-input">
+                <option value="">Seleccionar...</option>
+                <option value="puerta">Vidrio de Puerta</option>
+                <option value="aleta">Vidrio Aleta (no encapsulada)</option>
+              </select>
+            </div>
+            <div id="fabLaminaOpts" class="calc-options-wrap" hidden>
+              <span class="calc-label">¿Incluir lámina de seguridad?</span>
+              <div class="calc-pills">
+                <label class="calc-pill" id="fabPillLamina">
+                  <input type="checkbox" id="fabChkLamina" /><span>Agregar lámina</span>
+                </label>
+                <label class="calc-pill" id="fabPillAltaGama">
+                  <input type="checkbox" id="fabChkAltaGama" /><span>Alta Gama (×1,5)</span>
+                </label>
+              </div>
+              <div id="fabMicrasGroup" class="calc-cam-group" hidden>
+                <span class="calc-label-mini">Micras de lámina</span>
+                <div class="calc-pills">
+                  <label class="calc-pill is-checked" id="fabPill4m"><input type="radio" name="fabMicras" value="4" checked /><span>4 micras</span></label>
+                  <label class="calc-pill" id="fabPill8m"><input type="radio" name="fabMicras" value="8" /><span>8 micras (+30%)</span></label>
+                  <label class="calc-pill" id="fabPill12m"><input type="radio" name="fabMicras" value="12" /><span>12 micras (+60%)</span></label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="calc-results">
+            <p id="fabStatus" class="calc-status"></p>
+            <div class="calc-result-row calc-result-row--main">
+              <span class="calc-result-label">Precio Fabricado</span>
+              <span id="fabResPrecio" class="calc-result-value">—</span>
+            </div>
+            <div class="calc-result-row" id="fabLaminaRow" hidden>
+              <span class="calc-result-label">Costo Lámina</span>
+              <span id="fabResLamina" class="calc-result-value">—</span>
+            </div>
+            <div class="calc-result-row calc-result-row--ml" id="fabTotalRow" hidden>
+              <span class="calc-result-label">Total con Lámina</span>
+              <span id="fabResTotal" class="calc-result-value">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Lámina de Seguridad -->
+        <div id="calcLaminaPanel" class="calc-body" hidden>
+          <div class="calc-form">
+            <p class="calc-kicker" style="margin-bottom:10px">Servicio externo · Precios de referencia para cliente</p>
+            <span class="calc-label">Vidrios a laminar</span>
+            <div class="calc-lam-grid">
+              <div class="calc-lam-row"><label>Parabrisas</label>    <input type="number" id="lamQPar" min="0" max="9" value="0" class="calc-lam-qty" /></div>
+              <div class="calc-lam-row"><label>Luneta</label>         <input type="number" id="lamQLun" min="0" max="9" value="0" class="calc-lam-qty" /></div>
+              <div class="calc-lam-row"><label>Vidrio de Puerta</label><input type="number" id="lamQPue" min="0" max="9" value="0" class="calc-lam-qty" /></div>
+              <div class="calc-lam-row"><label>Vidrio Lateral</label>  <input type="number" id="lamQLat" min="0" max="9" value="0" class="calc-lam-qty" /></div>
+              <div class="calc-lam-row"><label>Vidrio Aleta</label>    <input type="number" id="lamQAle" min="0" max="9" value="0" class="calc-lam-qty" /></div>
+            </div>
+            <div class="calc-options-wrap" style="margin-top:8px">
+              <span class="calc-label">Opciones</span>
+              <div class="calc-pills">
+                <label class="calc-pill" id="lamPillAltaGama">
+                  <input type="checkbox" id="lamChkAltaGama" /><span>Alta Gama (×1,5)</span>
+                </label>
+                <label class="calc-pill" id="lamPillVehiculo">
+                  <input type="checkbox" id="lamChkVehiculo" /><span>Vehículo completo (−15%)</span>
+                </label>
+              </div>
+              <div class="calc-cam-group">
+                <span class="calc-label-mini">Micras</span>
+                <div class="calc-pills">
+                  <label class="calc-pill is-checked" id="lamPill4m"><input type="radio" name="lamMicras" value="4" checked /><span>4 micras</span></label>
+                  <label class="calc-pill" id="lamPill8m"><input type="radio" name="lamMicras" value="8" /><span>8 micras (+30%)</span></label>
+                  <label class="calc-pill" id="lamPill12m"><input type="radio" name="lamMicras" value="12" /><span>12 micras (+60%)</span></label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="calc-results">
+            <p id="lamStatus" class="calc-status"></p>
+            <div id="lamDetalle" class="calc-lam-detalle"></div>
+            <div class="calc-result-row">
+              <span class="calc-result-label">Subtotal</span>
+              <span id="lamResSubtotal" class="calc-result-value">—</span>
+            </div>
+            <div class="calc-result-row calc-result-row--muted" id="lamDescRow" hidden>
+              <span class="calc-result-label">Descuento veh. completo (15%)</span>
+              <span id="lamResDescuento" class="calc-result-value">—</span>
+            </div>
+            <div class="calc-result-row calc-result-row--main">
+              <span class="calc-result-label">Total Lámina</span>
+              <span id="lamResTotal" class="calc-result-value">—</span>
+            </div>
+          </div>
+        </div>
+
       </dialog>
       <!-- ── Modal Cotizador ── -->
       <dialog id="cotModal" class="cot-dialog">
