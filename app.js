@@ -1795,6 +1795,7 @@ editCostoSaveBtn?.addEventListener("click", async () => {
     editCostoSaveBtn.disabled = false;
     editCostoSaveBtn.textContent = "💾 Actualizar en sheets";
   }
+});
 
 // ── Selector de modo de calculadora (radio pills, mismo estilo UI) ────────────
 function switchCalcMode(mode) {
