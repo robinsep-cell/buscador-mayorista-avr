@@ -1258,6 +1258,79 @@ function stockClass(value) {
   return "stock-cell stock-zero";
 }
 
+// === Fusión INVEXA ↔ Buscador: fotos de productos por código antiguo ===
+// Lee la vista pública `vidrios_fotos_publica` (Supabase, anon key de auth.js)
+// y muestra una miniatura clickeable en los productos que tienen foto.
+const FOTOS = new Map(); // CODIGO_ANTIGUO (mayúsculas) -> foto_url
+
+async function loadFotos() {
+  try {
+    FOTOS.clear();
+    // PostgREST corta en 1000 filas por request → paginamos con offset.
+    const pageSize = 1000;
+    for (let offset = 0; ; offset += pageSize) {
+      const r = await fetch(
+        `${SUPABASE_URL}/rest/v1/vidrios_fotos_publica?select=codigo_antiguo,foto_url&limit=${pageSize}&offset=${offset}`,
+        {
+          headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` },
+          cache: "no-store",
+        }
+      );
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const rows = await r.json();
+      for (const row of rows) {
+        if (row.codigo_antiguo && row.foto_url) {
+          FOTOS.set(String(row.codigo_antiguo).trim().toUpperCase(), row.foto_url);
+        }
+      }
+      if (rows.length < pageSize) break;
+    }
+  } catch (e) {
+    console.warn("[fotos] no se pudieron cargar:", e);
+  }
+}
+
+// Devuelve la foto del primer código antiguo del producto que tenga una.
+function fotoUrlForProducto(p) {
+  for (const c of p.codigoAntiguo || []) {
+    const url = FOTOS.get(String(c).trim().toUpperCase());
+    if (url) return url;
+  }
+  return "";
+}
+
+function fotoThumbHtml(p) {
+  const url = fotoUrlForProducto(p);
+  if (!url) return "";
+  const safe = escapeHtml(url);
+  return `<img class="foto-thumb" src="${safe}" data-foto="${safe}" alt="foto del producto" loading="lazy" title="Ver foto" />`;
+}
+
+// Lightbox para ver la foto en grande
+function openFotoLightbox(url) {
+  let lb = document.getElementById("foto-lightbox");
+  if (!lb) {
+    lb = document.createElement("div");
+    lb.id = "foto-lightbox";
+    lb.innerHTML = `<span class="foto-lightbox-close" title="Cerrar">✕</span><img class="foto-lightbox-img" alt="foto del producto" />`;
+    document.body.appendChild(lb);
+  }
+  lb.querySelector(".foto-lightbox-img").src = url;
+  lb.classList.add("open");
+}
+function closeFotoLightbox() {
+  document.getElementById("foto-lightbox")?.classList.remove("open");
+}
+document.addEventListener("click", (e) => {
+  const thumb = e.target.closest && e.target.closest(".foto-thumb");
+  if (thumb) { e.preventDefault(); openFotoLightbox(thumb.dataset.foto); return; }
+  if (e.target.id === "foto-lightbox" ||
+      (e.target.classList && e.target.classList.contains("foto-lightbox-close"))) {
+    closeFotoLightbox();
+  }
+});
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeFotoLightbox(); });
+
 function renderRows(items, tokens) {
   if (!items.length) {
     resultsBody.innerHTML = `<tr><td colspan="${COLSPAN}" class="empty-cell">No encontré resultados.</td></tr>`;
@@ -1277,7 +1350,7 @@ function renderRows(items, tokens) {
     return `
     <tr>
       <td class="cot-check-cell"><input type="checkbox" class="cot-check" data-id="${p._id}" ${checked} /></td>
-      <td class="name-cell${p.medida ? ' has-medida' : ''}" ${p.medida ? `data-medida="📐 ${escapeHtml(p.medida)}"` : ''}>${highlight(p.nombre, tokens)}</td>
+      <td class="name-cell${p.medida ? ' has-medida' : ''}" ${p.medida ? `data-medida="📐 ${escapeHtml(p.medida)}"` : ''}>${fotoThumbHtml(p)}${highlight(p.nombre, tokens)}</td>
       <td class="siglas-cell">${renderSiglas(p, tokens)}</td>
       <td class="siglas-cell">${renderBadges(p.codigoAntiguo, tokens)}</td>
       <td class="years-cell">${highlight(buildYearLabel(p.anioDesde, p.anioHasta), tokens)}</td>
@@ -1321,7 +1394,7 @@ async function loadProducts() {
   resultsBody.innerHTML = `<tr><td colspan="${COLSPAN}" class="empty-cell">Cargando...</td></tr>`;
 
   try {
-    const [imp, avr] = await Promise.all([fetchSheet(URL_IMPORTADORA), fetchSheet(URL_AVR)]);
+    const [imp, avr] = await Promise.all([fetchSheet(URL_IMPORTADORA), fetchSheet(URL_AVR), loadFotos()]);
 
     // Agrupar importadora por cp para saber cuántos productos comparten el mismo código
     const impByCp = new Map(); // cp → item[]

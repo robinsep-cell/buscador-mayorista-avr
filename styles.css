@@ -2794,3 +2794,46 @@ html[data-theme="light"] .cot-open-hero-btn {
   .editcosto-fields { grid-template-columns: 1fr; }
   .editcosto-actions { flex-direction: column; }
 }
+
+/* === Fotos de productos (fusión INVEXA) === */
+.foto-thumb {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--border, rgba(255,255,255,.18));
+  vertical-align: middle;
+  margin-right: 8px;
+  cursor: zoom-in;
+  background: rgba(127,127,127,.15);
+  transition: box-shadow .12s ease;
+}
+.foto-thumb:hover { box-shadow: 0 0 0 2px var(--primary, #4da3ff); }
+
+#foto-lightbox {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,.82);
+  z-index: 9999;
+  cursor: zoom-out;
+}
+#foto-lightbox.open { display: flex; }
+.foto-lightbox-img {
+  max-width: 92vw;
+  max-height: 92vh;
+  border-radius: 8px;
+  box-shadow: 0 8px 40px rgba(0,0,0,.5);
+}
+.foto-lightbox-close {
+  position: absolute;
+  top: 16px;
+  right: 22px;
+  font-size: 28px;
+  line-height: 1;
+  color: #fff;
+  cursor: pointer;
+  user-select: none;
+}
