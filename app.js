@@ -1079,10 +1079,21 @@ function formatPrice(value) {
   return "$ " + n.toLocaleString("es-CL");
 }
 
+// Primera imagen disponible de la importadora. AF = "Imagen2" (preferida, casi
+// todo la tiene); cae a Imagen1/3/4. Encodea espacios de las URLs del proveedor.
+function pickImagen(row, hm) {
+  for (const col of ["Imagen2", "Imagen1", "Imagen3", "Imagen4"]) {
+    const v = getCell(row, hm, col);
+    if (v && v.trim()) return encodeURI(v.trim());
+  }
+  return "";
+}
+
 function buildImportadora(row, hm) {
   return {
     cp: getCell(row, hm, "CodigoProveedor").toUpperCase(),
     sku: getCell(row, hm, "SKU"),
+    fotoImp: pickImagen(row, hm),
     codigoAntiguo: getCell(row, hm, "CodigoAntiguo"),
     nombre: getCell(row, hm, "Nombre"),
     descripcion: getCell(row, hm, "Descripcion"),
@@ -1193,6 +1204,7 @@ function mergeRows(imp, avr) {
     ventaSin: pickField(imp?.ventaSin, avr?.ventaSin),
     ventaCon: pickField(imp?.ventaCon, avr?.ventaCon),
     cp: (imp?.cp || avr?.cp || ""),
+    fotoImp: imp?.fotoImp || "",
   };
 }
 
@@ -1292,11 +1304,13 @@ async function loadFotos() {
 
 // Devuelve la foto del primer código antiguo del producto que tenga una.
 function fotoUrlForProducto(p) {
+  // 1) Foto propia de AVR (Supabase) por código antiguo — tiene prioridad.
   for (const c of p.codigoAntiguo || []) {
     const url = FOTOS.get(String(c).trim().toUpperCase());
     if (url) return url;
   }
-  return "";
+  // 2) Fallback: foto de la importadora (columna AF / Imagen2 del sheet).
+  return p.fotoImp || "";
 }
 
 function fotoThumbHtml(p) {
