@@ -1273,20 +1273,20 @@ function stockClass(value) {
 // === Fusión INVEXA ↔ Buscador: fotos de productos por código antiguo ===
 // Lee la vista pública `vidrios_fotos_publica` (Supabase, anon key de auth.js)
 // y muestra una miniatura clickeable en los productos que tienen foto.
-const FOTOS = new Map(); // CODIGO_ANTIGUO (mayúsculas) -> foto_url
+const FOTOS = new Map();    // CODIGO_ANTIGUO (mayúsculas) -> foto_url (AVR vidrios)
+const FOTOS_CP = new Map(); // CODIGO_PROVEEDOR (mayúsculas) -> foto principal propia
 
 async function loadFotos() {
   try {
     FOTOS.clear();
-    // PostgREST corta en 1000 filas por request → paginamos con offset.
-    const pageSize = 1000;
+    FOTOS_CP.clear();
+    const pageSize = 1000; // PostgREST corta en 1000 → paginamos con offset.
+
+    // Fotos AVR por código antiguo.
     for (let offset = 0; ; offset += pageSize) {
       const r = await fetch(
         `${SUPABASE_URL}/rest/v1/vidrios_fotos_publica?select=codigo_antiguo,foto_url&limit=${pageSize}&offset=${offset}`,
-        {
-          headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` },
-          cache: "no-store",
-        }
+        { headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` }, cache: "no-store" }
       );
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       const rows = await r.json();
@@ -1297,6 +1297,22 @@ async function loadFotos() {
       }
       if (rows.length < pageSize) break;
     }
+
+    // Fotos propias por código proveedor (reemplazan a la importadora).
+    // La vista viene ordenada por codigo_proveedor, orden → la primera es la principal.
+    for (let offset = 0; ; offset += pageSize) {
+      const r = await fetch(
+        `${SUPABASE_URL}/rest/v1/fotos_proveedor_publica?select=codigo_proveedor,url&limit=${pageSize}&offset=${offset}`,
+        { headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` }, cache: "no-store" }
+      );
+      if (!r.ok) break;
+      const rows = await r.json();
+      for (const row of rows) {
+        const cp = String(row.codigo_proveedor || "").trim().toUpperCase();
+        if (cp && row.url && !FOTOS_CP.has(cp)) FOTOS_CP.set(cp, row.url);
+      }
+      if (rows.length < pageSize) break;
+    }
   } catch (e) {
     console.warn("[fotos] no se pudieron cargar:", e);
   }
@@ -1304,12 +1320,15 @@ async function loadFotos() {
 
 // Devuelve la foto del primer código antiguo del producto que tenga una.
 function fotoUrlForProducto(p) {
-  // 1) Foto propia de AVR (Supabase) por código antiguo — tiene prioridad.
+  // 1) Foto propia de AVR por código antiguo (vidrios).
   for (const c of p.codigoAntiguo || []) {
     const url = FOTOS.get(String(c).trim().toUpperCase());
     if (url) return url;
   }
-  // 2) Fallback: foto de la importadora (columna AF / Imagen2 del sheet).
+  // 2) Foto propia por código proveedor (reemplaza la de la importadora).
+  const cp = String(p.cp || "").trim().toUpperCase();
+  if (cp && FOTOS_CP.has(cp)) return FOTOS_CP.get(cp);
+  // 3) Fallback: foto de la importadora (columna AF / Imagen2 del sheet).
   return p.fotoImp || "";
 }
 
