@@ -12,7 +12,7 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
 // Dominio autovidriosrobin.cl verificado en Resend el 2026-07-07 → envío desde la marca.
-const FROM     = "AutoVidriosRobin <cotizaciones@autovidriosrobin.cl>";
+const FROM     = "AutoVidriosRobin <contacto@autovidriosrobin.cl>";
 const REPLY_TO = "contacto@autovidriosrobin.cl";
 
 const CORS: Record<string, string> = {
