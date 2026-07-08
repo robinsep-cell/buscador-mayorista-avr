@@ -784,6 +784,23 @@ function confirmManualProduct() {
   renderCotItems();
 }
 
+// Helper público para agregar un ítem a la cotización desde otros módulos (ej. espejos-cot.js).
+// Reusa la key "m_N" (compatible con los handlers de cantidad/eliminar de ítems manuales).
+window.addCotItem = function ({ nombre, precio, marca = "", anioDesde = "", anioHasta = "", color = "", cant = 1 } = {}) {
+  if (!nombre) return null;
+  const key = "m_" + (++_manualCounter);
+  window.cotSelection.set(key, {
+    _id: key, _isManual: true,
+    _cant: Math.max(1, parseInt(cant) || 1),
+    _precioManual: Math.max(0, Math.round(Number(precio)) || 0),
+    nombre, marca, color, anioDesde, anioHasta,
+    ventaSin: "0", ventaCon: "0",
+  });
+  updateCotBtn();
+  renderCotItems();
+  return key;
+};
+
 cotManualConfirm?.addEventListener("click", confirmManualProduct);
 cotManualNombreEl?.addEventListener("keydown", e => { if (e.key === "Enter") cotManualPrecioEl.focus(); });
 cotManualPrecioEl?.addEventListener("keydown", e => { if (e.key === "Enter") confirmManualProduct(); });

@@ -90,6 +90,10 @@
               <button id="calcOpenBtn" class="calc-open-btn" type="button">Calculadora</button>
             </div>
           </div>
+          <div class="modo-toggle">
+            <button id="modoVidrios" class="modo-btn is-active" type="button">🔎 Vidrios</button>
+            <button id="modoEspejos" class="modo-btn" type="button">🪞 Espejos</button>
+          </div>
           <div class="search-box">
             <input
               id="searchInput"
@@ -153,6 +157,16 @@
             </tbody>
           </table>
           </div>
+        </section>
+
+        <!-- Modo Espejos (fase 2): busca modelos con precio y agrega a la cotización -->
+        <section id="espSection" class="esp-panel" hidden>
+          <div class="search-box">
+            <input id="espSearch" type="search" placeholder="Buscar espejo: marca modelo año (ej: nissan pathfinder 2012)" autocomplete="off" />
+          </div>
+          <p class="hint">Elige la <strong>opción</strong> del espejo (Original, Alternativo, con punto ciego, retrovisor completo, pieza…) y agrégala a la cotización.</p>
+          <div id="espStatus" class="status"></div>
+          <div id="espResults" class="esp-results"></div>
         </section>
       </main>
 
@@ -689,10 +703,25 @@
       </div>
     </dialog>
 
+    <style>
+      .modo-toggle { display: inline-flex; gap: 6px; margin: 0 0 10px; }
+      .modo-btn { border: 1px solid var(--border, #ccc); background: var(--bg, #fff); color: var(--text, #111); border-radius: 999px; padding: 6px 14px; font-size: 0.9rem; font-weight: 600; cursor: pointer; }
+      .modo-btn.is-active { background: var(--primary, #111); color: #fff; border-color: var(--primary, #111); }
+      .esp-results { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+      .esp-card { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; border: 1px solid var(--border, #ddd); border-radius: 10px; padding: 10px 14px; background: var(--bg, #fff); }
+      .esp-card-info { display: flex; flex-direction: column; }
+      .esp-card-info strong { font-size: 0.98rem; }
+      .esp-sub { font-size: 0.8rem; color: var(--muted, #777); }
+      .esp-card-actions { display: flex; gap: 8px; align-items: center; }
+      .esp-op { border: 1px solid var(--border, #ccc); border-radius: 8px; padding: 6px 8px; background: var(--bg, #fff); color: var(--text, #111); font-size: 0.85rem; max-width: 280px; }
+      .esp-add { border: none; background: var(--primary, #111); color: #fff; border-radius: 8px; padding: 7px 14px; font-weight: 600; cursor: pointer; font-size: 0.85rem; }
+      .esp-add:disabled { opacity: .6; }
+    </style>
     <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
     <script src="./auth.js"></script>
     <script src="./admin.js"></script>
     <script src="./app.js?v=supabase1"></script>
-    <script src="./cotizador.js?v=wa1"></script>
+    <script src="./cotizador.js?v=esp1"></script>
+    <script src="./espejos-cot.js?v=1"></script>
   </body>
 </html>
