@@ -448,23 +448,61 @@ function printCot() {
   setTimeout(() => { win.print(); }, 600);
 }
 
-// ── Compartir WhatsApp ────────────────────────────────────────────────────────
-function shareWA() {
-  const tipo  = getPrecioTipo();
-  const items = [...window.cotSelection.values()];
-  let text = `*Cotización ${_cotNumero || ""}*\n`;
-  text += `AutovidriosRobin SPA — ${formatDateShort(new Date())}\n`;
-  if (cotNombreEl.value.trim()) text += `Cliente: ${cotNombreEl.value.trim()}\n`;
-  text += "\n";
-  items.forEach((p, i) => {
-    const precio = getUnitPrice(p, tipo);
-    const cant   = p._cant || 1;
-    text += `${i + 1}. ${p.nombre} x${cant} → ${fmtCLP(precio * cant)}\n`;
-  });
-  let subtotal = 0;
-  items.forEach(p => { subtotal += getUnitPrice(p, tipo) * (p._cant || 1); });
-  text += `\n*TOTAL: ${fmtCLP(subtotal)}*\nValidez: 3 días hábiles`;
-  window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank");
+// ── Compartir WhatsApp (con PDF por link firmado) ─────────────────────────────
+// WhatsApp no permite adjuntar archivos por link: se sube el PDF a Supabase y se
+// manda el texto + el enlace firmado (función cotizacion-pdf).
+async function shareWA() {
+  if (!window.cotSelection.size) { alert("La cotización no tiene productos."); return; }
+
+  const prev = cotBtnWA.textContent;
+  cotBtnWA.disabled = true;
+  try {
+    // 1) Guardar (una sola vez por cotización)
+    if (_cotSavedNumero !== _cotNumero) {
+      cotBtnWA.textContent = "Guardando…";
+      await saveCotizacion();
+    }
+
+    // 2) PDF → 3) subir y obtener link firmado
+    cotBtnWA.textContent = "Generando PDF…";
+    const pdf_base64 = await buildCotPdfBase64();
+    cotBtnWA.textContent = "Subiendo…";
+    const { data, error } = await window._sb.functions.invoke("cotizacion-pdf", {
+      body: { numero: _cotNumero || "", pdf_base64 },
+    });
+    if (error || !data?.ok || !data.url) {
+      throw new Error(error?.message || data?.error || "no se pudo subir el PDF");
+    }
+
+    // 4) Texto de WhatsApp: resumen + link al PDF
+    const tipo  = getPrecioTipo();
+    const items = [...window.cotSelection.values()];
+    let text = `*Cotización ${_cotNumero || ""}*\n`;
+    text += `AutoVidriosRobin SPA — ${formatDateShort(new Date())}\n`;
+    if (cotNombreEl.value.trim()) text += `Cliente: ${cotNombreEl.value.trim()}\n`;
+    text += "\n";
+    items.forEach((p, i) => {
+      const precio = getUnitPrice(p, tipo);
+      const cant   = p._cant || 1;
+      text += `${i + 1}. ${p.nombre} x${cant} → ${fmtCLP(precio * cant)}\n`;
+    });
+    let subtotal = 0;
+    items.forEach(p => { subtotal += getUnitPrice(p, tipo) * (p._cant || 1); });
+    text += `\n*TOTAL: ${fmtCLP(subtotal)}*\nValidez: 3 días hábiles\n\n📄 Descarga tu cotización en PDF:\n${data.url}`;
+
+    // 5) Abrir WhatsApp — al número del cliente si está cargado
+    const fono = (cotTelEl.value || "").replace(/\D/g, "");
+    const to   = fono ? (fono.length === 9 ? "56" + fono : fono) : "";
+    const base = to ? `https://wa.me/${to}` : "https://wa.me/";
+    window.open(base + "?text=" + encodeURIComponent(text), "_blank");
+
+    cotBtnWA.textContent = "✓ Listo";
+    setTimeout(() => { cotBtnWA.textContent = prev; cotBtnWA.disabled = false; }, 2500);
+  } catch (e) {
+    alert("No se pudo preparar el WhatsApp: " + (e.message || e));
+    cotBtnWA.textContent = prev;
+    cotBtnWA.disabled = false;
+  }
 }
 
 // ── Event listeners ───────────────────────────────────────────────────────────
