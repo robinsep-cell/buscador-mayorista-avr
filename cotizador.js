@@ -4,6 +4,7 @@ window.cotSelection = new Map(); // _id → product (con _cant). Manuales usan k
 let _cotNumero    = null;
 let _manualCounter = 0;
 let _reemplazaA   = null; // numero de cotización que se reemplaza al guardar
+let _cotSavedNumero = null; // número ya guardado en esta sesión del modal (evita doble insert)
 
 // ── DOM ───────────────────────────────────────────────────────────────────────
 const cotBtn      = document.getElementById("cotBtn");
@@ -278,6 +279,7 @@ async function openCotModal() {
     _cotNumero = null;
   }
   cotNumeroEl.textContent = "N° " + (_cotNumero || "—");
+  _cotSavedNumero = null; // cotización nueva: aún no guardada
 
   renderCotItems();
   cotModal.showModal();
@@ -350,6 +352,7 @@ async function saveCotizacion() {
     alert("Error al guardar: " + error.message);
     return;
   }
+  _cotSavedNumero = _cotNumero; // marca esta cotización como ya guardada en la sesión
 
   // Si reemplaza una anterior → anularla automáticamente
   if (_reemplazaA) {
@@ -363,21 +366,8 @@ async function saveCotizacion() {
   setTimeout(() => { cotBtnGuardar.textContent = "💾 Guardar"; }, 2500);
 }
 
-// ── Imprimir ──────────────────────────────────────────────────────────────────
-function printCot() {
-  const logoSrc = document.querySelector(".cot-logo")?.src || "";
-  // Sincronizar atributos value de todos los inputs/textareas antes de copiar el HTML
-  const doc = document.getElementById("cotDoc");
-  doc.querySelectorAll("input").forEach(el => el.setAttribute("value", el.value));
-  doc.querySelectorAll("textarea").forEach(el => { el.innerHTML = el.value; });
-  const content = doc.innerHTML;
-  const win = window.open("", "_blank", "width=900,height=1100");
-  win.document.write(`<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<title>${_cotNumero || "Cotización"}</title>
-<style>
+// ── CSS del documento imprimible / PDF (compartido por printCot y el PDF de correo) ──
+const COT_DOC_CSS = `
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: sans-serif; font-size: 13px; color: #111; padding: 24px; }
   .cot-doc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
@@ -408,7 +398,48 @@ function printCot() {
   .cot-notes-val { font-size: 12px; color: #444; border: 1px solid #ddd; border-radius: 4px; padding: 8px; min-height: 40px; }
   .no-print { display: none !important; }
   .cot-cant-inp { border: none; background: transparent; width: 40px; text-align: center; font-size: 12px; }
-</style>
+`;
+
+// Copia el HTML del documento sincronizando los value de inputs/textarea (para print y PDF).
+function snapshotCotHtml() {
+  const doc = document.getElementById("cotDoc");
+  doc.querySelectorAll("input").forEach(el => el.setAttribute("value", el.value));
+  doc.querySelectorAll("textarea").forEach(el => { el.innerHTML = el.value; });
+  return doc.innerHTML;
+}
+
+// Genera el PDF de la cotización y lo devuelve como base64 (sin el prefijo data:).
+async function buildCotPdfBase64() {
+  if (typeof html2pdf === "undefined") throw new Error("Falta la librería de PDF (html2pdf).");
+  const content = snapshotCotHtml();
+  const wrap = document.createElement("div");
+  wrap.style.cssText = "position:fixed;left:-9999px;top:0;width:794px;background:#fff;";
+  wrap.innerHTML = `<style>${COT_DOC_CSS}</style><div class="cot-pdf-body" style="background:#fff">${content}</div>`;
+  document.body.appendChild(wrap);
+  try {
+    const opt = {
+      margin:      [8, 8, 8, 8],
+      image:       { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2, backgroundColor: "#ffffff", useCORS: true },
+      jsPDF:       { unit: "mm", format: "a4", orientation: "portrait" },
+    };
+    const dataUri = await html2pdf().set(opt).from(wrap).outputPdf("datauristring");
+    return dataUri.split(",")[1];
+  } finally {
+    wrap.remove();
+  }
+}
+
+// ── Imprimir ──────────────────────────────────────────────────────────────────
+function printCot() {
+  const content = snapshotCotHtml();
+  const win = window.open("", "_blank", "width=900,height=1100");
+  win.document.write(`<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>${_cotNumero || "Cotización"}</title>
+<style>${COT_DOC_CSS}</style>
 </head>
 <body>${content}</body>
 </html>`);
@@ -606,15 +637,54 @@ cotBtnGuardar?.addEventListener("click", saveCotizacion);
 cotBtnImprimir?.addEventListener("click", printCot);
 cotBtnWA?.addEventListener("click", shareWA);
 
-cotBtnEmail?.addEventListener("click", () => {
-  const dest    = cotEmailEl.value.trim();
-  const subject = encodeURIComponent("Cotización " + (_cotNumero || "") + " — AutovidriosRobin");
-  const body    = encodeURIComponent(
-    "Estimado/a " + (cotNombreEl.value.trim() || "cliente") + ",\n\n" +
-    "Adjunto encontrará su cotización " + (_cotNumero || "") + ".\n\n" +
-    "Saludos,\nAutovidriosRobin SPA\n+56 9 XXXX XXXX"
-  );
-  window.open(`mailto:${dest}?subject=${subject}&body=${body}`, "_blank");
+cotBtnEmail?.addEventListener("click", async () => {
+  const dest = cotEmailEl.value.trim();
+  if (!dest || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(dest)) {
+    alert("Escribe un correo válido del cliente antes de enviar.");
+    cotEmailEl.focus();
+    return;
+  }
+  if (!window.cotSelection.size) { alert("La cotización no tiene productos."); return; }
+
+  const prev = cotBtnEmail.textContent;
+  cotBtnEmail.disabled = true;
+  try {
+    // 1) Guardar en el historial (una sola vez por cotización)
+    if (_cotSavedNumero !== _cotNumero) {
+      cotBtnEmail.textContent = "Guardando…";
+      await saveCotizacion();
+    }
+
+    // 2) Generar el PDF
+    cotBtnEmail.textContent = "Generando PDF…";
+    const pdf_base64 = await buildCotPdfBase64();
+
+    // 3) Enviar por correo con el PDF adjunto (función Supabase → Resend)
+    cotBtnEmail.textContent = "Enviando…";
+    const tipo = getPrecioTipo();
+    let subtotal = 0;
+    [...window.cotSelection.values()].forEach(p => { subtotal += getUnitPrice(p, tipo) * (p._cant || 1); });
+
+    const { data, error } = await window._sb.functions.invoke("cotizacion-email", {
+      body: {
+        to:             dest,
+        cliente_nombre: cotNombreEl.value.trim(),
+        numero:         _cotNumero || "",
+        total:          subtotal,
+        ejecutivo:      cotEjecEl.value.trim(),
+        filename:       `Cotizacion_${_cotNumero || "AVR"}.pdf`,
+        pdf_base64,
+      },
+    });
+    if (error || !data?.ok) throw new Error(error?.message || data?.error || "no se pudo enviar");
+
+    cotBtnEmail.textContent = "✓ Enviado";
+    setTimeout(() => { cotBtnEmail.textContent = prev; cotBtnEmail.disabled = false; }, 2800);
+  } catch (e) {
+    alert("No se pudo enviar el correo: " + (e.message || e));
+    cotBtnEmail.textContent = prev;
+    cotBtnEmail.disabled = false;
+  }
 });
 
 cotBtnCopiar?.addEventListener("click", () => {
