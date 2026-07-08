@@ -1,7 +1,7 @@
-const SHEET_ID = "1h7VNeNZHI4zvJR9WTBXXM0BhsKu22u-GJNpT1TIh9YU";
-const URL_IMPORTADORA = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=142068239`;
-const URL_AVR = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=704848232`;
-// Positional column indexes (0-based, same layout in both sheets)
+// El catálogo se lee desde Supabase (vistas buscador_avr y buscador_importadora).
+// El Google Sheet dejó de ser la fuente (2026-07-08): AVR se edita en INVEXA
+// (/lab/vidrios) y la importadora la mantiene el bot semanal en Supabase.
+// Positional column indexes (0-based, mismo layout del CSV histórico)
 const COL_STOCK   = 13; // N
 const COL_COSTO   = 35; // AJ
 const COL_VSIN    = 36; // AK – Venta sin instalación
@@ -1412,13 +1412,105 @@ function filterProducts() {
   setStatus(`Búsqueda: ${tokens.join(" · ")}`);
 }
 
-async function fetchSheet(url) {
-  const r = await fetch(url, { cache: "no-store" });
-  if (!r.ok) throw new Error(`HTTP ${r.status}`);
-  const text = await r.text();
-  const rows = parseCsv(text);
-  const headerMap = buildHeaderMap(rows[0] || []);
-  return { rows: rows.slice(1), headerMap };
+// ── Catálogo desde Supabase (reemplaza la lectura del Sheet, 2026-07-08) ──
+// Cada vista se convierte a la MISMA estructura de filas del CSV histórico
+// (mismos nombres y posiciones de columna), así el resto del código —
+// buildAvr/buildImportadora, índices fijos COL_*, merge por CP — no cambia.
+const HEADER_CATALOGO = [
+  "SKU", "Nombre", "Titulos WIX ML", "Grupo", "Subgrupo", "MarcaPrincipal",
+  "MarcasCompatibles", "AnioDesde", "AnioHasta", "Color", "Medida",
+  "PrecioCompraMayorista", "PrecioListaPublico", "Stock", "CodigoProveedor",
+  "CodigoFamilia", "SensorLluvia", "SensorHumedad", "Camaras", "Antena",
+  "Calefaccionado", "Desempanante", "BandaCeramica", "BotonEspejo",
+  "SoporteEspejo", "ImpresionEspejo", "Moldura", "LuzFreno", "Orificio",
+  "Sunfrit", "Imagen1", "Imagen2", "Imagen3", "Imagen4", "CodigoAntiguo",
+  "Costo con Iva", "Venta sin Instalación", "Venta con instalación",
+  "Margen ML", "Margen Sin Instalación", "Margen con Instalación", "Sigla",
+];
+const IDX_CATALOGO = {};
+HEADER_CATALOGO.forEach((h, i) => { IDX_CATALOGO[h] = i; });
+
+function filaDesde(campos) {
+  const fila = new Array(HEADER_CATALOGO.length).fill("");
+  for (const k in campos) {
+    const i = IDX_CATALOGO[k];
+    const v = campos[k];
+    if (i !== undefined && v !== null && v !== undefined) fila[i] = String(v);
+  }
+  return fila;
+}
+
+async function fetchVista(vista) {
+  const pageSize = 1000; // PostgREST corta en 1000 → paginamos con offset.
+  const out = [];
+  for (let offset = 0; ; offset += pageSize) {
+    const r = await fetch(
+      `${SUPABASE_URL}/rest/v1/${vista}?select=*&limit=${pageSize}&offset=${offset}`,
+      { headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` }, cache: "no-store" }
+    );
+    if (!r.ok) throw new Error(`HTTP ${r.status} (${vista})`);
+    const rows = await r.json();
+    out.push(...rows);
+    if (rows.length < pageSize) break;
+  }
+  return out;
+}
+
+async function fetchCatalogoAvr() {
+  const rows = await fetchVista("buscador_avr");
+  return {
+    rows: rows.map(v => filaDesde({
+      "Nombre": v.nombre,
+      "Titulos WIX ML": v.titulo,
+      "Grupo": v.grupo,
+      "Subgrupo": v.subgrupo,
+      "MarcaPrincipal": v.marca,
+      "MarcasCompatibles": v.marcas_compat,
+      "AnioDesde": v.anio_desde,
+      "AnioHasta": v.anio_hasta,
+      "Color": v.color,
+      "Medida": v.medida,
+      "Stock": v.stock,
+      "CodigoProveedor": v.codigo_proveedor,
+      "CodigoAntiguo": v.codigo_antiguo,
+      "Costo con Iva": v.costo_iva,
+      "Venta sin Instalación": v.venta_sin,
+      "Venta con instalación": v.venta_con,
+      "Sigla": v.sigla,
+    })),
+    headerMap: buildHeaderMap(HEADER_CATALOGO),
+  };
+}
+
+async function fetchCatalogoImportadora() {
+  const rows = await fetchVista("buscador_importadora");
+  return {
+    rows: rows.map(v => filaDesde({
+      "SKU": v.sku,
+      "Nombre": v.nombre,
+      "Titulos WIX ML": v.titulo,
+      "Grupo": v.grupo,
+      "Subgrupo": v.subgrupo,
+      "MarcaPrincipal": v.marca,
+      "MarcasCompatibles": v.marcas_compat,
+      "AnioDesde": v.anio_desde,
+      "AnioHasta": v.anio_hasta,
+      "Color": v.color,
+      "Medida": v.medida,
+      "Stock": v.stock,
+      "CodigoProveedor": v.codigo_proveedor,
+      "CodigoAntiguo": v.codigo_antiguo,
+      "Imagen1": v.imagen1,
+      "Imagen2": v.imagen2,
+      "Imagen3": v.imagen3,
+      "Imagen4": v.imagen4,
+      "Costo con Iva": v.costo_iva,
+      "Venta sin Instalación": v.venta_sin,
+      "Venta con instalación": v.venta_con,
+      "Sigla": v.sigla,
+    })),
+    headerMap: buildHeaderMap(HEADER_CATALOGO),
+  };
 }
 
 async function loadProducts() {
@@ -1427,7 +1519,7 @@ async function loadProducts() {
   resultsBody.innerHTML = `<tr><td colspan="${COLSPAN}" class="empty-cell">Cargando...</td></tr>`;
 
   try {
-    const [imp, avr] = await Promise.all([fetchSheet(URL_IMPORTADORA), fetchSheet(URL_AVR), loadFotos()]);
+    const [imp, avr] = await Promise.all([fetchCatalogoImportadora(), fetchCatalogoAvr(), loadFotos()]);
 
     // Agrupar importadora por cp para saber cuántos productos comparten el mismo código
     const impByCp = new Map(); // cp → item[]
