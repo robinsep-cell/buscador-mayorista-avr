@@ -1364,19 +1364,10 @@ document.addEventListener("click", (e) => {
 });
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeFotoLightbox(); });
 
-// Celda "Cotizar": menú de precio (Sin/Con instalación) + botón Agregar.
-// Unifica el flujo de vidrios con el de espejos: se elige el precio al agregar y
-// queda FIJO en la cotización (window.addCotVidrio). Reemplaza la casilla anterior.
+// Celda "Cotizar": botón Agregar. Los precios (sin/con inst.) ya se ven en la fila;
+// la elección de instalación se hace DENTRO de la cotización, por producto.
 function cotAddCellHtml(p) {
-  const toNum = v => { const n = parseInt(String(v ?? "").replace(/\./g, ""), 10); return Number.isInteger(n) && n > 0 ? n : 0; };
-  const opts = [];
-  if (toNum(p.ventaSin)) opts.push(`<option value="sin">Sin inst. ${formatPrice(p.ventaSin)}</option>`);
-  if (toNum(p.ventaCon)) opts.push(`<option value="con">Con inst. ${formatPrice(p.ventaCon)}</option>`);
-  if (!opts.length) return `<td class="cot-add-cell"><span class="cot-add-na">—</span></td>`;
-  return `<td class="cot-add-cell">
-        <select class="cot-op" data-id="${p._id}" aria-label="Tipo de precio">${opts.join("")}</select>
-        <button type="button" class="cot-add-btn" data-id="${p._id}">Agregar</button>
-      </td>`;
+  return `<td class="cot-add-cell"><button type="button" class="cot-add-btn" data-id="${p._id}">Agregar</button></td>`;
 }
 
 function renderRows(items, tokens) {

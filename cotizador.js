@@ -107,15 +107,21 @@ function getPrecioTipo() {
   return document.querySelector('input[name="cotPrecio"]:checked')?.value ?? "sin";
 }
 
-function getUnitPrice(p, tipo) {
+// Precio unitario POR ÍTEM. Los vidrios llevan su propio _tipo ("sin"|"con"); los
+// productos manuales (espejos/externos) usan su precio fijo.
+function getUnitPrice(p) {
   if (p._isManual) return p._precioManual || 0;
-  if (tipo === "con") return parsePrice(p.ventaCon);
-  return parsePrice(p.ventaSin); // "sin" o "ambas" → sin instalación para subtotal
+  return p._tipo === "con" ? parsePrice(p.ventaCon) : parsePrice(p.ventaSin);
+}
+
+// Etiqueta de instalación para mostrar en PDF/WhatsApp (solo vidrios instalables).
+function instLabel(p) {
+  if (p._isManual || !parsePrice(p.ventaCon)) return "";
+  return p._tipo === "con" ? " · Con instalación" : " · Sin instalación";
 }
 
 // ── Render items del modal ────────────────────────────────────────────────────
 function renderCotItems() {
-  const tipo   = getPrecioTipo();
   const items  = [...window.cotSelection.values()];
 
   if (!items.length) {
@@ -125,50 +131,21 @@ function renderCotItems() {
   }
 
   cotItemsEl.innerHTML = items.map((p, idx) => {
-    const cant = p._cant || 1;
-    const sin  = parsePrice(p.ventaSin);
-    const con  = parsePrice(p.ventaCon);
+    const cant   = p._cant || 1;
+    const precio = getUnitPrice(p);
+    const sub    = precio * cant;
 
-    if (tipo === "ambas") {
-      const subSin = sin * cant;
-      const subCon = con * cant;
-      return `
-        <tr>
-          <td class="cot-td cot-td-num" rowspan="2">${idx + 1}</td>
-          <td class="cot-td" rowspan="2">
-            <strong>${esc(p.nombre)}</strong>
-            <span class="cot-item-sub">${esc(p.marca)} · ${esc(p.color)} · ${esc(yearRange(p.anioDesde, p.anioHasta))}</span>
-          </td>
-          <td class="cot-td cot-td-cant" rowspan="2">
-            <input class="cot-cant-inp" type="number" value="${cant}" min="1" max="999" data-id="${p._id}" />
-          </td>
-          <td class="cot-td cot-td-price">Sin inst.: ${fmtCLP(sin)}</td>
-          <td class="cot-td cot-td-price">${fmtCLP(subSin)}</td>
-          <td class="cot-td no-print" rowspan="2">
-            <button class="cot-rm-btn" data-id="${p._id}">✕</button>
-          </td>
-        </tr>
-        <tr>
-          <td class="cot-td cot-td-price">Con inst.: ${fmtCLP(con)}</td>
-          <td class="cot-td cot-td-price">${fmtCLP(subCon)}</td>
-        </tr>`;
-    }
-
-    // Producto manual: precio editable directamente
+    // Producto manual (espejo/externo): precio editable directamente.
     if (p._isManual) {
-      const precio = p._precioManual || 0;
-      const sub    = precio * cant;
       return `
         <tr>
           <td class="cot-td cot-td-num">${idx + 1}</td>
-          <td class="cot-td">
-            <strong>${esc(p.nombre)}</strong>
-          </td>
+          <td class="cot-td"><strong>${esc(p.nombre)}</strong></td>
           <td class="cot-td cot-td-cant">
             <input class="cot-cant-inp" type="number" value="${cant}" min="1" max="999" data-id="${p._id}" />
           </td>
           <td class="cot-td cot-td-price">
-            <input class="cot-precio-manual-inp" type="number" value="${precio}" min="0" data-id="${p._id}" style="width:100px;border:1px solid var(--border);border-radius:5px;padding:3px 6px;background:var(--bg);color:var(--text);font-size:0.82rem;" />
+            <input class="cot-precio-manual-inp" type="number" value="${p._precioManual || 0}" min="0" data-id="${p._id}" style="width:100px;border:1px solid var(--border);border-radius:5px;padding:3px 6px;background:var(--bg);color:var(--text);font-size:0.82rem;" />
           </td>
           <td class="cot-td cot-td-price"><strong>${fmtCLP(sub)}</strong></td>
           <td class="cot-td no-print">
@@ -177,14 +154,21 @@ function renderCotItems() {
         </tr>`;
     }
 
-    const precio = tipo === "con" ? con : sin;
-    const sub    = precio * cant;
+    // Vidrio: selector de instalación POR PRODUCTO (si tiene precio con instalación).
+    const con = parsePrice(p.ventaCon);
+    const instSel = con ? `
+            <label class="cot-inst">Instalación:
+              <select class="cot-inst-sel" data-id="${p._id}">
+                <option value="sin"${p._tipo === "con" ? "" : " selected"}>Sin instalación</option>
+                <option value="con"${p._tipo === "con" ? " selected" : ""}>Con instalación</option>
+              </select>
+            </label>` : "";
     return `
       <tr>
         <td class="cot-td cot-td-num">${idx + 1}</td>
         <td class="cot-td">
           <strong>${esc(p.nombre)}</strong>
-          <span class="cot-item-sub">${esc(p.marca)} · ${esc(p.color)} · ${esc(yearRange(p.anioDesde, p.anioHasta))}</span>
+          <span class="cot-item-sub">${esc(p.marca)} · ${esc(p.color)} · ${esc(yearRange(p.anioDesde, p.anioHasta))}</span>${instSel}
         </td>
         <td class="cot-td cot-td-cant">
           <input class="cot-cant-inp" type="number" value="${cant}" min="1" max="999" data-id="${p._id}" />
@@ -196,6 +180,16 @@ function renderCotItems() {
         </td>
       </tr>`;
   }).join("");
+
+  // Selector de instalación por ítem
+  cotItemsEl.querySelectorAll(".cot-inst-sel").forEach(sel => {
+    sel.addEventListener("change", () => {
+      const id = sel.dataset.id.startsWith("m_") ? sel.dataset.id : Number(sel.dataset.id);
+      const p  = window.cotSelection.get(id);
+      if (p) { p._tipo = sel.value === "con" ? "con" : "sin"; window.cotSelection.set(id, p); }
+      renderCotItems();
+    });
+  });
 
   // Cantidad inputs
   cotItemsEl.querySelectorAll(".cot-cant-inp").forEach(inp => {
@@ -242,11 +236,9 @@ function renderCotItems() {
 }
 
 function calcTotals() {
-  const tipo = getPrecioTipo();
   let subtotal = 0;
   [...window.cotSelection.values()].forEach(p => {
-    const precio = getUnitPrice(p, tipo);
-    subtotal += precio * (p._cant || 1);
+    subtotal += getUnitPrice(p) * (p._cant || 1);
   });
   const neto = Math.round(subtotal / 1.19);
   const iva  = subtotal - neto;
@@ -256,30 +248,38 @@ function calcTotals() {
 }
 
 // ── Abrir modal ───────────────────────────────────────────────────────────────
-async function openCotModal() {
+// opts.numero: reabrir una cotización EXISTENTE con su mismo número (reenviar), sin
+// pedir un correlativo nuevo. opts.fecha: fecha original a mostrar.
+async function openCotModal(opts = {}) {
 
   const today = new Date();
-  cotFechaEl.textContent = "Fecha: " + formatDateShort(today);
+  cotFechaEl.textContent = opts.fecha ? ("Fecha: " + opts.fecha) : ("Fecha: " + formatDateShort(today));
 
   const envio    = addBusinessDays(today, 2);
   const envioStr = formatDateLong(envio);
   cotEnvioEl.innerHTML = `<strong>📦 Envío estimado:</strong> ${envioStr.charAt(0).toUpperCase() + envioStr.slice(1)}`;
 
-  // Ejecutivo = usuario actual
-  if (cotEjecEl && window.currentUser) {
+  // Ejecutivo = usuario actual (salvo que se reabra una existente y ya venga cargado)
+  if (cotEjecEl && window.currentUser && !opts.numero) {
     cotEjecEl.value = window.currentUser.nombre || window.currentUser.email || "";
   }
 
-  // Correlativo desde Supabase
-  cotNumeroEl.textContent = "Generando…";
-  try {
-    const { data, error } = await window._sb.rpc("next_cotizacion_numero");
-    _cotNumero = (!error && data) ? data : "COT-" + today.toISOString().slice(0,10).replace(/-/g,"") + "-?";
-  } catch {
-    _cotNumero = null;
+  if (opts.numero) {
+    // Reabrir existente: conservar su número; ya está guardada.
+    _cotNumero = opts.numero;
+    _cotSavedNumero = opts.numero;
+  } else {
+    // Correlativo nuevo desde Supabase
+    cotNumeroEl.textContent = "Generando…";
+    try {
+      const { data, error } = await window._sb.rpc("next_cotizacion_numero");
+      _cotNumero = (!error && data) ? data : "COT-" + today.toISOString().slice(0,10).replace(/-/g,"") + "-?";
+    } catch {
+      _cotNumero = null;
+    }
+    _cotSavedNumero = null; // cotización nueva: aún no guardada
   }
   cotNumeroEl.textContent = "N° " + (_cotNumero || "—");
-  _cotSavedNumero = null; // cotización nueva: aún no guardada
 
   renderCotItems();
   cotModal.showModal();
@@ -293,34 +293,21 @@ function updateCotBtn() {
   cotBtn.disabled  = false; // siempre habilitado, se pueden agregar externos
 }
 
-// Agrega un VIDRIO a la cotización con precio FIJO según el tipo elegido (sin/con
-// instalación). Unifica el flujo de vidrios con el de espejos (menú + Agregar → precio
-// fijo). El nombre queda anotado con "· Sin/Con instalación" para que se lea en el PDF.
-window.addCotVidrio = function (id, tipo) {
-  const p = window._products?.find(x => x._id === id);
-  if (!p) return null;
-  const precio = tipo === "con" ? parsePrice(p.ventaCon) : parsePrice(p.ventaSin);
-  if (!precio) return null;
-  const etiqueta = tipo === "con" ? "Con instalación" : "Sin instalación";
-  return window.addCotItem({
-    nombre:    `${p.nombre} · ${etiqueta}`,
-    precio,
-    marca:     p.marca || "",
-    color:     p.color || "",
-    anioDesde: p.anioDesde || "",
-    anioHasta: p.anioHasta || "",
-    cant: 1,
-  });
-};
-
-// Click en "Agregar" de una fila de resultados → agrega el vidrio con el precio elegido.
+// Click en "Agregar" de una fila de resultados → agrega el vidrio a la cotización.
+// El vidrio conserva sus dos precios (ventaSin/ventaCon); la instalación se elige por
+// producto DENTRO de la cotización (campo _tipo, por defecto "sin").
 document.getElementById("resultsBody").addEventListener("click", e => {
   const btn = e.target.closest(".cot-add-btn");
   if (!btn) return;
-  const id   = Number(btn.dataset.id);
-  const sel  = btn.parentElement.querySelector(".cot-op");
-  const tipo = sel ? sel.value : "sin";
-  if (!window.addCotVidrio(id, tipo)) return;
+  const id = Number(btn.dataset.id);
+  const product = window._products?.find(p => p._id === id);
+  if (!product) return;
+  if (!window.cotSelection.has(id)) {
+    product._cant = product._cant || 1;
+    if (!product._tipo) product._tipo = "sin";
+    window.cotSelection.set(id, product);
+    updateCotBtn();
+  }
   btn.textContent = "✓ Agregado";
   btn.disabled = true;
   setTimeout(() => { btn.textContent = "Agregar"; btn.disabled = false; }, 1400);
@@ -333,17 +320,17 @@ async function saveCotizacion() {
   cotBtnGuardar.disabled     = true;
   cotBtnGuardar.textContent  = "Guardando…";
 
-  const tipo = getPrecioTipo();
   let subtotal = 0;
   const items = [...window.cotSelection.values()].map(p => {
     const cant   = p._cant || 1;
-    const precio = getUnitPrice(p, tipo);
+    const precio = getUnitPrice(p);
     subtotal += precio * cant;
     return {
       nombre: p.nombre, marca: p.marca, color: p.color,
       anioDesde: p.anioDesde, anioHasta: p.anioHasta,
       cant, precioSin: parsePrice(p.ventaSin),
       precioCon: parsePrice(p.ventaCon), precio,
+      tipo: p._isManual ? null : (p._tipo === "con" ? "con" : "sin"),
     };
   });
   const neto = Math.round(subtotal / 1.19);
@@ -356,7 +343,7 @@ async function saveCotizacion() {
     cliente_telefono: cotTelEl.value.trim(),
     cliente_email:    cotEmailEl.value.trim(),
     ejecutivo:        cotEjecEl.value.trim(),
-    precio_tipo:      tipo,
+    precio_tipo:      "por_item",
     items,
     notas:            cotNotasEl.value.trim(),
     neto, iva, total: subtotal,
@@ -389,7 +376,7 @@ async function saveCotizacion() {
 // página (antes apuntaba a `body`, que no aplicaba al contenedor del PDF → salía en blanco).
 const COT_PDF_CSS = `
   .avr-pdf, .avr-pdf * { box-sizing: border-box; margin: 0; padding: 0; }
-  .avr-pdf { font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; font-size: 12.5px; color: #14261c; background: #fff; padding: 28px 30px; width: 794px; }
+  .avr-pdf { font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; font-size: 12.5px; color: #14261c; background: #fff; padding: 28px 30px; width: 794px; overflow: hidden; }
   .avr-pdf .cot-doc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
   .avr-pdf .cot-header-left { display: flex; align-items: center; gap: 14px; }
   .avr-pdf .cot-logo { width: 66px; height: 66px; border-radius: 50%; object-fit: cover; }
@@ -408,15 +395,14 @@ const COT_PDF_CSS = `
   .avr-pdf .cot-k { font-size: 9px; font-weight: 700; letter-spacing: .8px; color: #7a8a80; text-transform: uppercase; }
   .avr-pdf .cot-v { font-size: 13px; font-weight: 600; color: #14261c; }
   .avr-pdf .cot-price-note { font-size: 11px; color: #556; margin-bottom: 8px; }
-  .avr-pdf table { width: 100%; border-collapse: collapse; margin-bottom: 14px; }
+  .avr-pdf table { width: 100%; min-width: 0; border-collapse: collapse; margin-bottom: 14px; table-layout: fixed; }
   .avr-pdf thead tr { background: #0f5132; color: #fff; }
   .avr-pdf thead th { padding: 8px 10px; text-align: left; font-size: 11.5px; font-weight: 700; }
-  .avr-pdf thead th.num, .avr-pdf thead th.cant { text-align: center; }
-  .avr-pdf thead th.price { text-align: right; }
-  .avr-pdf tbody td { padding: 7px 10px; border-bottom: 1px solid #e7ece8; font-size: 12px; vertical-align: top; }
+  .avr-pdf th.num, .avr-pdf td.num { width: 6%; text-align: center; }
+  .avr-pdf th.cant, .avr-pdf td.cant { width: 10%; text-align: center; }
+  .avr-pdf th.price, .avr-pdf td.price { width: 20%; text-align: right; }
+  .avr-pdf tbody td { padding: 7px 10px; border-bottom: 1px solid #e7ece8; font-size: 12px; vertical-align: top; overflow-wrap: anywhere; word-break: break-word; }
   .avr-pdf tbody tr:nth-child(even) { background: #f6f9f7; }
-  .avr-pdf td.num, .avr-pdf td.cant { text-align: center; }
-  .avr-pdf td.price { text-align: right; white-space: nowrap; }
   .avr-pdf .cot-item-name { font-weight: 700; color: #14261c; }
   .avr-pdf .cot-item-sub { display: block; font-size: 10.5px; color: #7a8a80; margin-top: 1px; }
   .avr-pdf .cot-totals { margin-left: auto; width: 260px; margin-bottom: 16px; }
@@ -431,29 +417,16 @@ const COT_PDF_CSS = `
 `;
 
 // Filas de la tabla en TEXTO PLANO (sin <input>) para el PDF / impresión.
-function cotPdfRows(items, tipo) {
+function cotPdfRows(items) {
   return items.map((p, idx) => {
-    const cant = p._cant || 1;
-    const n    = idx + 1;
-    const sub  = p._isManual ? "" :
+    const cant   = p._cant || 1;
+    const precio = getUnitPrice(p);
+    const sub    = p._isManual ? "" :
       `<span class="cot-item-sub">${esc([p.marca, p.color, yearRange(p.anioDesde, p.anioHasta)].filter(Boolean).join(" · "))}</span>`;
-    const nameCell = `<span class="cot-item-name">${esc(p.nombre)}</span>${sub}`;
-
-    if (!p._isManual && tipo === "ambas") {
-      const sin = parsePrice(p.ventaSin), con = parsePrice(p.ventaCon);
-      return `
-        <tr>
-          <td class="num">${n}</td>
-          <td>${nameCell}</td>
-          <td class="cant">${cant}</td>
-          <td class="price">Sin inst.: ${fmtCLP(sin)}<br>Con inst.: ${fmtCLP(con)}</td>
-          <td class="price">${fmtCLP(sin * cant)}<br>${fmtCLP(con * cant)}</td>
-        </tr>`;
-    }
-    const precio = getUnitPrice(p, tipo);
+    const nameCell = `<span class="cot-item-name">${esc(p.nombre + instLabel(p))}</span>${sub}`;
     return `
       <tr>
-        <td class="num">${n}</td>
+        <td class="num">${idx + 1}</td>
         <td>${nameCell}</td>
         <td class="cant">${cant}</td>
         <td class="price">${fmtCLP(precio)}</td>
@@ -466,11 +439,10 @@ function cotPdfRows(items, tipo) {
 // para el PDF (correo/WhatsApp) y para imprimir. Los precios ya incluyen IVA; el Neto se
 // deriva (total/1.19), igual que en pantalla (calcTotals).
 function buildCotDocHtml() {
-  const tipo  = getPrecioTipo();
   const items = [...window.cotSelection.values()];
 
   let total = 0;
-  items.forEach(p => { total += getUnitPrice(p, tipo) * (p._cant || 1); });
+  items.forEach(p => { total += getUnitPrice(p) * (p._cant || 1); });
   const neto = Math.round(total / 1.19);
   const iva  = total - neto;
 
@@ -488,7 +460,7 @@ function buildCotDocHtml() {
    .join("");
 
   const notas    = cotNotasEl.value.trim();
-  const rowsHtml = cotPdfRows(items, tipo) ||
+  const rowsHtml = cotPdfRows(items) ||
     `<tr><td colspan="5" style="text-align:center;padding:14px;color:#7a8a80">Sin productos.</td></tr>`;
 
   return `<div class="avr-pdf">
@@ -560,7 +532,7 @@ async function buildCotPdfBase64() {
     const opt = {
       margin:      [8, 8, 8, 8],
       image:       { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2, backgroundColor: "#ffffff", useCORS: true },
+      html2canvas: { scale: 2, backgroundColor: "#ffffff", useCORS: true, width: 794, windowWidth: 794 },
       jsPDF:       { unit: "mm", format: "a4", orientation: "portrait" },
     };
     const dataUri = await html2pdf().set(opt).from(wrap.querySelector(".avr-pdf")).outputPdf("datauristring");
@@ -614,19 +586,18 @@ async function shareWA() {
     }
 
     // 4) Texto de WhatsApp: resumen + link al PDF
-    const tipo  = getPrecioTipo();
     const items = [...window.cotSelection.values()];
     let text = `*Cotización ${_cotNumero || ""}*\n`;
     text += `AutoVidriosRobin SPA — ${formatDateShort(new Date())}\n`;
     if (cotNombreEl.value.trim()) text += `Cliente: ${cotNombreEl.value.trim()}\n`;
     text += "\n";
     items.forEach((p, i) => {
-      const precio = getUnitPrice(p, tipo);
+      const precio = getUnitPrice(p);
       const cant   = p._cant || 1;
-      text += `${i + 1}. ${p.nombre} x${cant} → ${fmtCLP(precio * cant)}\n`;
+      text += `${i + 1}. ${p.nombre}${instLabel(p)} x${cant} → ${fmtCLP(precio * cant)}\n`;
     });
     let subtotal = 0;
-    items.forEach(p => { subtotal += getUnitPrice(p, tipo) * (p._cant || 1); });
+    items.forEach(p => { subtotal += getUnitPrice(p) * (p._cant || 1); });
     text += `\n*TOTAL: ${fmtCLP(subtotal)}*\nValidez: 3 días hábiles\n\n📄 Descarga tu cotización en PDF:\n${data.url}`;
 
     // 5) Abrir WhatsApp — al número del cliente si está cargado
@@ -663,60 +634,39 @@ function renderHistorial(rows) {
     historialList.innerHTML = `<p style="color:var(--muted);text-align:center;padding:24px">Sin cotizaciones encontradas.</p>`;
     return;
   }
-  historialList.innerHTML = `
-    <table style="width:100%;border-collapse:collapse;font-size:0.85rem">
-      <thead>
-        <tr style="border-bottom:2px solid var(--border)">
-          <th style="text-align:left;padding:8px 10px;color:var(--muted);font-weight:600">N°</th>
-          <th style="text-align:left;padding:8px 10px;color:var(--muted);font-weight:600">Fecha</th>
-          <th style="text-align:left;padding:8px 10px;color:var(--muted);font-weight:600">Cliente</th>
-          <th style="text-align:left;padding:8px 10px;color:var(--muted);font-weight:600">Ejecutivo</th>
-          <th style="text-align:right;padding:8px 10px;color:var(--muted);font-weight:600">Total</th>
-          <th style="text-align:left;padding:8px 10px;color:var(--muted);font-weight:600">Items</th>
-          <th style="padding:8px 10px"></th>
-        </tr>
-      </thead>
-      <tbody>
-        ${rows.map(r => {
-          const anulada = r.estado === 'anulada';
-          const rowStyle = anulada
-            ? 'border-bottom:1px solid var(--border);opacity:0.45;text-decoration:line-through'
-            : 'border-bottom:1px solid var(--border)';
-          const refTag = r.reemplaza_a
-            ? `<div style="font-size:0.7rem;color:#f59e0b;margin-top:2px">↺ Reemplaza ${esc(r.reemplaza_a)}</div>` : "";
-          const anuladaTag = r.anulada_por
-            ? `<div style="font-size:0.7rem;color:#f87171;margin-top:2px">→ Reemplazada por ${esc(r.anulada_por)}</div>` : "";
-          const btnAnular = anulada
-            ? `<span style="font-size:0.75rem;color:#f87171;font-weight:600">ANULADA</span>${anuladaTag}`
-            : `<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-start">
-                <button class="hist-requotizar-btn" style="background:none;border:1px solid var(--primary);color:var(--primary);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:0.78rem;font-weight:600">↺ Re-cotizar</button>
-                <button class="hist-anular-btn" data-id="${r.id}" data-num="${esc(r.numero)}"
-                  style="background:none;border:1px solid #f87171;color:#f87171;border-radius:6px;padding:4px 10px;cursor:pointer;font-size:0.78rem;font-weight:600">
-                  Anular
-                </button>
-              </div>`;
-          return `
-            <tr style="${rowStyle}">
-              <td style="padding:9px 10px;font-weight:700;color:var(--primary)">${esc(r.numero || "—")}${refTag}</td>
-              <td style="padding:9px 10px">${fmtDate(r.created_at)}</td>
-              <td style="padding:9px 10px">${esc(r.cliente_nombre || "—")}</td>
-              <td style="padding:9px 10px">${esc(r.ejecutivo || "—")}</td>
-              <td style="padding:9px 10px;text-align:right;font-weight:600">${fmtCLP(r.total)}</td>
-              <td style="padding:9px 10px;color:var(--muted)">${Array.isArray(r.items) ? r.items.length + " prod." : "—"}</td>
-              <td style="padding:9px 10px">${btnAnular}</td>
-            </tr>`;
-        }).join("")}
-      </tbody>
-    </table>`;
+  historialList.innerHTML = `<div class="hist-cards">${rows.map((r, i) => {
+    const anulada = r.estado === 'anulada';
+    const nItems  = Array.isArray(r.items) ? r.items.length : 0;
+    const refTag  = r.reemplaza_a ? `<span class="hist-tag hist-tag-ref">↺ Reemplaza ${esc(r.reemplaza_a)}</span>` : "";
+    const anuTag  = r.anulada_por ? `<span class="hist-tag hist-tag-anu">→ Reemplazada por ${esc(r.anulada_por)}</span>` : "";
+    const actions = anulada
+      ? `<span class="hist-anulada">ANULADA</span>${anuTag}`
+      : `<button class="hist-btn hist-btn-send" data-idx="${i}">✉ Reenviar</button>
+         <button class="hist-btn hist-btn-edit" data-idx="${i}">✎ Editar</button>
+         <button class="hist-btn hist-btn-anular" data-id="${r.id}" data-num="${esc(r.numero)}">Anular</button>`;
+    return `
+      <div class="hist-card${anulada ? ' hist-card--anulada' : ''}">
+        <div class="hist-card-head">
+          <div class="hist-num">${esc(r.numero || "—")} ${refTag}</div>
+          <div class="hist-total">${fmtCLP(r.total)}</div>
+        </div>
+        <div class="hist-meta">
+          <span class="hist-meta-i">📅 ${fmtDate(r.created_at)}</span>
+          <span class="hist-meta-i">👤 ${esc(r.cliente_nombre || "—")}</span>
+          <span class="hist-meta-i">🧑‍💼 ${esc(r.ejecutivo || "—")}</span>
+          <span class="hist-meta-i">📦 ${nItems} prod.</span>
+        </div>
+        <div class="hist-actions">${actions}</div>
+      </div>`;
+  }).join("")}</div>`;
 
-  // Listeners botones re-cotizar
-  historialList.querySelectorAll(".hist-requotizar-btn").forEach((btn, i) => {
-    const row = rows.filter(r => r.estado !== 'anulada')[i];
-    btn.addEventListener("click", () => { if (row) reQuotizar(row); });
-  });
+  historialList.querySelectorAll(".hist-btn-send").forEach(btn =>
+    btn.addEventListener("click", () => abrirParaReenviar(rows[Number(btn.dataset.idx)])));
 
-  // Listeners botones anular
-  historialList.querySelectorAll(".hist-anular-btn").forEach(btn => {
+  historialList.querySelectorAll(".hist-btn-edit").forEach(btn =>
+    btn.addEventListener("click", () => reQuotizar(rows[Number(btn.dataset.idx)])));
+
+  historialList.querySelectorAll(".hist-btn-anular").forEach(btn => {
     btn.addEventListener("click", async () => {
       const num = btn.dataset.num;
       if (!confirm(`¿Anular cotización ${num}? Quedará marcada pero no se eliminará.`)) return;
@@ -758,23 +708,20 @@ function filterHistorial() {
   renderHistorial(filtered);
 }
 
-// ── Re-cotizar ────────────────────────────────────────────────────────────────
-async function reQuotizar(row) {
-  historialModal.close();
-
-  // Limpiar estado anterior
+// Carga los ítems de una cotización guardada en la selección (como productos fijos,
+// conservando la etiqueta de instalación en el nombre para que el PDF quede idéntico).
+function cargarItemsDesde(row) {
   window.cotSelection.clear();
   _manualCounter = 0;
-  _reemplazaA = row.numero;
-
-  // Cargar items como productos manuales
   (row.items || []).forEach(item => {
-    const key = "m_" + (++_manualCounter);
+    const key  = "m_" + (++_manualCounter);
+    const inst = item.tipo === "con" ? " · Con instalación"
+               : item.tipo === "sin" ? " · Sin instalación" : "";
     window.cotSelection.set(key, {
       _id: key, _isManual: true,
       _cant: item.cant || 1,
       _precioManual: item.precio || item.precioSin || 0,
-      nombre:    item.nombre    || "",
+      nombre:    (item.nombre || "") + inst,
       marca:     item.marca     || "",
       color:     item.color     || "",
       anioDesde: item.anioDesde || "",
@@ -783,18 +730,36 @@ async function reQuotizar(row) {
       ventaCon: String(item.precioCon || 0),
     });
   });
-
   updateCotBtn();
-  await openCotModal();
+}
 
-  // Pre-llenar datos del cliente
-  if (cotNombreEl) cotNombreEl.value = row.cliente_nombre || "";
-  if (cotRutEl)    cotRutEl.value    = row.cliente_rut    || "";
+function llenarClienteDesde(row) {
+  if (cotNombreEl) cotNombreEl.value = row.cliente_nombre   || "";
+  if (cotRutEl)    cotRutEl.value    = row.cliente_rut      || "";
   if (cotTelEl)    cotTelEl.value    = row.cliente_telefono || "";
-  if (cotEmailEl)  cotEmailEl.value  = row.cliente_email  || "";
-  if (cotEjecEl)   cotEjecEl.value   = row.ejecutivo      || "";
-  if (cotNotasEl)  cotNotasEl.value  = (row.notas ? row.notas + "\n" : "") +
-                                        `Reemplaza a: ${row.numero}`;
+  if (cotEmailEl)  cotEmailEl.value  = row.cliente_email    || "";
+  if (cotEjecEl)   cotEjecEl.value   = row.ejecutivo        || "";
+}
+
+// Reenviar: reabrir la MISMA cotización (mismo número) para volver a mandarla por
+// correo/WhatsApp o imprimirla, o hacer un ajuste menor sin generar otra.
+async function abrirParaReenviar(row) {
+  historialModal.close();
+  cargarItemsDesde(row);
+  _reemplazaA = null;
+  await openCotModal({ numero: row.numero, fecha: fmtDate(row.created_at) });
+  llenarClienteDesde(row);
+  if (cotNotasEl) cotNotasEl.value = row.notas || "";
+}
+
+// ── Re-cotizar (editar como versión nueva) ────────────────────────────────────
+async function reQuotizar(row) {
+  historialModal.close();
+  cargarItemsDesde(row);
+  _reemplazaA = row.numero;
+  await openCotModal();
+  llenarClienteDesde(row);
+  if (cotNotasEl) cotNotasEl.value = (row.notas ? row.notas + "\n" : "") + `Reemplaza a: ${row.numero}`;
 }
 
 document.getElementById("historialBtn")?.addEventListener("click", () => {
@@ -838,9 +803,8 @@ cotBtnEmail?.addEventListener("click", async () => {
 
     // 3) Enviar por correo con el PDF adjunto (función Supabase → Resend)
     cotBtnEmail.textContent = "Enviando…";
-    const tipo = getPrecioTipo();
     let subtotal = 0;
-    [...window.cotSelection.values()].forEach(p => { subtotal += getUnitPrice(p, tipo) * (p._cant || 1); });
+    [...window.cotSelection.values()].forEach(p => { subtotal += getUnitPrice(p) * (p._cant || 1); });
 
     const { data, error } = await window._sb.functions.invoke("cotizacion-email", {
       body: {
@@ -865,16 +829,15 @@ cotBtnEmail?.addEventListener("click", async () => {
 });
 
 cotBtnCopiar?.addEventListener("click", () => {
-  const tipo  = getPrecioTipo();
   const items = [...window.cotSelection.values()];
   let text = `Cotización ${_cotNumero || ""} — ${formatDateShort(new Date())}\nAutovidriosRobin SPA\n\n`;
   items.forEach((p, i) => {
-    const precio = getUnitPrice(p, tipo);
+    const precio = getUnitPrice(p);
     const cant   = p._cant || 1;
-    text += `${i + 1}. ${p.nombre} x${cant} — ${fmtCLP(precio * cant)}\n`;
+    text += `${i + 1}. ${p.nombre}${instLabel(p)} x${cant} — ${fmtCLP(precio * cant)}\n`;
   });
   let subtotal = 0;
-  items.forEach(p => { subtotal += getUnitPrice(p, tipo) * (p._cant || 1); });
+  items.forEach(p => { subtotal += getUnitPrice(p) * (p._cant || 1); });
   text += `\nTOTAL: ${fmtCLP(subtotal)}\nValidez: 3 días hábiles`;
   navigator.clipboard.writeText(text).then(() => {
     cotBtnCopiar.textContent = "✓ Copiado";

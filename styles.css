@@ -1990,30 +1990,17 @@ html[data-theme="light"] .admin-del-btn {
 /* Selector "Cotizar" en tabla de resultados (menú de precio + Agregar).
    Mismo mecanismo que el modo Espejos para unificar el flujo. */
 .cot-add-th {
-  width: 150px;
+  width: 96px;
   text-align: center;
   font-size: 0.75rem;
   color: var(--muted);
   padding: 0 8px !important;
 }
 .cot-add-cell {
-  width: 150px;
+  width: 96px;
   padding: 4px 8px !important;
   vertical-align: middle;
   white-space: nowrap;
-}
-.cot-op {
-  display: block;
-  width: 100%;
-  margin-bottom: 4px;
-  padding: 4px 6px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--bg);
-  color: var(--text);
-  font: inherit;
-  font-size: 0.76rem;
-  cursor: pointer;
 }
 .cot-add-btn {
   display: block;
@@ -2035,6 +2022,63 @@ html[data-theme="light"] .admin-del-btn {
   display: block;
   text-align: center;
   color: var(--muted);
+}
+
+/* Historial de cotizaciones — tarjetas responsive (PC muestra todo; celular apila) */
+.hist-cards { display: flex; flex-direction: column; gap: 10px; }
+.hist-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.hist-card--anulada { opacity: 0.55; }
+.hist-card-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.hist-num { font-weight: 700; color: var(--primary); font-size: 0.95rem; }
+.hist-total { font-weight: 800; font-size: 1.05rem; color: var(--text); }
+.hist-meta { display: flex; flex-wrap: wrap; gap: 4px 16px; color: var(--muted); font-size: 0.84rem; }
+.hist-meta-i { white-space: nowrap; }
+.hist-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.hist-btn {
+  border-radius: 8px;
+  padding: 7px 14px;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+}
+.hist-btn:hover { filter: brightness(1.05); }
+.hist-btn-send { border-color: var(--primary); color: var(--primary); }
+.hist-btn-edit { border-color: var(--primary); color: var(--primary); }
+.hist-btn-anular { border-color: #f87171; color: #f87171; }
+.hist-tag { font-size: 0.7rem; font-weight: 600; margin-left: 6px; }
+.hist-tag-ref { color: #f59e0b; }
+.hist-tag-anu { color: #f87171; }
+.hist-anulada { color: #f87171; font-weight: 700; font-size: 0.82rem; }
+
+/* Selector de instalación POR PRODUCTO dentro de la cotización */
+.cot-inst {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.cot-inst-sel {
+  font: inherit;
+  font-size: 0.76rem;
+  padding: 2px 6px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
 }
 
 /* Botón "Cotizar" en hero — mismo estilo que admin-hero-btn */
