@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=fotos2026c" />
+    <link rel="stylesheet" href="./styles.css?v=cotsel1" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   </head>
   <body>
@@ -137,7 +137,7 @@
           <table>
             <thead>
               <tr>
-                <th class="cot-check-th" title="Seleccionar para cotizar">☑</th>
+                <th class="cot-add-th" title="Agregar a la cotización">Cotizar</th>
                 <th>Producto</th>
                 <th>Siglas</th>
                 <th>Cód. Antiguo</th>
@@ -488,14 +488,6 @@
             </div>
           </div>
 
-          <!-- Selector tipo de precio -->
-          <div class="cot-precio-selector no-print">
-            <span class="cot-precio-label">Precio a mostrar:</span>
-            <label class="cot-radio-lbl"><input type="radio" name="cotPrecio" value="sin" checked /> Sin instalación</label>
-            <label class="cot-radio-lbl"><input type="radio" name="cotPrecio" value="con" /> Con instalación</label>
-            <label class="cot-radio-lbl"><input type="radio" name="cotPrecio" value="ambas" /> Ambas</label>
-          </div>
-
           <!-- Tabla de productos -->
           <table class="cot-table">
             <thead>
@@ -720,8 +712,8 @@
     <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
     <script src="./auth.js"></script>
     <script src="./admin.js"></script>
-    <script src="./app.js?v=supabase1"></script>
-    <script src="./cotizador.js?v=esp1"></script>
+    <script src="./app.js?v=cotsel1"></script>
+    <script src="./cotizador.js?v=pdf2"></script>
     <script src="./espejos-cot.js?v=1"></script>
   </body>
 </html>

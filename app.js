@@ -1364,6 +1364,21 @@ document.addEventListener("click", (e) => {
 });
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeFotoLightbox(); });
 
+// Celda "Cotizar": menú de precio (Sin/Con instalación) + botón Agregar.
+// Unifica el flujo de vidrios con el de espejos: se elige el precio al agregar y
+// queda FIJO en la cotización (window.addCotVidrio). Reemplaza la casilla anterior.
+function cotAddCellHtml(p) {
+  const toNum = v => { const n = parseInt(String(v ?? "").replace(/\./g, ""), 10); return Number.isInteger(n) && n > 0 ? n : 0; };
+  const opts = [];
+  if (toNum(p.ventaSin)) opts.push(`<option value="sin">Sin inst. ${formatPrice(p.ventaSin)}</option>`);
+  if (toNum(p.ventaCon)) opts.push(`<option value="con">Con inst. ${formatPrice(p.ventaCon)}</option>`);
+  if (!opts.length) return `<td class="cot-add-cell"><span class="cot-add-na">—</span></td>`;
+  return `<td class="cot-add-cell">
+        <select class="cot-op" data-id="${p._id}" aria-label="Tipo de precio">${opts.join("")}</select>
+        <button type="button" class="cot-add-btn" data-id="${p._id}">Agregar</button>
+      </td>`;
+}
+
 function renderRows(items, tokens) {
   if (!items.length) {
     resultsBody.innerHTML = `<tr><td colspan="${COLSPAN}" class="empty-cell">No encontré resultados.</td></tr>`;
@@ -1371,7 +1386,6 @@ function renderRows(items, tokens) {
   }
   const isAdmin = window.currentUser?.isAdmin === true;
   resultsBody.innerHTML = items.map(p => {
-    const checked = window.cotSelection?.has(p._id) ? "checked" : "";
     const editBtn = isAdmin && p.cp
       ? `<button class="edit-costo-btn" title="Actualizar costo"
            data-cp="${escapeHtml(p.cp)}"
@@ -1382,7 +1396,7 @@ function renderRows(items, tokens) {
       : "";
     return `
     <tr>
-      <td class="cot-check-cell"><input type="checkbox" class="cot-check" data-id="${p._id}" ${checked} /></td>
+      ${cotAddCellHtml(p)}
       <td class="name-cell${p.medida ? ' has-medida' : ''}" ${p.medida ? `data-medida="📐 ${escapeHtml(p.medida)}"` : ''}>${fotoThumbHtml(p)}${highlight(p.nombre, tokens)}</td>
       <td class="siglas-cell">${renderSiglas(p, tokens)}</td>
       <td class="siglas-cell">${renderBadges(p.codigoAntiguo, tokens)}</td>

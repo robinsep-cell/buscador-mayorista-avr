@@ -293,19 +293,37 @@ function updateCotBtn() {
   cotBtn.disabled  = false; // siempre habilitado, se pueden agregar externos
 }
 
-document.getElementById("resultsBody").addEventListener("change", e => {
-  const cb = e.target.closest(".cot-check");
-  if (!cb) return;
-  const id = Number(cb.dataset.id);
-  const product = window._products?.find(p => p._id === id);
-  if (!product) return;
-  if (cb.checked) {
-    if (!product._cant) product._cant = 1;
-    window.cotSelection.set(id, product);
-  } else {
-    window.cotSelection.delete(id);
-  }
-  updateCotBtn();
+// Agrega un VIDRIO a la cotización con precio FIJO según el tipo elegido (sin/con
+// instalación). Unifica el flujo de vidrios con el de espejos (menú + Agregar → precio
+// fijo). El nombre queda anotado con "· Sin/Con instalación" para que se lea en el PDF.
+window.addCotVidrio = function (id, tipo) {
+  const p = window._products?.find(x => x._id === id);
+  if (!p) return null;
+  const precio = tipo === "con" ? parsePrice(p.ventaCon) : parsePrice(p.ventaSin);
+  if (!precio) return null;
+  const etiqueta = tipo === "con" ? "Con instalación" : "Sin instalación";
+  return window.addCotItem({
+    nombre:    `${p.nombre} · ${etiqueta}`,
+    precio,
+    marca:     p.marca || "",
+    color:     p.color || "",
+    anioDesde: p.anioDesde || "",
+    anioHasta: p.anioHasta || "",
+    cant: 1,
+  });
+};
+
+// Click en "Agregar" de una fila de resultados → agrega el vidrio con el precio elegido.
+document.getElementById("resultsBody").addEventListener("click", e => {
+  const btn = e.target.closest(".cot-add-btn");
+  if (!btn) return;
+  const id   = Number(btn.dataset.id);
+  const sel  = btn.parentElement.querySelector(".cot-op");
+  const tipo = sel ? sel.value : "sin";
+  if (!window.addCotVidrio(id, tipo)) return;
+  btn.textContent = "✓ Agregado";
+  btn.disabled = true;
+  setTimeout(() => { btn.textContent = "Agregar"; btn.disabled = false; }, 1400);
 });
 
 // ── Guardar en Supabase ───────────────────────────────────────────────────────
@@ -367,55 +385,177 @@ async function saveCotizacion() {
 }
 
 // ── CSS del documento imprimible / PDF (compartido por printCot y el PDF de correo) ──
-const COT_DOC_CSS = `
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: sans-serif; font-size: 13px; color: #111; padding: 24px; }
-  .cot-doc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-  .cot-logo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; }
-  .cot-company-block { margin-left: 12px; }
-  .cot-company-name { font-size: 15px; font-weight: 700; }
-  .cot-company-tag { color: #666; font-size: 11px; }
-  .cot-header-left { display: flex; align-items: center; gap: 12px; }
-  .cot-title-block { text-align: right; }
-  .cot-title-big { font-size: 20px; font-weight: 800; letter-spacing: 1px; }
-  .cot-numero { font-size: 13px; font-weight: 600; margin-top: 4px; }
-  .cot-envio { color: #b45309; font-size: 12px; margin: 8px 0 10px; }
-  hr { border: none; border-top: 2px solid #111; margin: 10px 0; }
-  .cot-client-box { border: 1px solid #ddd; border-left: 4px solid #111; border-radius: 6px; padding: 12px 16px; margin-bottom: 14px; background: #f9f9f9; }
-  .cot-client-label { font-size: 9px; font-weight: 700; letter-spacing: 1px; color: #666; text-transform: uppercase; margin-bottom: 2px; }
-  .cot-client-value { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 8px; }
-  .cot-client-row2 { display: flex; gap: 32px; }
-  .cot-price-label { font-size: 11px; color: #555; margin-bottom: 8px; }
-  table { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
-  thead tr { background: #111; color: #fff; }
-  thead th { padding: 8px 10px; text-align: left; font-size: 12px; }
-  tbody tr:nth-child(even) { background: #f5f5f5; }
-  tbody td { padding: 8px 10px; border-bottom: 1px solid #e5e5e5; font-size: 12px; vertical-align: middle; }
-  .cot-totals { text-align: right; margin-bottom: 14px; }
-  .cot-totals p { font-size: 12px; color: #555; margin-bottom: 3px; }
-  .cot-totals .cot-total-row { font-size: 15px; font-weight: 800; color: #111; border-top: 2px solid #111; padding-top: 4px; margin-top: 4px; }
-  .cot-notes-label { font-size: 9px; font-weight: 700; letter-spacing: 1px; color: #666; text-transform: uppercase; margin-bottom: 4px; }
-  .cot-notes-val { font-size: 12px; color: #444; border: 1px solid #ddd; border-radius: 4px; padding: 8px; min-height: 40px; }
-  .no-print { display: none !important; }
-  .cot-cant-inp { border: none; background: transparent; width: 40px; text-align: center; font-size: 12px; }
+// CSS del documento PDF / impresión. Va SCOPED bajo `.avr-pdf` para no afectar la
+// página (antes apuntaba a `body`, que no aplicaba al contenedor del PDF → salía en blanco).
+const COT_PDF_CSS = `
+  .avr-pdf, .avr-pdf * { box-sizing: border-box; margin: 0; padding: 0; }
+  .avr-pdf { font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; font-size: 12.5px; color: #14261c; background: #fff; padding: 28px 30px; width: 794px; }
+  .avr-pdf .cot-doc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+  .avr-pdf .cot-header-left { display: flex; align-items: center; gap: 14px; }
+  .avr-pdf .cot-logo { width: 66px; height: 66px; border-radius: 50%; object-fit: cover; }
+  .avr-pdf .cot-company-name { font-size: 15px; font-weight: 800; letter-spacing: .3px; color: #14261c; }
+  .avr-pdf .cot-company-block p { font-size: 11px; color: #45564c; line-height: 1.45; }
+  .avr-pdf .cot-company-tag { color: #7a8a80; font-style: italic; }
+  .avr-pdf .cot-title-block { text-align: right; }
+  .avr-pdf .cot-title-big { font-size: 24px; font-weight: 800; letter-spacing: 2px; color: #0f5132; }
+  .avr-pdf .cot-title-block p { font-size: 11.5px; color: #45564c; line-height: 1.5; }
+  .avr-pdf .cot-title-block .cot-numero { font-size: 13px; font-weight: 700; color: #14261c; margin-top: 3px; }
+  .avr-pdf .cot-rule { border: none; border-top: 2.5px solid #0f5132; margin: 8px 0 14px; }
+  .avr-pdf .cot-envio { color: #b45309; font-size: 11.5px; margin: 0 0 12px; font-weight: 600; }
+  .avr-pdf .cot-client { border: 1px solid #dfe6e1; border-left: 4px solid #0f5132; border-radius: 7px; padding: 12px 16px; margin-bottom: 16px; background: #f6f9f7; }
+  .avr-pdf .cot-client-grid { display: flex; flex-wrap: wrap; gap: 8px 40px; }
+  .avr-pdf .cot-client-item { min-width: 210px; }
+  .avr-pdf .cot-k { font-size: 9px; font-weight: 700; letter-spacing: .8px; color: #7a8a80; text-transform: uppercase; }
+  .avr-pdf .cot-v { font-size: 13px; font-weight: 600; color: #14261c; }
+  .avr-pdf .cot-price-note { font-size: 11px; color: #556; margin-bottom: 8px; }
+  .avr-pdf table { width: 100%; border-collapse: collapse; margin-bottom: 14px; }
+  .avr-pdf thead tr { background: #0f5132; color: #fff; }
+  .avr-pdf thead th { padding: 8px 10px; text-align: left; font-size: 11.5px; font-weight: 700; }
+  .avr-pdf thead th.num, .avr-pdf thead th.cant { text-align: center; }
+  .avr-pdf thead th.price { text-align: right; }
+  .avr-pdf tbody td { padding: 7px 10px; border-bottom: 1px solid #e7ece8; font-size: 12px; vertical-align: top; }
+  .avr-pdf tbody tr:nth-child(even) { background: #f6f9f7; }
+  .avr-pdf td.num, .avr-pdf td.cant { text-align: center; }
+  .avr-pdf td.price { text-align: right; white-space: nowrap; }
+  .avr-pdf .cot-item-name { font-weight: 700; color: #14261c; }
+  .avr-pdf .cot-item-sub { display: block; font-size: 10.5px; color: #7a8a80; margin-top: 1px; }
+  .avr-pdf .cot-totals { margin-left: auto; width: 260px; margin-bottom: 16px; }
+  .avr-pdf .cot-totals .row { display: flex; justify-content: space-between; font-size: 12px; color: #45564c; padding: 3px 0; }
+  .avr-pdf .cot-totals .row.total { font-size: 15px; font-weight: 800; color: #0f5132; border-top: 2px solid #0f5132; padding-top: 6px; margin-top: 4px; }
+  .avr-pdf .cot-notes { margin-bottom: 14px; }
+  .avr-pdf .cot-notes .cot-k { margin-bottom: 4px; }
+  .avr-pdf .cot-notes-body { font-size: 12px; color: #37463d; line-height: 1.5; white-space: pre-wrap; word-wrap: break-word; }
+  .avr-pdf .cot-garantia { border-top: 1px solid #dfe6e1; padding-top: 10px; }
+  .avr-pdf .cot-garantia-title { font-size: 10px; font-weight: 700; letter-spacing: .8px; color: #7a8a80; text-transform: uppercase; margin-bottom: 4px; }
+  .avr-pdf .cot-garantia p { font-size: 10.5px; color: #556; line-height: 1.5; }
 `;
 
-// Copia el HTML del documento sincronizando los value de inputs/textarea (para print y PDF).
-function snapshotCotHtml() {
-  const doc = document.getElementById("cotDoc");
-  doc.querySelectorAll("input").forEach(el => el.setAttribute("value", el.value));
-  doc.querySelectorAll("textarea").forEach(el => { el.innerHTML = el.value; });
-  return doc.innerHTML;
+// Filas de la tabla en TEXTO PLANO (sin <input>) para el PDF / impresión.
+function cotPdfRows(items, tipo) {
+  return items.map((p, idx) => {
+    const cant = p._cant || 1;
+    const n    = idx + 1;
+    const sub  = p._isManual ? "" :
+      `<span class="cot-item-sub">${esc([p.marca, p.color, yearRange(p.anioDesde, p.anioHasta)].filter(Boolean).join(" · "))}</span>`;
+    const nameCell = `<span class="cot-item-name">${esc(p.nombre)}</span>${sub}`;
+
+    if (!p._isManual && tipo === "ambas") {
+      const sin = parsePrice(p.ventaSin), con = parsePrice(p.ventaCon);
+      return `
+        <tr>
+          <td class="num">${n}</td>
+          <td>${nameCell}</td>
+          <td class="cant">${cant}</td>
+          <td class="price">Sin inst.: ${fmtCLP(sin)}<br>Con inst.: ${fmtCLP(con)}</td>
+          <td class="price">${fmtCLP(sin * cant)}<br>${fmtCLP(con * cant)}</td>
+        </tr>`;
+    }
+    const precio = getUnitPrice(p, tipo);
+    return `
+      <tr>
+        <td class="num">${n}</td>
+        <td>${nameCell}</td>
+        <td class="cant">${cant}</td>
+        <td class="price">${fmtCLP(precio)}</td>
+        <td class="price">${fmtCLP(precio * cant)}</td>
+      </tr>`;
+  }).join("");
+}
+
+// Arma el HTML LIMPIO del documento (texto plano, sin controles de formulario). Se usa
+// para el PDF (correo/WhatsApp) y para imprimir. Los precios ya incluyen IVA; el Neto se
+// deriva (total/1.19), igual que en pantalla (calcTotals).
+function buildCotDocHtml() {
+  const tipo  = getPrecioTipo();
+  const items = [...window.cotSelection.values()];
+
+  let total = 0;
+  items.forEach(p => { total += getUnitPrice(p, tipo) * (p._cant || 1); });
+  const neto = Math.round(total / 1.19);
+  const iva  = total - neto;
+
+  const envio   = (cotEnvioEl?.textContent || "").trim();
+  const fecha   = (cotFechaEl?.textContent || "").trim() || ("Fecha: " + formatDateShort(new Date()));
+
+  const clientItems = [
+    ["Cliente", cotNombreEl.value.trim()],
+    ["RUT", cotRutEl.value.trim()],
+    ["Teléfono", cotTelEl.value.trim()],
+    ["Correo", cotEmailEl.value.trim()],
+    ["Ejecutivo responsable", cotEjecEl.value.trim()],
+  ].filter(([, v]) => v)
+   .map(([k, v]) => `<div class="cot-client-item"><div class="cot-k">${k}</div><div class="cot-v">${esc(v)}</div></div>`)
+   .join("");
+
+  const notas    = cotNotasEl.value.trim();
+  const rowsHtml = cotPdfRows(items, tipo) ||
+    `<tr><td colspan="5" style="text-align:center;padding:14px;color:#7a8a80">Sin productos.</td></tr>`;
+
+  return `<div class="avr-pdf">
+    <div class="cot-doc-header">
+      <div class="cot-header-left">
+        <img class="cot-logo" src="./logo-autovidriosrobin.jpg" alt="AVR" />
+        <div class="cot-company-block">
+          <p class="cot-company-name">AUTOVIDRIOSROBIN SPA</p>
+          <p>RUT: 77.068.352-1</p>
+          <p>José Arrieta 7044, La Reina</p>
+          <p class="cot-company-tag">Venta al por menor — Repuestos Automotrices</p>
+        </div>
+      </div>
+      <div class="cot-title-block">
+        <p class="cot-title-big">COTIZACIÓN</p>
+        <p class="cot-numero">N° ${esc(_cotNumero || "—")}</p>
+        <p>${esc(fecha)}</p>
+        <p>Validez: <strong>3 días hábiles</strong></p>
+      </div>
+    </div>
+    ${envio ? `<p class="cot-envio">${esc(envio)}</p>` : ""}
+    <hr class="cot-rule" />
+    ${clientItems ? `<div class="cot-client"><div class="cot-client-grid">${clientItems}</div></div>` : ""}
+    <p class="cot-price-note">Valores en pesos chilenos (CLP), IVA incluido. La instalación se indica en cada ítem.</p>
+    <table>
+      <thead>
+        <tr>
+          <th class="num">#</th>
+          <th>Descripción del producto</th>
+          <th class="cant">Cant.</th>
+          <th class="price">P. Unitario</th>
+          <th class="price">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>${rowsHtml}</tbody>
+    </table>
+    <div class="cot-totals">
+      <div class="row"><span>Neto</span><span>${fmtCLP(neto)}</span></div>
+      <div class="row"><span>IVA (19%)</span><span>${fmtCLP(iva)}</span></div>
+      <div class="row total"><span>TOTAL</span><span>${fmtCLP(total)}</span></div>
+    </div>
+    ${notas ? `<div class="cot-notes"><div class="cot-k">Notas / Observaciones</div><div class="cot-notes-body">${esc(notas)}</div></div>` : ""}
+    <div class="cot-garantia">
+      <p class="cot-garantia-title">Garantía y condiciones</p>
+      <p>• Garantía de <strong>6 meses</strong> por falla de fábrica o instalación desde la fecha de entrega.</p>
+      <p>• Productos pintados, grabados o alterados <strong>no podrán ser devueltos</strong>.</p>
+      <p>• Devoluciones por desistimiento: <strong>10 días hábiles</strong> desde la entrega, en las mismas condiciones en que fue entregado el producto.</p>
+    </div>
+  </div>`;
 }
 
 // Genera el PDF de la cotización y lo devuelve como base64 (sin el prefijo data:).
+// El contenedor se renderiza EN PANTALLA (no fuera de ella): html2canvas capturaba
+// vacío cuando el nodo estaba en left:-9999px → PDF en blanco.
 async function buildCotPdfBase64() {
   if (typeof html2pdf === "undefined") throw new Error("Falta la librería de PDF (html2pdf).");
-  const content = snapshotCotHtml();
   const wrap = document.createElement("div");
-  wrap.style.cssText = "position:fixed;left:-9999px;top:0;width:794px;background:#fff;";
-  wrap.innerHTML = `<style>${COT_DOC_CSS}</style><div class="cot-pdf-body" style="background:#fff">${content}</div>`;
+  wrap.style.cssText = "position:fixed;left:0;top:0;z-index:2147483647;background:#fff;width:794px;pointer-events:none;";
+  wrap.innerHTML = `<style>${COT_PDF_CSS}</style>${buildCotDocHtml()}`;
   document.body.appendChild(wrap);
+
+  // Esperar a que el logo cargue para que no salga cortado en el canvas.
+  const img = wrap.querySelector("img.cot-logo");
+  if (img && !img.complete) {
+    await new Promise((res) => { img.onload = img.onerror = res; setTimeout(res, 1500); });
+  }
+
   try {
     const opt = {
       margin:      [8, 8, 8, 8],
@@ -423,7 +563,7 @@ async function buildCotPdfBase64() {
       html2canvas: { scale: 2, backgroundColor: "#ffffff", useCORS: true },
       jsPDF:       { unit: "mm", format: "a4", orientation: "portrait" },
     };
-    const dataUri = await html2pdf().set(opt).from(wrap).outputPdf("datauristring");
+    const dataUri = await html2pdf().set(opt).from(wrap.querySelector(".avr-pdf")).outputPdf("datauristring");
     return dataUri.split(",")[1];
   } finally {
     wrap.remove();
@@ -432,16 +572,15 @@ async function buildCotPdfBase64() {
 
 // ── Imprimir ──────────────────────────────────────────────────────────────────
 function printCot() {
-  const content = snapshotCotHtml();
   const win = window.open("", "_blank", "width=900,height=1100");
   win.document.write(`<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <title>${_cotNumero || "Cotización"}</title>
-<style>${COT_DOC_CSS}</style>
+<style>${COT_PDF_CSS} @page { margin: 10mm; } .avr-pdf { width: auto; }</style>
 </head>
-<body>${content}</body>
+<body>${buildCotDocHtml()}</body>
 </html>`);
   win.document.close();
   win.focus();
