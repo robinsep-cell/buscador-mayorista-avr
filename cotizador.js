@@ -526,6 +526,7 @@ async function buildCotPdfBase64() {
   wrap.style.cssText = "position:fixed;left:0;top:0;z-index:2147483647;background:#fff;width:794px;pointer-events:none;";
   wrap.innerHTML = `<style>${COT_PDF_CSS}</style>${buildCotDocHtml()}`;
   document.body.appendChild(wrap);
+  const el = wrap.querySelector(".avr-pdf");
 
   // Esperar a que el logo cargue para que no salga cortado en el canvas.
   const img = wrap.querySelector("img.cot-logo");
@@ -534,13 +535,15 @@ async function buildCotPdfBase64() {
   }
 
   try {
+    // width EXPLÍCITO (offsetWidth del documento): sin él html2canvas mide la caja de
+    // contenido (734) y recorta la derecha; con windowWidth desplazaba el contenido.
     const opt = {
       margin:      [8, 8, 8, 8],
       image:       { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2, backgroundColor: "#ffffff", useCORS: true, width: 794, windowWidth: 794 },
+      html2canvas: { scale: 2, backgroundColor: "#ffffff", useCORS: true, width: el.offsetWidth, scrollX: 0, scrollY: 0 },
       jsPDF:       { unit: "mm", format: "a4", orientation: "portrait" },
     };
-    const dataUri = await html2pdf().set(opt).from(wrap.querySelector(".avr-pdf")).outputPdf("datauristring");
+    const dataUri = await html2pdf().set(opt).from(el).outputPdf("datauristring");
     return dataUri.split(",")[1];
   } finally {
     wrap.remove();
