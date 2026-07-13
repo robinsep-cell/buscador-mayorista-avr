@@ -2061,6 +2061,10 @@ html[data-theme="light"] .admin-del-btn {
 .hist-tag-anu { color: #f87171; }
 .hist-anulada { color: #f87171; font-weight: 700; font-size: 0.82rem; }
 
+/* Precio editable (manual/externo) con separador de miles */
+.cot-precio-manual-wrap { display: inline-flex; align-items: center; gap: 4px; justify-content: flex-end; }
+.cot-precio-manual-sign { color: var(--muted); font-size: 0.82rem; }
+
 /* Selector de instalación POR PRODUCTO dentro de la cotización */
 .cot-inst {
   display: flex;

@@ -47,6 +47,11 @@ function fmtCLP(n) {
   return "$ " + Math.round(n).toLocaleString("es-CL");
 }
 
+// Miles con puntos, sin símbolo (para el input editable): 189000 → "189.000".
+function milesFmt(n) {
+  return Math.round(n || 0).toLocaleString("es-CL");
+}
+
 function esc(v) {
   return String(v ?? "")
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -145,7 +150,7 @@ function renderCotItems() {
             <input class="cot-cant-inp" type="number" value="${cant}" min="1" max="999" data-id="${p._id}" />
           </td>
           <td class="cot-td cot-td-price">
-            <input class="cot-precio-manual-inp" type="number" value="${p._precioManual || 0}" min="0" data-id="${p._id}" style="width:100px;border:1px solid var(--border);border-radius:5px;padding:3px 6px;background:var(--bg);color:var(--text);font-size:0.82rem;" />
+            <span class="cot-precio-manual-wrap"><span class="cot-precio-manual-sign">$</span><input class="cot-precio-manual-inp" type="text" inputmode="numeric" value="${milesFmt(p._precioManual || 0)}" data-id="${p._id}" style="width:96px;border:1px solid var(--border);border-radius:5px;padding:3px 6px;background:var(--bg);color:var(--text);font-size:0.82rem;text-align:right;" /></span>
           </td>
           <td class="cot-td cot-td-price"><strong>${fmtCLP(sub)}</strong></td>
           <td class="cot-td no-print">
@@ -206,13 +211,13 @@ function renderCotItems() {
     });
   });
 
-  // Precio manual editable
+  // Precio manual editable (texto con separador de miles → se leen solo los dígitos)
   cotItemsEl.querySelectorAll(".cot-precio-manual-inp").forEach(inp => {
     inp.addEventListener("change", () => {
       const id = inp.dataset.id;
       const p  = window.cotSelection.get(id);
       if (p) {
-        p._precioManual = Math.max(0, parseInt(inp.value) || 0);
+        p._precioManual = Math.max(0, parseInt(String(inp.value).replace(/\D/g, ""), 10) || 0);
         window.cotSelection.set(id, p);
       }
       renderCotItems();
