@@ -44,6 +44,15 @@ const previewSvg = document.querySelector("#previewSvg");
 const previewPaths = document.querySelector("#previewPaths");
 const metrics = document.querySelector("#metrics");
 const ncOutput = document.querySelector("#ncOutput");
+const traceControls = document.querySelector("#traceControls");
+const traceAuto = document.querySelector("#traceAuto");
+const traceManual = document.querySelector("#traceManual");
+const traceThreshold = document.querySelector("#traceThreshold");
+const traceThresholdVal = document.querySelector("#traceThresholdVal");
+const traceInvert = document.querySelector("#traceInvert");
+const designList = document.querySelector("#designList");
+
+const IMAGE_DEFAULT_MM = 120; // lado mayor por defecto al trazar una imagen (el usuario luego lo ajusta)
 
 function showAuth() {
   authScreen.hidden = false;
@@ -421,12 +430,56 @@ function pathToD(points) {
   return points.map((p, i) => `${i === 0 ? "M" : "L"} ${fmt(p.x)} ${fmt(p.y)}`).join(" ") + " Z";
 }
 
+function labelBox(cx, cy, text, font) {
+  const w = text.length * font * 0.6 + font * 0.5;
+  const h = font * 1.35;
+  return `
+    <rect class="dim-bg" x="${fmt(cx - w / 2)}" y="${fmt(cy - h / 2)}" width="${fmt(w)}" height="${fmt(h)}" rx="${fmt(font * 0.25)}" />
+    <text class="dim-text" x="${fmt(cx)}" y="${fmt(cy)}" font-size="${fmt(font)}" text-anchor="middle" dominant-baseline="central">${text}</text>`;
+}
+
+function dimensionMarkup(box) {
+  const w = box.width;
+  const h = box.height;
+  const cx = box.minX + w / 2;
+  const cy = box.minY + h / 2;
+  const font = Math.min(9, Math.max(4, Math.min(w, h) / 7));
+  const gap = Math.max(font * 1.1, Math.min(w, h) * 0.08);
+  const tick = gap * 0.5;
+  const wText = `${w.toFixed(1)} mm`;
+  const hText = `${h.toFixed(1)} mm`;
+
+  // Cota de ancho abajo (numero sobre la linea) y de alto a la izquierda (numero girado).
+  const wy = box.maxY + gap;
+  const hx = box.minX - gap;
+  const hLabelX = hx - font * 0.9;
+  return `
+    <g class="dim">
+      <line x1="${fmt(box.minX)}" y1="${fmt(wy)}" x2="${fmt(box.maxX)}" y2="${fmt(wy)}" />
+      <line x1="${fmt(box.minX)}" y1="${fmt(wy - tick)}" x2="${fmt(box.minX)}" y2="${fmt(wy + tick)}" />
+      <line x1="${fmt(box.maxX)}" y1="${fmt(wy - tick)}" x2="${fmt(box.maxX)}" y2="${fmt(wy + tick)}" />
+      ${labelBox(cx, wy + font, wText, font)}
+      <line x1="${fmt(hx)}" y1="${fmt(box.minY)}" x2="${fmt(hx)}" y2="${fmt(box.maxY)}" />
+      <line x1="${fmt(hx - tick)}" y1="${fmt(box.minY)}" x2="${fmt(hx + tick)}" y2="${fmt(box.minY)}" />
+      <line x1="${fmt(hx - tick)}" y1="${fmt(box.maxY)}" x2="${fmt(hx + tick)}" y2="${fmt(box.maxY)}" />
+      <g transform="rotate(-90 ${fmt(hLabelX)} ${fmt(cy)})">
+        ${labelBox(hLabelX, cy, hText, font)}
+      </g>
+    </g>`;
+}
+
 function renderPreview(paths, sheetW, sheetH) {
-  previewSvg.setAttribute("viewBox", `0 0 ${sheetW} ${sheetH}`);
+  const m = Math.max(16, sheetW * 0.05); // margen para que las cotas no se corten
+  previewSvg.setAttribute("viewBox", `${fmt(-m)} ${fmt(-m)} ${fmt(sheetW + 2 * m)} ${fmt(sheetH + 2 * m)}`);
   const sheet = previewSvg.querySelector(".sheet");
   sheet.setAttribute("width", sheetW);
   sheet.setAttribute("height", sheetH);
-  previewPaths.innerHTML = paths.map((item) => `<path class="cut-path" d="${pathToD(item.points)}"></path>`).join("");
+  previewPaths.innerHTML = paths
+    .map((item) => {
+      const box = bbox(item.points);
+      return `<path class="cut-path" d="${pathToD(item.points)}"></path>${dimensionMarkup(box)}`;
+    })
+    .join("");
 }
 
 function setStatus(text, ready = false) {
@@ -457,6 +510,7 @@ function currentPieceDefaults() {
     return Array.from({ length: copyCount }, () => ({
       width: box.width,
       height: box.height,
+      aspect: box.height ? box.width / box.height : 1,
     }));
   });
 }
@@ -474,8 +528,10 @@ function buildPieceControls() {
   state.pieceSettings = Array.from({ length: count }, (_, index) => ({
     mirrored: state.pieceSettings?.[index]?.mirrored === true,
     rotated: state.pieceSettings?.[index]?.rotated === true,
+    locked: state.pieceSettings?.[index]?.locked !== false, // por defecto: proporcion bloqueada
     width: Number(state.pieceSettings?.[index]?.width) || defaults[index]?.width || 0,
     height: Number(state.pieceSettings?.[index]?.height) || defaults[index]?.height || 0,
+    aspect: defaults[index]?.aspect || 1,
   }));
 
   pieceControls.hidden = false;
@@ -486,15 +542,19 @@ function buildPieceControls() {
         <div class="piece-card-title">Pieza ${index + 1}</div>
         <div class="piece-size-grid">
           <label>
-            <span>Ancho</span>
+            <span>Ancho (mm)</span>
             <input class="piece-width" data-index="${index}" type="number" min="1" step="0.1" value="${setting.width.toFixed(1)}" />
           </label>
           <label>
-            <span>Alto</span>
+            <span>Alto (mm)</span>
             <input class="piece-height" data-index="${index}" type="number" min="1" step="0.1" value="${setting.height.toFixed(1)}" />
           </label>
         </div>
         <div class="piece-card-actions">
+          <label class="check-field">
+            <input class="piece-lock" data-index="${index}" type="checkbox" ${setting.locked ? "checked" : ""} />
+            <span>Proporcion</span>
+          </label>
           <label class="check-field">
             <input class="piece-mirror" data-index="${index}" type="checkbox" ${setting.mirrored ? "checked" : ""} />
             <span>Invertir</span>
@@ -508,6 +568,11 @@ function buildPieceControls() {
     `).join("")}
   `;
 
+  pieceControls.querySelectorAll(".piece-lock").forEach((input) => {
+    input.addEventListener("change", () => {
+      state.pieceSettings[Number(input.dataset.index)].locked = input.checked;
+    });
+  });
   pieceControls.querySelectorAll(".piece-mirror").forEach((input) => {
     input.addEventListener("change", () => {
       state.pieceSettings[Number(input.dataset.index)].mirrored = input.checked;
@@ -522,13 +587,27 @@ function buildPieceControls() {
   });
   pieceControls.querySelectorAll(".piece-width").forEach((input) => {
     input.addEventListener("input", () => {
-      state.pieceSettings[Number(input.dataset.index)].width = Number(input.value);
+      const index = Number(input.dataset.index);
+      const setting = state.pieceSettings[index];
+      setting.width = Number(input.value);
+      if (setting.locked && setting.aspect && Number(input.value) > 0) {
+        setting.height = Number((setting.width / setting.aspect).toFixed(1));
+        const heightInput = pieceControls.querySelector(`.piece-height[data-index="${index}"]`);
+        if (heightInput) heightInput.value = setting.height.toFixed(1);
+      }
       regenerate();
     });
   });
   pieceControls.querySelectorAll(".piece-height").forEach((input) => {
     input.addEventListener("input", () => {
-      state.pieceSettings[Number(input.dataset.index)].height = Number(input.value);
+      const index = Number(input.dataset.index);
+      const setting = state.pieceSettings[index];
+      setting.height = Number(input.value);
+      if (setting.locked && setting.aspect && Number(input.value) > 0) {
+        setting.width = Number((setting.height * setting.aspect).toFixed(1));
+        const widthInput = pieceControls.querySelector(`.piece-width[data-index="${index}"]`);
+        if (widthInput) widthInput.value = setting.width.toFixed(1);
+      }
       regenerate();
     });
   });
@@ -599,43 +678,233 @@ function regenerate() {
   }
 }
 
-svgInput.addEventListener("change", async () => {
-  const files = [...(svgInput.files || [])];
-  clearDownload();
-  if (!files.length) return;
+function isSvgFile(file) {
+  return file.name.toLowerCase().endsWith(".svg") || file.type === "image/svg+xml";
+}
+
+function isImageFile(file) {
+  return /\.(png|jpe?g|webp|bmp|gif)$/i.test(file.name) ||
+    (file.type.startsWith("image/") && file.type !== "image/svg+xml");
+}
+
+function traceOptions() {
+  return {
+    threshold: traceAuto.checked ? null : Number(traceThreshold.value),
+    invert: traceInvert.checked,
+  };
+}
+
+// Normaliza el contorno trazado (en pixeles) a un tamano por defecto en mm,
+// para que la pieza se dibuje dentro de la plancha antes de que el usuario
+// escriba las medidas reales.
+function imageContourFromPoints(points) {
+  const box = bbox(points);
+  const longest = Math.max(box.width, box.height) || 1;
+  const scale = IMAGE_DEFAULT_MM / longest;
+  return points.map((p) => ({ x: p.x * scale, y: p.y * scale }));
+}
+
+function updateTraceControls() {
+  const hasImage = state.designs.some((design) => design.kind === "image");
+  traceControls.hidden = !hasImage;
+}
+
+// Re-traza las imagenes ya cargadas cuando cambia el umbral o el invertido.
+function retraceImages() {
+  if (!window.ContourTracer) return;
+  const imageDesigns = state.designs.filter((design) => design.kind === "image" && design.imageData);
+  if (!imageDesigns.length) return;
+  const opts = traceOptions();
   try {
-    const designs = [];
-    for (const file of files) {
-      if (!file.name.toLowerCase().endsWith(".svg")) {
-        throw new Error(`${file.name}: por ahora solo puedo leer SVG`);
-      }
-      const text = await file.text();
-      designs.push({
-        name: file.name.replace(/\.svg$/i, ""),
-        contour: loadLargestContour(text),
-      });
-    }
-    state.fileName = files.map((file) => file.name).join(", ");
-    state.contour = designs[0].contour;
-    state.designs = designs;
-    fileLabel.textContent = files.length === 1 ? files[0].name : `${files.length} SVG cargados`;
-    copies.disabled = files.length > 1;
-    if (jobName.value === "MODELO PRUEBA") jobName.value = designs.map((design) => design.name).join("_").toUpperCase();
-    generateBtn.disabled = false;
-    setStatus("SVG cargado", true);
+    imageDesigns.forEach((design) => {
+      const traced = window.ContourTracer.imageDataToContour(design.imageData, opts);
+      design.contour = imageContourFromPoints(traced.points);
+    });
+    state.contour = state.designs[0].contour;
     buildPieceControls();
     regenerate();
   } catch (error) {
-    state.contour = null;
-    state.designs = [];
-    state.pieceSettings = [];
-    buildPieceControls();
-    generateBtn.disabled = true;
-    copies.disabled = false;
-    setStatus("Error SVG", false);
+    setStatus("Error trazado", false);
     metrics.innerHTML = `<span>${error.message}</span>`;
   }
+}
+
+// Suma las figuras nuevas a las ya cargadas (permite usar 2-3 a la vez).
+async function processFiles(files) {
+  files = [...(files || [])];
+  clearDownload();
+  if (!files.length) return;
+  try {
+    const opts = traceOptions();
+    const nuevos = [];
+    for (const file of files) {
+      if (isSvgFile(file)) {
+        const text = await file.text();
+        nuevos.push({
+          name: file.name.replace(/\.svg$/i, ""),
+          kind: "svg",
+          contour: loadLargestContour(text),
+        });
+      } else if (isImageFile(file)) {
+        if (!window.ContourTracer) throw new Error("No se pudo cargar el trazador de imagenes.");
+        const traced = await window.ContourTracer.imageFileToContour(file, opts);
+        nuevos.push({
+          name: (file.name || "imagen").replace(/\.[^.]+$/, ""),
+          kind: "image",
+          contour: imageContourFromPoints(traced.points),
+          imageData: traced.imageData,
+        });
+      } else {
+        throw new Error(`${file.name || "archivo"}: formato no soportado. Usa SVG o una imagen (PNG/JPG).`);
+      }
+    }
+    state.designs = state.designs.concat(nuevos);
+    afterDesignsChanged(nuevos.some((design) => design.kind === "image") ? "Imagen trazada" : "SVG cargado");
+  } catch (error) {
+    setStatus("Error al cargar", false);
+    metrics.innerHTML = `<span>${error.message}</span>`;
+  }
+}
+
+// Refresca todo el estado de la UI tras agregar o quitar figuras.
+function afterDesignsChanged(statusText) {
+  if (!state.designs.length) {
+    state.contour = null;
+    state.pieceSettings = [];
+    fileLabel.textContent = "Seleccionar, arrastrar o pegar";
+    copies.disabled = false;
+    generateBtn.disabled = true;
+    updateTraceControls();
+    updateDesignList();
+    buildPieceControls();
+    clearDownload();
+    previewPaths.innerHTML = "";
+    metrics.innerHTML = "<span>Sin figuras</span>";
+    setStatus("Sin SVG", false);
+    return;
+  }
+  state.contour = state.designs[0].contour;
+  fileLabel.textContent = state.designs.length === 1
+    ? `${state.designs[0].name} (1 figura)`
+    : `${state.designs.length} figuras cargadas`;
+  copies.disabled = state.designs.length > 1;
+  updateTraceControls();
+  updateDesignList();
+  if (jobName.value === "MODELO PRUEBA") jobName.value = state.designs.map((d) => d.name).join("_").toUpperCase();
+  generateBtn.disabled = false;
+  setStatus(statusText || "Listo", true);
+  buildPieceControls();
+  regenerate();
+}
+
+function removeDesign(index) {
+  state.designs.splice(index, 1);
+  afterDesignsChanged("Figura eliminada");
+}
+
+// Genera un SVG a tamano real (mm) de una figura y lo descarga.
+function saveDesignSvg(index) {
+  const design = state.designs[index];
+  if (!design) return;
+  const pieceIndex = state.designs.length > 1 ? index : 0;
+  const box = bbox(design.contour);
+  const wmm = Number(state.pieceSettings?.[pieceIndex]?.width) || box.width;
+  const hmm = Number(state.pieceSettings?.[pieceIndex]?.height) || box.height;
+  const scaled = scalePointsToSize(design.contour, wmm, hmm);
+  const svg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="${fmt(wmm)}mm" height="${fmt(hmm)}mm" viewBox="0 0 ${fmt(wmm)} ${fmt(hmm)}">
+  <path d="${pathToD(scaled)}" fill="none" stroke="#000000" stroke-width="0.2"/>
+</svg>
+`;
+  const blob = new Blob([svg], { type: "image/svg+xml" });
+  const url = URL.createObjectURL(blob);
+  const safeName = `${design.name || "figura"}.svg`.replace(/[^\w.\-]+/g, "_");
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = safeName;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+
+function updateDesignList() {
+  if (!designList) return;
+  if (!state.designs.length) {
+    designList.hidden = true;
+    designList.innerHTML = "";
+    return;
+  }
+  designList.hidden = false;
+  designList.innerHTML = `
+    <div class="piece-controls-title">Figuras cargadas</div>
+    ${state.designs.map((design, index) => `
+      <div class="design-row">
+        <span class="design-tag ${design.kind === "image" ? "img" : "svg"}">${design.kind === "image" ? "IMG" : "SVG"}</span>
+        <span class="design-name" title="${design.name}">${design.name}</span>
+        <button class="design-save" data-index="${index}" type="button" title="Guardar como SVG">Guardar SVG</button>
+        <button class="design-del" data-index="${index}" type="button" title="Eliminar figura" aria-label="Eliminar">✕</button>
+      </div>
+    `).join("")}
+  `;
+  designList.querySelectorAll(".design-save").forEach((btn) => {
+    btn.addEventListener("click", () => saveDesignSvg(Number(btn.dataset.index)));
+  });
+  designList.querySelectorAll(".design-del").forEach((btn) => {
+    btn.addEventListener("click", () => removeDesign(Number(btn.dataset.index)));
+  });
+}
+
+svgInput.addEventListener("change", () => processFiles(svgInput.files));
+
+// Arrastrar y soltar sobre la zona de carga (o cualquier parte de la app).
+const dropZone = document.querySelector(".file-drop");
+["dragenter", "dragover"].forEach((evt) => {
+  appContent.addEventListener(evt, (e) => {
+    if (e.dataTransfer && [...e.dataTransfer.types].includes("Files")) {
+      e.preventDefault();
+      if (dropZone) dropZone.classList.add("dragging");
+    }
+  });
 });
+["dragleave", "dragend"].forEach((evt) => {
+  appContent.addEventListener(evt, (e) => {
+    if (e.target === appContent || e.target === dropZone) {
+      if (dropZone) dropZone.classList.remove("dragging");
+    }
+  });
+});
+appContent.addEventListener("drop", (e) => {
+  if (!e.dataTransfer) return;
+  e.preventDefault();
+  if (dropZone) dropZone.classList.remove("dragging");
+  const files = [...e.dataTransfer.files];
+  if (files.length) processFiles(files);
+});
+
+// Pegar imagen (Ctrl/Cmd+V) desde el portapapeles.
+document.addEventListener("paste", (e) => {
+  if (appContent.hidden) return; // solo con sesion iniciada
+  const items = e.clipboardData ? [...e.clipboardData.items] : [];
+  const imageFiles = items
+    .filter((item) => item.kind === "file" && item.type.startsWith("image/"))
+    .map((item) => item.getAsFile())
+    .filter(Boolean);
+  if (imageFiles.length) {
+    e.preventDefault();
+    processFiles(imageFiles);
+  }
+});
+
+traceAuto.addEventListener("change", () => {
+  traceManual.hidden = traceAuto.checked;
+  retraceImages();
+});
+traceThreshold.addEventListener("input", () => {
+  traceThresholdVal.textContent = traceThreshold.value;
+  if (!traceAuto.checked) retraceImages();
+});
+traceInvert.addEventListener("change", retraceImages);
 
 generateBtn.addEventListener("click", regenerate);
 copyBtn.addEventListener("click", async () => {

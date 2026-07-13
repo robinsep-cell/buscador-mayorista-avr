@@ -43,10 +43,29 @@
         <aside class="controls">
           <label class="file-drop" for="svgInput">
             <span class="file-icon">SVG</span>
-            <strong id="fileLabel">Seleccionar silueta(s)</strong>
-            <small>Una o varias exportadas desde Silhouette Studio</small>
-            <input id="svgInput" type="file" accept=".svg,image/svg+xml" multiple />
+            <strong id="fileLabel">Seleccionar, arrastrar o pegar</strong>
+            <small>SVG o foto de plantilla. Tambien puedes arrastrar el archivo o pegar una imagen con Ctrl/Cmd+V.</small>
+            <input id="svgInput" type="file" accept=".svg,image/svg+xml,.png,.jpg,.jpeg,.webp,.bmp,image/*" multiple />
           </label>
+
+          <div id="traceControls" class="trace-controls" hidden>
+            <div class="piece-controls-title">Trazado de la imagen</div>
+            <label class="check-field trace-check">
+              <input id="traceAuto" type="checkbox" checked />
+              <span>Umbral automatico</span>
+            </label>
+            <div id="traceManual" class="field" hidden>
+              <label for="traceThreshold">Umbral manual: <span id="traceThresholdVal">128</span></label>
+              <input id="traceThreshold" type="range" min="1" max="254" value="128" />
+            </div>
+            <label class="check-field trace-check">
+              <input id="traceInvert" type="checkbox" />
+              <span>Fondo mas oscuro que la plantilla</span>
+            </label>
+            <small class="field-help">Solo para fotos. Si el contorno sale sucio, mueve el umbral o marca la casilla.</small>
+          </div>
+
+          <div id="designList" class="design-list" hidden></div>
 
           <div class="field">
             <label for="jobName">Nombre del archivo</label>
@@ -107,6 +126,7 @@
       </section>
     </main>
 
+    <script src="./trace.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>

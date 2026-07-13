@@ -125,6 +125,11 @@ h1 {
   text-align: center;
 }
 
+.file-drop.dragging {
+  border-color: var(--green);
+  background: rgba(85, 212, 0, 0.18);
+}
+
 .file-drop input {
   display: none;
 }
@@ -162,6 +167,106 @@ h1 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
+}
+
+.trace-controls {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 14px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--black);
+}
+
+.trace-controls .field {
+  margin: 0;
+}
+
+.trace-check {
+  margin: 0;
+}
+
+input[type="range"] {
+  height: 28px;
+  padding: 0;
+  accent-color: var(--green);
+}
+
+.design-list {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 14px;
+}
+
+.design-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--black);
+}
+
+.design-tag {
+  flex: 0 0 auto;
+  padding: 3px 6px;
+  border-radius: 4px;
+  color: #10140f;
+  font-size: 11px;
+  font-weight: 800;
+  background: var(--green);
+}
+
+.design-tag.img {
+  background: #58a6ff;
+}
+
+.design-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.design-save {
+  flex: 0 0 auto;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid rgba(85, 212, 0, 0.5);
+  border-radius: 5px;
+  color: #dfffcf;
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.design-del {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  color: #ff9b9b;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.design-save:hover {
+  background: rgba(85, 212, 0, 0.12);
+}
+
+.design-del:hover {
+  border-color: var(--red);
+  background: rgba(237, 37, 43, 0.14);
 }
 
 .piece-controls {
@@ -352,6 +457,23 @@ select {
   fill: rgba(237, 37, 43, 0.16);
   stroke: var(--red);
   stroke-width: 0.7;
+}
+
+.dim line {
+  stroke: rgba(255, 255, 255, 0.55);
+  stroke-width: 0.4;
+}
+
+.dim-bg {
+  fill: rgba(13, 15, 18, 0.82);
+  stroke: rgba(255, 255, 255, 0.18);
+  stroke-width: 0.3;
+}
+
+.dim-text {
+  fill: #eef4e8;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
 }
 
 textarea {
