@@ -659,7 +659,7 @@ function renderHistorial(rows) {
     const anuTag  = r.anulada_por ? `<span class="hist-tag hist-tag-anu">→ Reemplazada por ${esc(r.anulada_por)}</span>` : "";
     const actions = anulada
       ? `<span class="hist-anulada">ANULADA</span>${anuTag}`
-      : `<button class="hist-btn hist-btn-send" data-idx="${i}">✉ Reenviar</button>
+      : `<button class="hist-btn hist-btn-send" data-idx="${i}" title="Reenvía la misma cotización con la vigencia renovada (3 días hábiles)">↻ Revalidar / Reenviar</button>
          <button class="hist-btn hist-btn-edit" data-idx="${i}">✎ Editar</button>
          <button class="hist-btn hist-btn-anular" data-id="${r.id}" data-num="${esc(r.numero)}">Anular</button>`;
     return `
