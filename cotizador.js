@@ -281,18 +281,14 @@ async function openCotModal(opts = {}) {
     // Reabrir existente: conservar su número; ya está guardada.
     _cotNumero = opts.numero;
     _cotSavedNumero = opts.numero;
+    cotNumeroEl.textContent = "N° " + _cotNumero;
   } else {
-    // Correlativo nuevo desde Supabase
-    cotNumeroEl.textContent = "Generando…";
-    try {
-      const { data, error } = await window._sb.rpc("next_cotizacion_numero");
-      _cotNumero = (!error && data) ? data : "COT-" + today.toISOString().slice(0,10).replace(/-/g,"") + "-?";
-    } catch {
-      _cotNumero = null;
-    }
-    _cotSavedNumero = null; // cotización nueva: aún no guardada
+    // Borrador: el número se asigna recién al concretar (enviar/descargar/imprimir/copiar),
+    // así abrir el modal o "Vaciar" NO gastan números de la secuencia.
+    _cotNumero = null;
+    _cotSavedNumero = null;
+    cotNumeroEl.textContent = "Borrador · N° al enviar";
   }
-  cotNumeroEl.textContent = "N° " + (_cotNumero || "—");
 
   renderCotItems();
   if (!cotModal.open) cotModal.showModal();
@@ -330,8 +326,20 @@ document.getElementById("resultsBody").addEventListener("click", e => {
 // Guarda la cotización en el historial. IDEMPOTENTE: si ya se guardó en esta sesión
 // (mismo número), no hace nada (evita el error de doble insert). Lanza si falla; no
 // toca botones (la UI la manejan quienes la llaman: correo, WhatsApp, descargar PDF).
+// Asigna el número correlativo la PRIMERA vez que hace falta (al concretar). Antes de
+// esto la cotización es un borrador sin número, así que abrir/vaciar no gasta secuencia.
+async function ensureNumero() {
+  if (_cotNumero) return _cotNumero;
+  const { data, error } = await window._sb.rpc("next_cotizacion_numero");
+  _cotNumero = (!error && data)
+    ? data
+    : "COT-" + new Date().toISOString().slice(0, 10).replace(/-/g, "") + "-?";
+  cotNumeroEl.textContent = "N° " + _cotNumero;
+  return _cotNumero;
+}
+
 async function saveCotizacion() {
-  if (!_cotNumero) throw new Error("sin número de cotización");
+  await ensureNumero();
   if (_cotSavedNumero === _cotNumero) return; // ya guardada
 
   let subtotal = 0;
@@ -377,9 +385,10 @@ async function saveCotizacion() {
   }
 }
 
-// Nueva cotización: vacía el carrito y los datos del cliente, y saca número nuevo.
+// Vaciar: limpia el carrito y los datos del cliente para empezar un borrador nuevo.
+// NO gasta número de secuencia (el número se asigna recién al concretar).
 async function nuevaCotizacion() {
-  if (window.cotSelection.size && !confirm("¿Empezar una cotización nueva? Se vaciará la actual.")) return;
+  if (window.cotSelection.size && !confirm("¿Vaciar esta cotización y empezar de cero?")) return;
   window.cotSelection.clear();
   _manualCounter = 0;
   _reemplazaA = null;
@@ -397,7 +406,7 @@ async function descargarPdf() {
   const prev = cotBtnGuardar.textContent;
   cotBtnGuardar.disabled = true;
   try {
-    if (_cotSavedNumero !== _cotNumero) { cotBtnGuardar.textContent = "Guardando…"; await saveCotizacion(); }
+    cotBtnGuardar.textContent = "Guardando…"; await saveCotizacion();
     cotBtnGuardar.textContent = "Generando PDF…";
     const b64 = await buildCotPdfBase64();
     const a = document.createElement("a");
@@ -591,8 +600,11 @@ async function buildCotPdfBase64() {
 }
 
 // ── Imprimir ──────────────────────────────────────────────────────────────────
-function printCot() {
+async function printCot() {
+  if (!window.cotSelection.size) { alert("La cotización no tiene productos."); return; }
+  // Abrir la ventana AHORA (dentro del gesto del clic) para que el navegador no la bloquee.
   const win = window.open("", "_blank", "width=900,height=1100");
+  try { await saveCotizacion(); } catch (_e) { /* igual se imprime */ }
   win.document.write(`<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -616,11 +628,9 @@ async function shareWA() {
   const prev = cotBtnWA.textContent;
   cotBtnWA.disabled = true;
   try {
-    // 1) Guardar (una sola vez por cotización)
-    if (_cotSavedNumero !== _cotNumero) {
-      cotBtnWA.textContent = "Guardando…";
-      await saveCotizacion();
-    }
+    // 1) Guardar (asigna número la 1ª vez; idempotente)
+    cotBtnWA.textContent = "Guardando…";
+    await saveCotizacion();
 
     // 2) PDF → 3) subir y obtener link firmado
     cotBtnWA.textContent = "Generando PDF…";
@@ -836,11 +846,9 @@ cotBtnEmail?.addEventListener("click", async () => {
   const prev = cotBtnEmail.textContent;
   cotBtnEmail.disabled = true;
   try {
-    // 1) Guardar en el historial (una sola vez por cotización)
-    if (_cotSavedNumero !== _cotNumero) {
-      cotBtnEmail.textContent = "Guardando…";
-      await saveCotizacion();
-    }
+    // 1) Guardar en el historial (asigna número la 1ª vez; idempotente)
+    cotBtnEmail.textContent = "Guardando…";
+    await saveCotizacion();
 
     // 2) Generar el PDF
     cotBtnEmail.textContent = "Generando PDF…";
@@ -873,7 +881,9 @@ cotBtnEmail?.addEventListener("click", async () => {
   }
 });
 
-cotBtnCopiar?.addEventListener("click", () => {
+cotBtnCopiar?.addEventListener("click", async () => {
+  if (!window.cotSelection.size) { alert("La cotización no tiene productos."); return; }
+  try { await saveCotizacion(); } catch (_e) { /* igual copia */ }
   const items = [...window.cotSelection.values()];
   let text = `Cotización ${_cotNumero || ""} — ${formatDateShort(new Date())}\nAutovidriosRobin SPA\n\n`;
   items.forEach((p, i) => {
