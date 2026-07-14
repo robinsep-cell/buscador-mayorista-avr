@@ -452,7 +452,6 @@
               <p class="cot-title-big">COTIZACIÓN</p>
               <p id="cotNumero" class="cot-numero">N° —</p>
               <p id="cotFecha" class="cot-fecha">Fecha: —</p>
-              <p>Validez: <strong>3 días hábiles</strong></p>
             </div>
           </div>
 
@@ -531,9 +530,10 @@
             <textarea id="cotNotas" class="cot-notes-inp" rows="3" placeholder="Condiciones especiales, detalles de entrega, instrucciones para el cliente…"></textarea>
           </div>
 
-          <!-- Garantía (fija, siempre visible) -->
+          <!-- Vigencia + Garantía (fija, siempre visible) -->
           <div class="cot-garantia">
-            <p class="cot-garantia-title">GARANTÍA Y CONDICIONES</p>
+            <p class="cot-garantia-title">VIGENCIA, GARANTÍA Y CONDICIONES</p>
+            <p>• <strong>Vigencia:</strong> válida hasta el <strong id="cotVigenciaTxt">—</strong> (3 días hábiles). Pasado ese plazo los precios pueden variar; si necesitas más tiempo, escríbenos y la revalidamos.</p>
             <p>• Garantía de <strong>6 meses</strong> por falla de fábrica o instalación desde la fecha de entrega.</p>
             <p>• Productos pintados, grabados o alterados <strong>no podrán ser devueltos</strong>.</p>
             <p>• Devoluciones por desistimiento: <strong>10 días hábiles</strong> desde la entrega, en las mismas condiciones en que fue entregado el producto.</p>
@@ -716,7 +716,7 @@
     <script src="./auth.js"></script>
     <script src="./admin.js"></script>
     <script src="./app.js?v=fb3"></script>
-    <script src="./cotizador.js?v=fb5"></script>
+    <script src="./cotizador.js?v=fb6"></script>
     <script src="./espejos-cot.js?v=1"></script>
   </body>
 </html>

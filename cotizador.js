@@ -5,6 +5,7 @@ let _cotNumero    = null;
 let _manualCounter = 0;
 let _reemplazaA   = null; // numero de cotización que se reemplaza al guardar
 let _cotSavedNumero = null; // número ya guardado en esta sesión del modal (evita doble insert)
+let _cotVigenciaHasta = null; // fecha de vigencia fijada al revalidar/reabrir (null = calcular 3 días hábiles)
 
 // ── DOM ───────────────────────────────────────────────────────────────────────
 const cotBtn      = document.getElementById("cotBtn");
@@ -264,6 +265,12 @@ async function openCotModal(opts = {}) {
   const envioStr = formatDateLong(envio);
   cotEnvioEl.innerHTML = `<strong>📦 Envío estimado:</strong> ${envioStr.charAt(0).toUpperCase() + envioStr.slice(1)}`;
 
+  // Vigencia: la fija "Revalidar" (opts.vigenciaHasta); si no, 3 días hábiles desde hoy.
+  _cotVigenciaHasta = opts.vigenciaHasta || null;
+  const vigStr = formatDateLong(_cotVigenciaHasta || addBusinessDays(today, 3));
+  const cotVigEl = document.getElementById("cotVigenciaTxt");
+  if (cotVigEl) cotVigEl.textContent = vigStr.charAt(0).toUpperCase() + vigStr.slice(1);
+
   // Ejecutivo = usuario actual (salvo que se reabra una existente y ya venga cargado)
   if (cotEjecEl && window.currentUser && !opts.numero) {
     cotEjecEl.value = window.currentUser.nombre || window.currentUser.email || "";
@@ -453,6 +460,9 @@ function buildCotDocHtml() {
 
   const envio   = (cotEnvioEl?.textContent || "").trim();
   const fecha   = (cotFechaEl?.textContent || "").trim() || ("Fecha: " + formatDateShort(new Date()));
+  // Vigencia: fecha límite (3 días hábiles). _cotVigenciaHasta la fija "Revalidar"; si no, se calcula.
+  const vigDate = _cotVigenciaHasta || addBusinessDays(new Date(), 3);
+  const vigencia = formatDateLong(vigDate).replace(/^\w/, c => c.toUpperCase());
 
   const clientItems = [
     ["Cliente", cotNombreEl.value.trim()],
@@ -483,7 +493,6 @@ function buildCotDocHtml() {
         <p class="cot-title-big">COTIZACIÓN</p>
         <p class="cot-numero">N° ${esc(_cotNumero || "—")}</p>
         <p>${esc(fecha)}</p>
-        <p>Validez: <strong>3 días hábiles</strong></p>
       </div>
     </div>
     ${envio ? `<p class="cot-envio">${esc(envio)}</p>` : ""}
@@ -509,7 +518,8 @@ function buildCotDocHtml() {
     </div>
     ${notas ? `<div class="cot-notes"><div class="cot-k">Notas / Observaciones</div><div class="cot-notes-body">${esc(notas)}</div></div>` : ""}
     <div class="cot-garantia">
-      <p class="cot-garantia-title">Garantía y condiciones</p>
+      <p class="cot-garantia-title">Vigencia, garantía y condiciones</p>
+      <p>• <strong>Vigencia:</strong> esta cotización es válida hasta el <strong>${esc(vigencia)}</strong> (3 días hábiles). Pasado ese plazo los precios pueden variar; si necesitas más tiempo, escríbenos y la revalidamos.</p>
       <p>• Garantía de <strong>6 meses</strong> por falla de fábrica o instalación desde la fecha de entrega.</p>
       <p>• Productos pintados, grabados o alterados <strong>no podrán ser devueltos</strong>.</p>
       <p>• Devoluciones por desistimiento: <strong>10 días hábiles</strong> desde la entrega, en las mismas condiciones en que fue entregado el producto.</p>
