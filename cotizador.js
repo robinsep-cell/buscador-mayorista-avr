@@ -385,10 +385,40 @@ async function saveCotizacion() {
   }
 }
 
+// Confirmación con el estilo del buscador (reemplaza el confirm() nativo del navegador).
+// Devuelve Promise<boolean>. Crea el <dialog> una sola vez y lo reutiliza.
+function uiConfirm(message, { okText = "Aceptar", cancelText = "Cancelar", danger = false } = {}) {
+  let dlg = document.getElementById("uiConfirm");
+  if (!dlg) {
+    dlg = document.createElement("dialog");
+    dlg.id = "uiConfirm";
+    dlg.className = "ui-confirm-dialog";
+    dlg.innerHTML = `<p class="ui-confirm-msg"></p>
+      <div class="ui-confirm-actions">
+        <button type="button" class="cot-action-btn cot-btn-secondary ui-confirm-cancel"></button>
+        <button type="button" class="cot-action-btn ui-confirm-ok"></button>
+      </div>`;
+    document.body.appendChild(dlg);
+  }
+  return new Promise((resolve) => {
+    dlg.querySelector(".ui-confirm-msg").textContent = message;
+    const okBtn = dlg.querySelector(".ui-confirm-ok");
+    const cancelBtn = dlg.querySelector(".ui-confirm-cancel");
+    okBtn.textContent = okText;
+    cancelBtn.textContent = cancelText;
+    okBtn.classList.toggle("ui-confirm-danger", !!danger);
+    const done = (val) => { okBtn.onclick = cancelBtn.onclick = dlg.oncancel = null; dlg.close(); resolve(val); };
+    okBtn.onclick = () => done(true);
+    cancelBtn.onclick = () => done(false);
+    dlg.oncancel = (e) => { e.preventDefault(); done(false); }; // tecla Esc
+    dlg.showModal();
+  });
+}
+
 // Vaciar: limpia el carrito y los datos del cliente para empezar un borrador nuevo.
 // NO gasta número de secuencia (el número se asigna recién al concretar).
 async function nuevaCotizacion() {
-  if (window.cotSelection.size && !confirm("¿Vaciar esta cotización y empezar de cero?")) return;
+  if (window.cotSelection.size && !(await uiConfirm("¿Vaciar esta cotización y empezar de cero?", { okText: "Vaciar" }))) return;
   window.cotSelection.clear();
   _manualCounter = 0;
   _reemplazaA = null;
@@ -723,7 +753,7 @@ function renderHistorial(rows) {
   historialList.querySelectorAll(".hist-btn-anular").forEach(btn => {
     btn.addEventListener("click", async () => {
       const num = btn.dataset.num;
-      if (!confirm(`¿Anular cotización ${num}? Quedará marcada pero no se eliminará.`)) return;
+      if (!(await uiConfirm(`¿Anular cotización ${num}? Quedará marcada pero no se eliminará.`, { okText: "Anular", danger: true }))) return;
       btn.disabled = true;
       btn.textContent = "…";
       const { error } = await window._sb
