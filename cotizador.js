@@ -31,6 +31,7 @@ const cotRutMsg   = document.getElementById("cotRutMsg");
 const cotEmailMsg = document.getElementById("cotEmailMsg");
 
 const cotBtnClose    = document.getElementById("cotClose");
+const cotBtnNueva    = document.getElementById("cotBtnNueva");
 const cotBtnGuardar  = document.getElementById("cotBtnGuardar");
 const cotBtnEmail    = document.getElementById("cotBtnEmail");
 const cotBtnWA       = document.getElementById("cotBtnWA");
@@ -294,7 +295,7 @@ async function openCotModal(opts = {}) {
   cotNumeroEl.textContent = "N° " + (_cotNumero || "—");
 
   renderCotItems();
-  cotModal.showModal();
+  if (!cotModal.open) cotModal.showModal();
 }
 
 // ── Selección de productos ────────────────────────────────────────────────────
@@ -326,11 +327,12 @@ document.getElementById("resultsBody").addEventListener("click", e => {
 });
 
 // ── Guardar en Supabase ───────────────────────────────────────────────────────
+// Guarda la cotización en el historial. IDEMPOTENTE: si ya se guardó en esta sesión
+// (mismo número), no hace nada (evita el error de doble insert). Lanza si falla; no
+// toca botones (la UI la manejan quienes la llaman: correo, WhatsApp, descargar PDF).
 async function saveCotizacion() {
-  if (!_cotNumero) { alert("Error: sin número de cotización."); return; }
-
-  cotBtnGuardar.disabled     = true;
-  cotBtnGuardar.textContent  = "Guardando…";
+  if (!_cotNumero) throw new Error("sin número de cotización");
+  if (_cotSavedNumero === _cotNumero) return; // ya guardada
 
   let subtotal = 0;
   const items = [...window.cotSelection.values()].map(p => {
@@ -362,13 +364,8 @@ async function saveCotizacion() {
     created_by:       window.currentUser?.email || "",
     reemplaza_a:      _reemplazaA || null,
   });
+  if (error) throw new Error(error.message);
 
-  cotBtnGuardar.disabled = false;
-  if (error) {
-    cotBtnGuardar.textContent = "💾 Guardar";
-    alert("Error al guardar: " + error.message);
-    return;
-  }
   _cotSavedNumero = _cotNumero; // marca esta cotización como ya guardada en la sesión
 
   // Si reemplaza una anterior → anularla automáticamente
@@ -378,9 +375,42 @@ async function saveCotizacion() {
       .eq("numero", _reemplazaA);
     _reemplazaA = null;
   }
+}
 
-  cotBtnGuardar.textContent = "✓ Guardado";
-  setTimeout(() => { cotBtnGuardar.textContent = "💾 Guardar"; }, 2500);
+// Nueva cotización: vacía el carrito y los datos del cliente, y saca número nuevo.
+async function nuevaCotizacion() {
+  if (window.cotSelection.size && !confirm("¿Empezar una cotización nueva? Se vaciará la actual.")) return;
+  window.cotSelection.clear();
+  _manualCounter = 0;
+  _reemplazaA = null;
+  cotNombreEl.value = ""; cotRutEl.value = ""; cotTelEl.value = ""; cotEmailEl.value = "";
+  cotNotasEl.value = "";
+  if (cotRutMsg)   cotRutMsg.textContent = "";
+  if (cotEmailMsg) cotEmailMsg.textContent = "";
+  updateCotBtn();
+  await openCotModal();
+}
+
+// Descargar PDF: guarda en el historial (si falta) y baja el archivo al equipo.
+async function descargarPdf() {
+  if (!window.cotSelection.size) { alert("La cotización no tiene productos."); return; }
+  const prev = cotBtnGuardar.textContent;
+  cotBtnGuardar.disabled = true;
+  try {
+    if (_cotSavedNumero !== _cotNumero) { cotBtnGuardar.textContent = "Guardando…"; await saveCotizacion(); }
+    cotBtnGuardar.textContent = "Generando PDF…";
+    const b64 = await buildCotPdfBase64();
+    const a = document.createElement("a");
+    a.href = "data:application/pdf;base64," + b64;
+    a.download = `Cotizacion_${_cotNumero || "AVR"}.pdf`;
+    document.body.appendChild(a); a.click(); a.remove();
+    cotBtnGuardar.textContent = "✓ Descargado";
+    setTimeout(() => { cotBtnGuardar.textContent = "📄 Descargar PDF"; cotBtnGuardar.disabled = false; }, 2500);
+  } catch (e) {
+    alert("No se pudo generar el PDF: " + (e.message || e));
+    cotBtnGuardar.textContent = prev;
+    cotBtnGuardar.disabled = false;
+  }
 }
 
 // ── CSS del documento imprimible / PDF (compartido por printCot y el PDF de correo) ──
@@ -659,8 +689,7 @@ function renderHistorial(rows) {
     const anuTag  = r.anulada_por ? `<span class="hist-tag hist-tag-anu">→ Reemplazada por ${esc(r.anulada_por)}</span>` : "";
     const actions = anulada
       ? `<span class="hist-anulada">ANULADA</span>${anuTag}`
-      : `<button class="hist-btn hist-btn-send" data-idx="${i}" title="Reenvía la misma cotización con la vigencia renovada (3 días hábiles)">↻ Revalidar / Reenviar</button>
-         <button class="hist-btn hist-btn-edit" data-idx="${i}">✎ Editar</button>
+      : `<button class="hist-btn hist-btn-send" data-idx="${i}" title="Abre la misma cotización para reenviarla (vigencia renovada) o ajustarla">↻ Revalidar / Reenviar</button>
          <button class="hist-btn hist-btn-anular" data-id="${r.id}" data-num="${esc(r.numero)}">Anular</button>`;
     return `
       <div class="hist-card${anulada ? ' hist-card--anulada' : ''}">
@@ -680,9 +709,6 @@ function renderHistorial(rows) {
 
   historialList.querySelectorAll(".hist-btn-send").forEach(btn =>
     btn.addEventListener("click", () => abrirParaReenviar(rows[Number(btn.dataset.idx)])));
-
-  historialList.querySelectorAll(".hist-btn-edit").forEach(btn =>
-    btn.addEventListener("click", () => reQuotizar(rows[Number(btn.dataset.idx)])));
 
   historialList.querySelectorAll(".hist-btn-anular").forEach(btn => {
     btn.addEventListener("click", async () => {
@@ -793,7 +819,8 @@ cotBtn?.addEventListener("click", openCotModal);
 cotBtnClose?.addEventListener("click", () => cotModal.close());
 cotModal?.addEventListener("click", e => { if (e.target === cotModal) cotModal.close(); });
 
-cotBtnGuardar?.addEventListener("click", saveCotizacion);
+cotBtnNueva?.addEventListener("click", nuevaCotizacion);
+cotBtnGuardar?.addEventListener("click", descargarPdf);
 cotBtnImprimir?.addEventListener("click", printCot);
 cotBtnWA?.addEventListener("click", shareWA);
 
