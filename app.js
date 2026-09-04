@@ -8,71 +8,19 @@ const COL_VSIN    = 36; // AK – Venta sin instalación
 const COL_VCON    = 37; // AL – Venta con instalación
 const COL_SIGLA   = 41; // AP
 
-// ── Factores de precio v7 (última revisión: 2026-09-04) ────────────────────
-// OJO: esta calculadora tiene la fórmula ESCRITA ACÁ, no la lee de Supabase.
-// Si cambian las funciones lab.precio_web_v7 / precio_con_inst_v7 / precio_ml_v7
-// en INVEXA, hay que actualizar este archivo o el mayorista queda cotizando viejo.
-const FACTOR_C           = 2.5;   // sin instalación (todas las categorías)
-const FACTOR_D_NORMAL    = 4.0;   // con instalación normal (parabrisas, lunetas, laterales)
-const FACTOR_D_ALTA_GAMA = 4.5;   // con instalación alta gama
+// ── Fórmula de precios v7 ──────────────────────────────────────────────────
+// La fórmula NO vive acá. Vive en la base, en public.precios_v7, y esta
+// calculadora se la pregunta por RPC. Antes estaba copiada en este archivo y se
+// quedó vieja en mayo: cobraba $36.390 de más por instalar una puerta y $20.000
+// de menos en Mercado Libre, y nadie lo notó hasta que lo vio un cliente
+// (4-sep-2026). Si hay que cambiar un precio, se cambia en la base.
 
-// La PUERTA y la ALETA ya no usan multiplicador suelto: el cobro por instalar
-// es una BANDA (mínimo y máximo en pesos). La mano de obra es costo fijo, no
-// un porcentaje del vidrio (Robinson, 3 y 4-sep-2026).
-const BANDA_PUERTA         = { mult: 3,   min: 24610, max: 45000 };
-const BANDA_PUERTA_PREMIUM = { mult: 3.5, min: 45000, max: 70000 };
-const BANDA_ALETA          = { mult: 4,   min: 24610, max: 45000 };
-const BANDA_ALETA_ENCAP    = { mult: 4,   min: 24610, max: 55000 };
-
-// Mercado Libre = comisión + caja. Son dos costos distintos y se suman.
-const COMISION_ML = 0.20;         // 20% sobre el precio web, en TODOS los vidrios
-
-const MODIFICADORES = {
-  sensor_lluvia:       20000,  // solo parabrisas (código con "P")
-  sistema_adas:        30000,  // solo parabrisas (depende del vehículo, presencial)
-  camara_1:            25000,  // solo parabrisas (código con "Z")
-  camara_2:            45000,  // solo parabrisas (código con "2Z" - no acumula con camara_1)
-  encapsulada:         35000,  // SOLO aletas y laterales con /X (lunetas y parabrisas NO se cobran)
-  laminada_de_fabrica:     0,  // solo puerta
-  alta_gama_parabrisas_lunetas: 150000, // parabrisas y lunetas alta gama / camión / bus
-};
-
-const MIN_SIN = {
-  "Parabrisas":       73460,
-  "Luneta Portalón":  73460,
-  "Vidrio Lateral":   39870,
-  "Vidrio de Puerta": 45870,
-  "Vidrio Aleta":     34870,
-};
-// La aleta de alta gama tiene piso propio. Subaru va en ese grupo.
-const MIN_SIN_ALETA_ALTA = 49870;
-const MIN_CON_ALETA_ALTA = 56460;
-
-const MIN_CON = {
-  "Parabrisas":       97850,
-  "Luneta Portalón":  97850,
-  "Vidrio Lateral":   48850,
-  "Vidrio de Puerta": 64460,
-  "Vidrio Aleta":     48850,
-};
-
-const MIN_CON_ENCAPSULADA = {
-  "Vidrio Aleta":     75850,
-  "Vidrio Lateral":   75850,
-};
-
-const MIN_CON_ALTA_GAMA_O_ENCAP_ALTA_GAMA = {
-  "Vidrio Aleta":    195900,
-  "Vidrio Lateral":  195900,
-};
-
-const MIN_SOLO_INSTALACION = 24500;
-
-// Caja SOLO en Mercado Libre, SOLO para parabrisas y lunetas
+// Lo único que queda acá es la caja, porque es una opción que elige quien cotiza
+// (el cliente la pide o no), no parte del precio de lista.
 const CAJA_PRECIOS = {
   "Parabrisas":       { base: 45000, altaGama: 75000 },
   "Luneta Portalón":  { base: 45000, altaGama: 45000 },
-  // Los demás tipos no llevan caja en ML
+  // Puertas, laterales y aletas no llevan caja.
 };
 
 const PRODUCT_TRAITS = {
@@ -1731,17 +1679,38 @@ function updateCalcVisibility() {
   calcPrices();
 }
 
-// ── Precios psicológicos v7 (sin 900 - eliminado por Robinson 2026-05-21) ─────
-function aplicarPsicologia(monto) {
-  if (monto < 45000) return Math.floor(monto / 1000) * 1000 + 870;
-  if (monto < 160000) {
-    const base = Math.floor(monto / 1000) * 1000;
-    return (monto % 1000) < 500 ? base + 460 : base + 850;
+// El nombre del subgrupo que espera la fórmula. Tiene que ser el NOMBRE COMPLETO:
+// con la sigla (PBS, PTD…) la función devuelve nulo y el producto queda sin precio.
+const SUBGRUPO_RPC = {
+  "Parabrisas":       "PARABRISAS",
+  "Luneta Portalón":  "LUNETA",
+  "Vidrio de Puerta": "PUERTA DELANTERA DERECHA",
+  "Vidrio Aleta":     "ALETA DELANTERA DERECHA",
+  "Vidrio Lateral":   "LATERAL TRASERO DERECHO",
+};
+
+/** Le pregunta los cuatro precios a la base. Devuelve null si falla. */
+async function pedirPreciosV7(args) {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/precios_v7`, {
+      method: "POST",
+      headers: {
+        apikey: SUPABASE_ANON,
+        Authorization: `Bearer ${SUPABASE_ANON}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(args),
+    });
+    if (!res.ok) return null;
+    const filas = await res.json();
+    return Array.isArray(filas) ? filas[0] : filas;
+  } catch {
+    return null;
   }
-  return Math.floor(monto / 1000) * 1000 + 850;
 }
 
-function calcPrices() {
+let calcPeticion = 0;
+async function calcPrices() {
   const costo    = parseFloat(calcCosto.value);
   const producto = calcProducto.value;
 
@@ -1758,88 +1727,50 @@ function calcPrices() {
 
   const traits   = PRODUCT_TRAITS[producto] || {};
   const tipoVeh  = calcVehiculo?.value || "normal";
-  const premium  = tipoVeh === "premium";
-  const camion   = tipoVeh === "camion";
-  const subaru   = tipoVeh === "subaru";
+  const encapsulada = traits.encapsulada && chkEncapsulada.checked;
 
-  const esParabrisas = producto === "Parabrisas";
-  const esLuneta     = producto === "Luneta Portalón";
-  const esPbsLun     = esParabrisas || esLuneta;
-  const esPuerta     = producto === "Vidrio de Puerta";
-  const esAleta      = producto === "Vidrio Aleta";
-  const esLateral    = producto === "Vidrio Lateral";
-  const encapsulada  = (esAleta || esLateral) && chkEncapsulada.checked;
+  // El cálculo NO se hace acá: se le pregunta a la base, que es la única fuente
+  // de la fórmula v7 (public.precios_v7). Antes esta calculadora tenía la fórmula
+  // copiada y se quedó vieja: cobraba $36.390 de más por instalar una puerta y
+  // $20.000 de menos en Mercado Libre (4-sep-2026).
+  const modsPbs = [];
+  if (producto === "Parabrisas") {
+    if (traits.sensor && chkSensor.checked) modsPbs.push("P");
+    const camVal = document.querySelector('input[name="camara"]:checked')?.value;
+    if      (camVal === "2") modsPbs.push("2Z");
+    else if (camVal === "1") modsPbs.push("Z");
+  }
+  // El código de proveedor es como la fórmula detecta sensor, cámaras y encapsulado.
+  const codigoFicticio = ["CALC", ...modsPbs, ...(encapsulada ? ["X"] : [])].join("/");
 
-  // El camión se cobra como alta gama SOLO en parabrisas; en el resto va como
-  // vehículo normal (Robinson, 4-sep-2026). En ALETAS, Subaru va con la alta gama.
-  const alta      = premium || (camion && esParabrisas);
-  const altaAleta = premium || subaru;
-
-  const entre = (v, min, max) => Math.min(Math.max(v, min), max);
-
-  // ── Sin instalación ──────────────────────────────────────────────────────
-  const minSin  = esAleta ? (altaAleta ? MIN_SIN_ALETA_ALTA : MIN_SIN["Vidrio Aleta"])
-                          : (MIN_SIN[producto] || 0);
-  const finalSin = aplicarPsicologia(Math.max(costo * FACTOR_C, minSin));
-
-  // ── Con instalación ──────────────────────────────────────────────────────
-  // El cobro por instalar se calcula sobre el precio sin instalación YA redondeado,
-  // igual que la función de la base.
-  let finalCon;
-  if (esPuerta) {
-    const b = premium ? BANDA_PUERTA_PREMIUM : BANDA_PUERTA;
-    const cargo = entre(costo * b.mult - finalSin, b.min, b.max);
-    finalCon = aplicarPsicologia(Math.max(finalSin + cargo, MIN_CON["Vidrio de Puerta"]));
-  } else if (esAleta && !encapsulada) {
-    const cargo = entre(costo * BANDA_ALETA.mult - finalSin, BANDA_ALETA.min, BANDA_ALETA.max);
-    finalCon = aplicarPsicologia(
-      Math.max(finalSin + cargo, altaAleta ? MIN_CON_ALETA_ALTA : MIN_CON["Vidrio Aleta"]));
-  } else if (esAleta && !altaAleta) {
-    const cargo = entre(costo * BANDA_ALETA_ENCAP.mult + MODIFICADORES.encapsulada - finalSin,
-                        BANDA_ALETA_ENCAP.min, BANDA_ALETA_ENCAP.max);
-    finalCon = aplicarPsicologia(Math.max(finalSin + cargo, MIN_CON_ENCAPSULADA["Vidrio Aleta"]));
-  } else if (esAleta) {
-    // Aleta encapsulada de alta gama: sin techo, como estaba.
-    finalCon = aplicarPsicologia(Math.max(
-      costo * FACTOR_D_ALTA_GAMA + MODIFICADORES.encapsulada,
-      finalSin + MIN_SOLO_INSTALACION,
-      MIN_CON_ALTA_GAMA_O_ENCAP_ALTA_GAMA["Vidrio Aleta"]));
-  } else {
-    // Parabrisas, lunetas y laterales: siguen con el multiplicador.
-    let cargoMods = 0;
-    if (esParabrisas) {
-      if (traits.sensor && chkSensor.checked) cargoMods += MODIFICADORES.sensor_lluvia;
-      if (traits.adas   && chkAdas.checked)   cargoMods += MODIFICADORES.sistema_adas;
-      if (traits.camara) {
-        const camVal = document.querySelector('input[name="camara"]:checked')?.value;
-        if      (camVal === "2") cargoMods += MODIFICADORES.camara_2;
-        else if (camVal === "1") cargoMods += MODIFICADORES.camara_1;
-      }
-    }
-    if (esPbsLun && alta) cargoMods += MODIFICADORES.alta_gama_parabrisas_lunetas;
-    if (esLateral && encapsulada) cargoMods += MODIFICADORES.encapsulada;
-
-    const minCon = esPbsLun ? MIN_CON["Parabrisas"]
-                 : (alta ? MIN_CON_ALTA_GAMA_O_ENCAP_ALTA_GAMA["Vidrio Lateral"]
-                        : (encapsulada ? MIN_CON_ENCAPSULADA["Vidrio Lateral"]
-                                       : MIN_CON["Vidrio Lateral"]));
-    finalCon = aplicarPsicologia(Math.max(
-      costo * (alta ? FACTOR_D_ALTA_GAMA : FACTOR_D_NORMAL) + cargoMods,
-      finalSin + MIN_SOLO_INSTALACION,
-      minCon));
+  const pedido = ++calcPeticion;
+  const r = await pedirPreciosV7({
+    costo_iva: Math.round(costo),
+    subgrupo: SUBGRUPO_RPC[producto],
+    codigo_proveedor: codigoFicticio,
+    marca: tipoVeh === "premium" ? "BMW" : (tipoVeh === "subaru" ? "SUBARU" : ""),
+    encapsulado: !!encapsulada,
+    tipo_vehiculo: tipoVeh === "camion" ? "camion" : null,
+  });
+  if (pedido !== calcPeticion) return;   // llegó una respuesta vieja, se descarta
+  if (!r) {
+    calcStatus.textContent = "No se pudo consultar el precio. Revisa la conexión.";
+    calcResSin.textContent = "—"; calcResCon.textContent = "—";
+    calcResSolo.textContent = "—"; if (calcResML) calcResML.textContent = "—";
+    return;
   }
 
-  const soloInst = finalCon - finalSin;
+  const finalSin  = r.sin_instalacion;
+  const finalCon  = r.con_instalacion;
+  const soloInst  = r.solo_instalacion;
+  const finalML   = r.mercado_libre;
 
-  // ── Mercado Libre: comisión (20% en todo) + caja (fija, solo pbs y lunetas) ──
-  const caja = esParabrisas ? (premium || camion ? CAJA_PRECIOS["Parabrisas"].altaGama
-                                                 : CAJA_PRECIOS["Parabrisas"].base)
-             : esLuneta ? CAJA_PRECIOS["Luneta Portalón"].base
-             : 0;
-  const finalML = aplicarPsicologia(finalSin * (1 + COMISION_ML)) + caja;
-
-  // La caja también se puede sumar al precio sin instalación si el cliente la pide.
-  const finalSinMostrar = (chkCaja?.checked && caja) ? finalSin + caja : finalSin;
+  // La caja se puede sumar al precio sin instalación si el cliente la pide.
+  const cajaPedida = (chkCaja?.checked && CAJA_PRECIOS[producto])
+    ? ((producto === "Parabrisas" && (tipoVeh === "premium" || tipoVeh === "camion"))
+        ? CAJA_PRECIOS[producto].altaGama : CAJA_PRECIOS[producto].base)
+    : 0;
+  const finalSinMostrar = finalSin + cajaPedida;
 
   const fmt = n => "$ " + Math.round(n).toLocaleString("es-CL");
   calcResSin.textContent  = fmt(finalSinMostrar);
