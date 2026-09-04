@@ -262,8 +262,14 @@
             <div id="calcOptions" class="calc-options-wrap" hidden>
               <span class="calc-label">Características</span>
               <div class="calc-pills">
-                <label class="calc-pill" id="pillAltaGama">
-                  <input type="checkbox" id="chkAltaGama" /><span>Alta Gama / Buses y Camiones</span>
+                <label class="calc-pill" id="pillVehiculo" style="gap:.4rem">
+                  <span>Vehículo</span>
+                  <select id="calcVehiculo" class="calc-input" style="height:auto;padding:.15rem .4rem">
+                    <option value="normal">Auto, camioneta o furgón</option>
+                    <option value="subaru">Subaru</option>
+                    <option value="premium">Auto premium</option>
+                    <option value="camion">Camión o bus</option>
+                  </select>
                 </label>
                 <label class="calc-pill" id="pillSensor" hidden>
                   <input type="checkbox" id="chkSensor" /><span>Sensor lluvia</span>
