@@ -589,7 +589,7 @@ function buildCotDocHtml() {
     <div class="cot-garantia">
       <p class="cot-garantia-title">Vigencia, garantía y condiciones</p>
       <p>• <strong>Vigencia:</strong> esta cotización es válida hasta el <strong>${esc(vigencia)}</strong> (3 días hábiles). Pasado ese plazo los precios pueden variar; si necesitas más tiempo, escríbenos y la revalidamos.</p>
-      <p>• Garantía de <strong>6 meses</strong> por falla de fábrica o instalación desde la fecha de entrega.</p>
+      <p>• Garantía de <strong>2 años</strong> por falla de fábrica o problemas de instalación, desde la fecha de entrega.</p>
       <p>• Productos pintados, grabados o alterados <strong>no podrán ser devueltos</strong>.</p>
       <p>• Devoluciones por desistimiento: <strong>10 días hábiles</strong> desde la entrega, en las mismas condiciones en que fue entregado el producto.</p>
     </div>
