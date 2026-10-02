@@ -2930,3 +2930,54 @@ html[data-theme="light"] .cot-open-hero-btn {
   cursor: pointer;
   user-select: none;
 }
+
+/* ── Oferta vigente (promo.js, oct-2026) ─────────────────────────────────── */
+.promo-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 14px;
+  padding: 10px 16px;
+  border: 1px solid var(--line-strong);
+  border-left: 3px solid var(--primary);
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--ink);
+}
+.promo-banner-tag {
+  flex-shrink: 0;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  color: var(--primary);
+  font-size: 0.74rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.promo-banner-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.promo-banner-title { font-size: 0.92rem; }
+.promo-banner-cond { font-size: 0.76rem; color: var(--muted); line-height: 1.4; }
+@media (max-width: 640px) {
+  .promo-banner { flex-direction: column; align-items: flex-start; gap: 6px; }
+}
+
+.price-cell--oferta { line-height: 1.25; }
+.price-cell--oferta .precio-oferta { display: block; color: var(--ink); font-weight: 700; }
+.precio-normal {
+  color: var(--muted);
+  font-size: 0.82em;
+  font-weight: 400;
+  text-decoration: line-through;
+  opacity: 0.8;
+}
+.price-cell--oferta .precio-normal { display: block; }
+.oferta-tag {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--primary);
+  white-space: nowrap;
+}
+#calcResCon .oferta-tag { display: inline; margin-left: 4px; }
+.cot-oferta-sub { color: var(--primary); font-weight: 600; }

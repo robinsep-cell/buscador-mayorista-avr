@@ -118,7 +118,51 @@ function getPrecioTipo() {
 // productos manuales (espejos/externos) usan su precio fijo.
 function getUnitPrice(p) {
   if (p._isManual) return p._precioManual || 0;
+  const of = ofertaItem(p);
+  if (of) return of.oferta;
   return p._tipo === "con" ? parsePrice(p.ventaCon) : parsePrice(p.ventaSin);
+}
+
+// ── Oferta (promo.js) ─────────────────────────────────────────────────────────
+// Devuelve { pct, normal, oferta, hasta, promo } si al ítem le corresponde la oferta
+// de parabrisas instalado, o null. Vidrio del buscador: oferta vigente + parabrisas +
+// _tipo "con". Ítem reabierto del historial: la oferta con la que se guardó.
+function ofertaItem(p) {
+  if (!p) return null;
+  if (p._isManual) {
+    const f = p._ofertaFija;
+    return f ? { pct: f.pct, normal: f.normal, oferta: p._precioManual || 0, hasta: f.hasta, promo: null } : null;
+  }
+  if (p._tipo !== "con") return null;
+  const pr = window.AVRPromo?.parabrisas();
+  const normal = parsePrice(p.ventaCon);
+  if (!pr || !normal || !window.AVRPromo.esParabrisas(p)) return null;
+  return { pct: Number(pr.pct), normal, oferta: window.AVRPromo.precioOferta(normal, pr), hasta: pr.hasta, promo: pr };
+}
+
+function ofertaHastaCorto(of) {
+  return window.AVRPromo?.hastaCorto({ hasta: of.hasta }) || "";
+}
+
+// "Precio normal $X · Oferta −20% $Y"
+function ofertaTexto(of) {
+  return `Precio normal ${fmtCLP(of.normal)} · Oferta \u2212${of.pct}% ${fmtCLP(of.oferta)}`;
+}
+
+// Línea de condiciones/vigencia de la oferta (si algún ítem la tiene), o "".
+function ofertaCondicionesTexto(items) {
+  const ofs = items.map(ofertaItem).filter(Boolean);
+  if (!ofs.length) return "";
+  const pr = ofs.find(o => o.promo)?.promo || window.AVRPromo?.parabrisas();
+  const of = ofs[0];
+  const hastaIso = (pr || of).hasta;
+  const hasta = window.AVRPromo?.hastaLargo({ hasta: hastaIso }) || "";
+  const cond = String(pr?.condiciones || "").trim();
+  // La fecha solo se agrega si las condiciones de la base no la traen ya.
+  const anio = String(hastaIso || "").slice(0, 4);
+  const conFecha = hasta && !(anio && cond.includes(anio));
+  const base = `\u2212${of.pct}% en parabrisas con instalación (sucursal o domicilio)${conFecha ? `, válida hasta el ${hasta}` : ""}.`;
+  return cond ? `${base} ${cond}` : `${base} Sujeto a cupos de instalación disponibles.`;
 }
 
 // Etiqueta de instalación para mostrar en PDF/WhatsApp (solo vidrios instalables).
@@ -147,7 +191,7 @@ function renderCotItems() {
       return `
         <tr>
           <td class="cot-td cot-td-num">${idx + 1}</td>
-          <td class="cot-td"><strong>${esc(p.nombre)}</strong></td>
+          <td class="cot-td"><strong>${esc(p.nombre)}</strong>${ofertaItem(p) ? `<span class="cot-item-sub cot-oferta-sub">${esc(ofertaTexto(ofertaItem(p)))}</span>` : ""}</td>
           <td class="cot-td cot-td-cant">
             <input class="cot-cant-inp" type="number" value="${cant}" min="1" max="999" data-id="${p._id}" />
           </td>
@@ -180,13 +224,21 @@ function renderCotItems() {
         <td class="cot-td cot-td-cant">
           <input class="cot-cant-inp" type="number" value="${cant}" min="1" max="999" data-id="${p._id}" />
         </td>
-        <td class="cot-td cot-td-price">${fmtCLP(precio)}</td>
+        <td class="cot-td cot-td-price">${precioCeldaHtml(p, precio)}</td>
         <td class="cot-td cot-td-price"><strong>${fmtCLP(sub)}</strong></td>
         <td class="cot-td no-print">
           <button class="cot-rm-btn" data-id="${p._id}">✕</button>
         </td>
       </tr>`;
   }).join("");
+
+  // Condiciones de la oferta bajo la garantía (solo si algún ítem la tiene).
+  const promoTxtEl = document.getElementById("cotPromoTxt");
+  if (promoTxtEl) {
+    const t = ofertaCondicionesTexto(items);
+    promoTxtEl.hidden = !t;
+    promoTxtEl.innerHTML = t ? `• <strong>Oferta:</strong> ${esc(t)}` : "";
+  }
 
   // Selector de instalación por ítem
   cotItemsEl.querySelectorAll(".cot-inst-sel").forEach(sel => {
@@ -219,7 +271,9 @@ function renderCotItems() {
       const id = inp.dataset.id;
       const p  = window.cotSelection.get(id);
       if (p) {
-        p._precioManual = Math.max(0, parseInt(String(inp.value).replace(/\D/g, ""), 10) || 0);
+        const nuevo = Math.max(0, parseInt(String(inp.value).replace(/\D/g, ""), 10) || 0);
+        if (p._ofertaFija && nuevo !== p._precioManual) delete p._ofertaFija;
+        p._precioManual = nuevo;
         window.cotSelection.set(id, p);
       }
       renderCotItems();
@@ -240,6 +294,14 @@ function renderCotItems() {
   });
 
   calcTotals();
+}
+
+// Celda de precio unitario en el modal: con oferta → normal tachado + precio oferta.
+function precioCeldaHtml(p, precio) {
+  const of = ofertaItem(p);
+  if (!of) return fmtCLP(precio);
+  return `<s class="precio-normal">${fmtCLP(of.normal)}</s><br>${fmtCLP(of.oferta)}`
+    + `<span class="oferta-tag">Oferta \u2212${of.pct}%${ofertaHastaCorto(of) ? " hasta " + ofertaHastaCorto(of) : ""}</span>`;
 }
 
 function calcTotals() {
@@ -347,13 +409,24 @@ async function saveCotizacion() {
     const cant   = p._cant || 1;
     const precio = getUnitPrice(p);
     subtotal += precio * cant;
-    return {
+    const of = ofertaItem(p);
+    const item = {
       nombre: p.nombre, marca: p.marca, color: p.color,
       anioDesde: p.anioDesde, anioHasta: p.anioHasta,
       cant, precioSin: parsePrice(p.ventaSin),
       precioCon: parsePrice(p.ventaCon), precio,
       tipo: p._isManual ? null : (p._tipo === "con" ? "con" : "sin"),
     };
+    // Con oferta: los montos guardados son los con descuento; el precio normal y el
+    // % quedan como campos extra del ítem (jsonb), sin tocar el esquema de la tabla.
+    if (of) {
+      if (!p._isManual) item.precioCon = of.oferta;
+      item.precioNormal = of.normal;
+      item.ofertaPct    = of.pct;
+      item.ofertaHasta  = of.hasta;
+      if (of.promo?.slug) item.ofertaSlug = of.promo.slug;
+    }
+    return item;
   });
   const neto = Math.round(subtotal / 1.19);
   const iva  = subtotal - neto;
@@ -495,6 +568,9 @@ const COT_PDF_CSS = `
   .avr-pdf .cot-garantia { border-top: 1px solid #dfe6e1; padding-top: 10px; }
   .avr-pdf .cot-garantia-title { font-size: 10px; font-weight: 700; letter-spacing: .8px; color: #7a8a80; text-transform: uppercase; margin-bottom: 4px; }
   .avr-pdf .cot-garantia p { font-size: 10.5px; color: #556; line-height: 1.5; }
+  .avr-pdf .precio-normal { color: #8a968f; font-size: 10.5px; font-weight: 400; }
+  .avr-pdf .cot-oferta-sub { color: #0f5132; font-weight: 600; }
+  .avr-pdf .cot-oferta-box { border: 1px solid #cfe0d5; border-left: 4px solid #0f5132; border-radius: 7px; padding: 8px 12px; margin-bottom: 14px; background: #f6f9f7; font-size: 10.5px; color: #37463d; line-height: 1.5; }
 `;
 
 // Filas de la tabla en TEXTO PLANO (sin <input>) para el PDF / impresión.
@@ -504,13 +580,18 @@ function cotPdfRows(items) {
     const precio = getUnitPrice(p);
     const sub    = p._isManual ? "" :
       `<span class="cot-item-sub">${esc([p.marca, p.color, yearRange(p.anioDesde, p.anioHasta)].filter(Boolean).join(" · "))}</span>`;
-    const nameCell = `<span class="cot-item-name">${esc(p.nombre + instLabel(p))}</span>${sub}`;
+    const of     = ofertaItem(p);
+    const ofSub  = of ? `<span class="cot-item-sub cot-oferta-sub">${esc(ofertaTexto(of))}</span>` : "";
+    const nameCell = `<span class="cot-item-name">${esc(p.nombre + instLabel(p))}</span>${sub}${ofSub}`;
+    const precioCell = of
+      ? `<s class="precio-normal">${fmtCLP(of.normal)}</s><br>${fmtCLP(of.oferta)}`
+      : fmtCLP(precio);
     return `
       <tr>
         <td class="num">${idx + 1}</td>
         <td>${nameCell}</td>
         <td class="cant">${cant}</td>
-        <td class="price">${fmtCLP(precio)}</td>
+        <td class="price">${precioCell}</td>
         <td class="price">${fmtCLP(precio * cant)}</td>
       </tr>`;
   }).join("");
@@ -544,6 +625,7 @@ function buildCotDocHtml() {
    .join("");
 
   const notas    = cotNotasEl.value.trim();
+  const ofertaTxt = ofertaCondicionesTexto(items);
   const rowsHtml = cotPdfRows(items) ||
     `<tr><td colspan="5" style="text-align:center;padding:14px;color:#7a8a80">Sin productos.</td></tr>`;
 
@@ -585,6 +667,7 @@ function buildCotDocHtml() {
       <div class="row"><span>IVA (19%)</span><span>${fmtCLP(iva)}</span></div>
       <div class="row total"><span>TOTAL</span><span>${fmtCLP(total)}</span></div>
     </div>
+    ${ofertaTxt ? `<div class="cot-oferta-box"><strong>Oferta:</strong> ${esc(ofertaTxt)}</div>` : ""}
     ${notas ? `<div class="cot-notes"><div class="cot-k">Notas / Observaciones</div><div class="cot-notes-body">${esc(notas)}</div></div>` : ""}
     <div class="cot-garantia">
       <p class="cot-garantia-title">Vigencia, garantía y condiciones</p>
@@ -683,10 +766,15 @@ async function shareWA() {
       const precio = getUnitPrice(p);
       const cant   = p._cant || 1;
       text += `${i + 1}. ${p.nombre}${instLabel(p)} x${cant} → ${fmtCLP(precio * cant)}\n`;
+      const of = ofertaItem(p);
+      if (of) text += `   ${ofertaTexto(of)}${cant > 1 ? " c/u" : ""}\n`;
     });
     let subtotal = 0;
     items.forEach(p => { subtotal += getUnitPrice(p) * (p._cant || 1); });
-    text += `\n*TOTAL: ${fmtCLP(subtotal)}*\nValidez: 3 días hábiles\n\n📄 Descarga tu cotización en PDF:\n${data.url}`;
+    const ofertaTxtWA = ofertaCondicionesTexto(items);
+    text += `\n*TOTAL: ${fmtCLP(subtotal)}*\nValidez: 3 días hábiles\n`;
+    if (ofertaTxtWA) text += `\n_Oferta: ${ofertaTxtWA}_\n`;
+    text += `\n📄 Descarga tu cotización en PDF:\n${data.url}`;
 
     // 5) Abrir WhatsApp — al número del cliente si está cargado
     const fono = (cotTelEl.value || "").replace(/\D/g, "");
@@ -812,6 +900,9 @@ function cargarItemsDesde(row) {
       anioHasta: item.anioHasta || "",
       ventaSin: String(item.precioSin || 0),
       ventaCon: String(item.precioCon || 0),
+      ...(item.ofertaPct && item.precioNormal
+        ? { _ofertaFija: { pct: item.ofertaPct, normal: item.precioNormal, hasta: item.ofertaHasta || "" } }
+        : {}),
     });
   });
   updateCotBtn();
@@ -854,6 +945,9 @@ historialClose?.addEventListener("click", () => historialModal.close());
 historialModal?.addEventListener("click", e => { if (e.target === historialModal) historialModal.close(); });
 historialReload?.addEventListener("click", loadHistorial);
 historialSearch?.addEventListener("input", filterHistorial);
+
+// La oferta llega (o vence) → re-pintar la cotización abierta.
+window.AVRPromo?.onChange(() => { if (cotModal?.open) renderCotItems(); });
 
 cotBtn?.addEventListener("click", openCotModal);
 cotBtnClose?.addEventListener("click", () => cotModal.close());
@@ -920,10 +1014,14 @@ cotBtnCopiar?.addEventListener("click", async () => {
     const precio = getUnitPrice(p);
     const cant   = p._cant || 1;
     text += `${i + 1}. ${p.nombre}${instLabel(p)} x${cant} — ${fmtCLP(precio * cant)}\n`;
+    const of = ofertaItem(p);
+    if (of) text += `   ${ofertaTexto(of)}${cant > 1 ? " c/u" : ""}\n`;
   });
   let subtotal = 0;
   items.forEach(p => { subtotal += getUnitPrice(p) * (p._cant || 1); });
   text += `\nTOTAL: ${fmtCLP(subtotal)}\nValidez: 3 días hábiles`;
+  const ofertaTxtCp = ofertaCondicionesTexto(items);
+  if (ofertaTxtCp) text += `\n\nOferta: ${ofertaTxtCp}`;
   navigator.clipboard.writeText(text).then(() => {
     cotBtnCopiar.textContent = "✓ Copiado";
     setTimeout(() => { cotBtnCopiar.textContent = "📋 Copiar"; }, 2000);

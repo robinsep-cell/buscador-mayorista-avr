@@ -13,7 +13,7 @@
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=fb10" />
+    <link rel="stylesheet" href="./styles.css?v=fb11" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   </head>
   <body>
@@ -81,6 +81,9 @@
             </div>
           </div>
         </section>
+
+        <!-- Oferta vigente (promo.js la llena desde la base; oculta si no hay) -->
+        <section id="promoBanner" class="promo-banner" hidden aria-live="polite"></section>
 
         <section class="search-panel">
           <div class="search-panel-header">
@@ -543,6 +546,7 @@
             <p>• Garantía de <strong>2 años</strong> por falla de fábrica o problemas de instalación, desde la fecha de entrega.</p>
             <p>• Productos pintados, grabados o alterados <strong>no podrán ser devueltos</strong>.</p>
             <p>• Devoluciones por desistimiento: <strong>10 días hábiles</strong> desde la entrega, en las mismas condiciones en que fue entregado el producto.</p>
+            <p id="cotPromoTxt" hidden></p>
           </div>
 
         </div><!-- /#cotDoc -->
@@ -662,8 +666,9 @@
     <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
     <script src="./auth.js"></script>
     <script src="./admin.js"></script>
-    <script src="./app.js?v=fb3"></script>
-    <script src="./cotizador.js?v=fb11"></script>
+    <script src="./promo.js?v=1"></script>
+    <script src="./app.js?v=fb4"></script>
+    <script src="./cotizador.js?v=fb12"></script>
     <script src="./espejos-cot.js?v=1"></script>
   </body>
 </html>

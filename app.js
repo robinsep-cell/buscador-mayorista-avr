@@ -1335,6 +1335,23 @@ function cotAddCellHtml(p) {
   return `<td class="cot-add-cell"><button type="button" class="cot-add-btn" data-id="${p._id}">Agregar</button></td>`;
 }
 
+// Celda "Venta con instalación". Si hay oferta de parabrisas instalado vigente
+// (promo.js, viene de la base), muestra el precio normal tachado + el de oferta.
+function ventaConCellHtml(p) {
+  const pr = window.AVRPromo?.parabrisas();
+  const s = String(p.ventaCon ?? "").trim();
+  const normal = parseInt(s.replace(/\./g, ""), 10);
+  if (!pr || !(normal > 0) || !window.AVRPromo.esParabrisas(p)) {
+    return `<td class="price-cell">${formatPrice(p.ventaCon)}</td>`;
+  }
+  const oferta = window.AVRPromo.precioOferta(normal, pr);
+  return `<td class="price-cell price-cell--oferta">
+        <s class="precio-normal">${formatPrice(normal)}</s>
+        <span class="precio-oferta">${formatPrice(oferta)}</span>
+        <span class="oferta-tag">${escapeHtml(window.AVRPromo.etiqueta(pr))}</span>
+      </td>`;
+}
+
 function renderRows(items, tokens) {
   if (!items.length) {
     resultsBody.innerHTML = `<tr><td colspan="${COLSPAN}" class="empty-cell">No encontré resultados.</td></tr>`;
@@ -1353,7 +1370,7 @@ function renderRows(items, tokens) {
       <td class="${stockClass(p.stockAvr)}">${highlight(p.stockAvr || "0", tokens)}</td>
       <td class="price-cell price-cell--editable">${formatPrice(p.costo)}</td>
       <td class="price-cell">${formatPrice(p.ventaSin)}</td>
-      <td class="price-cell">${formatPrice(p.ventaCon)}</td>
+      ${ventaConCellHtml(p)}
     </tr>`;
   }).join("");
 }
@@ -1600,6 +1617,12 @@ async function loadProducts() {
   }
 }
 
+// Cuando llega (o vence) la oferta, se re-pintan los resultados y la calculadora.
+window.AVRPromo?.onChange(() => {
+  if (products.length) filterProducts();
+  if (calcModal?.open) calcPrices();
+});
+
 let debounceId;
 searchInput.addEventListener("input", () => {
   window.clearTimeout(debounceId);
@@ -1775,6 +1798,12 @@ async function calcPrices() {
   const fmt = n => "$ " + Math.round(n).toLocaleString("es-CL");
   calcResSin.textContent  = fmt(finalSinMostrar);
   calcResCon.textContent  = fmt(finalCon);
+  // Oferta de parabrisas instalado (si está vigente): normal tachado + precio oferta.
+  const prOferta = producto === "Parabrisas" ? window.AVRPromo?.parabrisas() : null;
+  if (prOferta && finalCon > 0) {
+    calcResCon.innerHTML = `<s class="precio-normal">${fmt(finalCon)}</s> ${fmt(window.AVRPromo.precioOferta(finalCon, prOferta))}`
+      + ` <span class="oferta-tag">${escapeHtml(window.AVRPromo.etiqueta(prOferta))}</span>`;
+  }
   calcResSolo.textContent = fmt(soloInst);
   if (calcResML) calcResML.textContent = fmt(finalML);
 
