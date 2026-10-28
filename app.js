@@ -1061,6 +1061,7 @@ function buildImportadora(row, hm) {
     fotoImp: pickImagen(row, hm),
     codigoAntiguo: getCell(row, hm, "CodigoAntiguo"),
     nombre: getCell(row, hm, "Nombre"),
+    titulo: getCell(row, hm, "Titulos WIX ML"),
     descripcion: getCell(row, hm, "Descripcion"),
     grupo: getCell(row, hm, "Grupo"),
     marca: getCell(row, hm, "MarcaPrincipal"),
@@ -1087,6 +1088,7 @@ function buildAvr(row, hm) {
     cp: getCell(row, hm, "CodigoProveedor").toUpperCase(),
     codigoAntiguo: getCell(row, hm, "CodigoAntiguo"),
     nombre: getCell(row, hm, "Nombre"),
+    titulo: getCell(row, hm, "Titulos WIX ML"),
     descripcion: getCell(row, hm, "Descripcion"),
     grupo: getCell(row, hm, "Grupo"),
     marca: getCell(row, hm, "MarcaPrincipal"),
@@ -1157,6 +1159,9 @@ function mergeRows(imp, avr) {
     siglasAuto: sigAuto,
     codigoAntiguo: codigoAntiguoList,
     sku,
+    // Títulos y grupo solo para BUSCAR: Cero nombra muchos productos con la sigla ("LUN SUZUKI SWIFT…",
+    // "PDD MAZDA…") y sin esto "luneta swift" no los encontraba (caso luneta Swift 2024, 27-oct-2026).
+    textoExtra: [imp?.titulo, avr?.titulo, imp?.grupo, avr?.grupo].filter(Boolean).join(" "),
     marca: pickField(imp?.marca, avr?.marca),
     marcasCompat: pickField(imp?.marcasCompat, avr?.marcasCompat),
     anioDesde: pickField(imp?.anioDesde, avr?.anioDesde),
@@ -1176,6 +1181,7 @@ function mergeRows(imp, avr) {
 function buildSearchIndex(p) {
   return normalizeText([
     p.nombre,
+    p.textoExtra || "",
     p.siglaSheet,
     p.siglasAuto.join(" "),
     p.codigoAntiguo.join(" "),
