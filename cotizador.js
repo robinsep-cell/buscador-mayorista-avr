@@ -592,10 +592,11 @@ const COT_PDF_CSS = `
   .avr-pdf tbody tr:nth-child(even) { background: #f6f9f7; }
   .avr-pdf .cot-item-name { font-weight: 700; color: #14261c; }
   .avr-pdf .cot-item-sub { display: block; font-size: 10.5px; color: #7a8a80; margin-top: 1px; }
-  .avr-pdf .cot-totals .row.desc { color: #b42318; font-weight: 600; gap: 10px; }
-  .avr-pdf .cot-totals .row.desc span:first-child { text-align: left; }
-  .avr-pdf .cot-totals { margin-left: auto; width: 340px; margin-bottom: 16px; }
-  .avr-pdf .cot-totals .row { display: flex; justify-content: space-between; font-size: 12px; color: #45564c; padding: 3px 0; }
+  .avr-pdf .cot-totals { display: block !important; margin-left: auto; width: 360px !important; max-width: 360px; margin-bottom: 16px; }
+  .avr-pdf .cot-totals .row { display: grid !important; grid-template-columns: 1fr auto; column-gap: 18px; align-items: start; font-size: 12px; color: #45564c; padding: 3px 0; }
+  .avr-pdf .cot-totals .row span:first-child { text-align: left; }
+  .avr-pdf .cot-totals .row span:last-child { text-align: right; white-space: nowrap; }
+  .avr-pdf .cot-totals .row.desc { color: #b42318; font-weight: 600; }
   .avr-pdf .cot-totals .row.total { font-size: 15px; font-weight: 800; color: #0f5132; border-top: 2px solid #0f5132; padding-top: 6px; margin-top: 4px; }
   .avr-pdf .cot-notes { margin-bottom: 14px; }
   .avr-pdf .cot-notes .cot-k { margin-bottom: 4px; }
