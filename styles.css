@@ -2981,3 +2981,11 @@ html[data-theme="light"] .cot-open-hero-btn {
 }
 #calcResCon .oferta-tag { display: inline; margin-left: 4px; }
 .cot-oferta-sub { color: var(--primary); font-weight: 600; }
+
+/* Descuento formal en cotización */
+.cot-desc-inputs { display:flex; gap:10px; flex-wrap:wrap; margin:10px 0 6px; font-size:12px; color:#45564c; }
+.cot-desc-inputs label { display:flex; flex-direction:column; gap:3px; }
+.cot-desc-inputs input { width:90px; }
+.cot-desc-inputs .cot-desc-mot { flex:1; min-width:200px; }
+.cot-desc-inputs .cot-desc-mot input { width:100%; }
+.cot-desc-row { color:#b42318; font-weight:600; }

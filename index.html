@@ -13,7 +13,7 @@
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=fb11" />
+    <link rel="stylesheet" href="./styles.css?v=fb12" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   </head>
   <body>
@@ -527,7 +527,13 @@
           </div>
 
           <!-- Totales -->
+          <div class="cot-desc-inputs">
+            <label>Descuento %<input id="cotDescPct" type="number" min="0" max="100" step="0.5" placeholder="0" class="cot-manual-inp" /></label>
+            <label class="cot-desc-mot">Motivo del descuento<input id="cotDescMotivo" type="text" placeholder="Ej: convenio empresa" class="cot-manual-inp" /></label>
+          </div>
           <div class="cot-totals">
+            <div class="cot-total-row"><span>Subtotal:</span><span id="cotSubtotal">—</span></div>
+            <div class="cot-total-row cot-desc-row" id="cotDescRow" hidden><span id="cotDescLbl">Descuento:</span><span id="cotDescMonto">—</span></div>
             <div class="cot-total-row"><span>Neto:</span><span id="cotNeto">—</span></div>
             <div class="cot-total-row"><span>IVA (19%):</span><span id="cotIva">—</span></div>
             <div class="cot-total-row cot-total-row--final"><span>TOTAL:</span><span id="cotTotal">—</span></div>
@@ -668,7 +674,7 @@
     <script src="./admin.js"></script>
     <script src="./promo.js?v=1"></script>
     <script src="./app.js?v=fb5"></script>
-    <script src="./cotizador.js?v=fb12"></script>
+    <script src="./cotizador.js?v=fb13"></script>
     <script src="./espejos-cot.js?v=1"></script>
   </body>
 </html>

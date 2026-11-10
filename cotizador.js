@@ -21,6 +21,30 @@ const cotNetoEl   = document.getElementById("cotNeto");
 const cotIvaEl    = document.getElementById("cotIva");
 const cotTotalEl  = document.getElementById("cotTotal");
 const cotNotasEl  = document.getElementById("cotNotas");
+const cotDescPctEl = document.getElementById("cotDescPct");
+const cotDescMotEl = document.getElementById("cotDescMotivo");
+const cotSubtotalEl = document.getElementById("cotSubtotal");
+const cotDescRowEl  = document.getElementById("cotDescRow");
+const cotDescLblEl  = document.getElementById("cotDescLbl");
+const cotDescMontoEl = document.getElementById("cotDescMonto");
+
+// Totales de la cotización con descuento formal. Precios con IVA; neto = total/1.19.
+function cotCalc(items) {
+  items = items || [...window.cotSelection.values()];
+  let subtotal = 0;
+  items.forEach(p => { subtotal += getUnitPrice(p) * (p._cant || 1); });
+  let pct = parseFloat(String(cotDescPctEl?.value || "0").replace(",", ".")) || 0;
+  pct = Math.min(100, Math.max(0, pct));
+  const motivo = (cotDescMotEl?.value || "").trim();
+  const descuento = Math.round(subtotal * pct / 100);
+  const total = subtotal - descuento;
+  const neto = Math.round(total / 1.19);
+  return { subtotal, pct, motivo, descuento, total, neto, iva: total - neto };
+}
+function descLabel(c) {
+  const pctTxt = String(c.pct).replace(".", ",");
+  return `Descuento ${pctTxt}%${c.motivo ? " \u2014 " + c.motivo : ""}`;
+}
 
 const cotNombreEl = document.getElementById("cotClienteNombre");
 const cotRutEl    = document.getElementById("cotClienteRut");
@@ -305,15 +329,21 @@ function precioCeldaHtml(p, precio) {
 }
 
 function calcTotals() {
-  let subtotal = 0;
-  [...window.cotSelection.values()].forEach(p => {
-    subtotal += getUnitPrice(p) * (p._cant || 1);
-  });
-  const neto = Math.round(subtotal / 1.19);
-  const iva  = subtotal - neto;
-  cotNetoEl.textContent  = fmtCLP(neto);
-  cotIvaEl.textContent   = fmtCLP(iva);
-  cotTotalEl.textContent = fmtCLP(subtotal);
+  const c = cotCalc();
+  if (cotSubtotalEl) cotSubtotalEl.textContent = fmtCLP(c.subtotal);
+  if (cotDescRowEl) cotDescRowEl.hidden = !c.descuento;
+  if (cotDescLblEl) cotDescLblEl.textContent = descLabel(c) + ":";
+  if (cotDescMontoEl) cotDescMontoEl.textContent = "\u2212" + fmtCLP(c.descuento);
+  cotNetoEl.textContent  = fmtCLP(c.neto);
+  cotIvaEl.textContent   = fmtCLP(c.iva);
+  cotTotalEl.textContent = fmtCLP(c.total);
+}
+cotDescPctEl?.addEventListener("input", calcTotals);
+cotDescMotEl?.addEventListener("input", calcTotals);
+function setDescuento(pct, motivo) {
+  if (cotDescPctEl) cotDescPctEl.value = pct ? String(pct) : "";
+  if (cotDescMotEl) cotDescMotEl.value = motivo || "";
+  calcTotals();
 }
 
 // ── Abrir modal ───────────────────────────────────────────────────────────────
@@ -428,8 +458,8 @@ async function saveCotizacion() {
     }
     return item;
   });
-  const neto = Math.round(subtotal / 1.19);
-  const iva  = subtotal - neto;
+  const c = cotCalc();
+  if (c.pct && !c.motivo) throw new Error("Escribe el motivo del descuento.");
 
   const { error } = await window._sb.from("cotizaciones").insert({
     numero:           _cotNumero,
@@ -441,7 +471,9 @@ async function saveCotizacion() {
     precio_tipo:      "por_item",
     items,
     notas:            cotNotasEl.value.trim(),
-    neto, iva, total: subtotal,
+    neto: c.neto, iva: c.iva, total: c.total,
+    descuento_pct:    c.pct,
+    descuento_motivo: c.pct ? c.motivo : null,
     created_by:       window.currentUser?.email || "",
     reemplaza_a:      _reemplazaA || null,
   });
@@ -497,6 +529,7 @@ async function nuevaCotizacion() {
   _reemplazaA = null;
   cotNombreEl.value = ""; cotRutEl.value = ""; cotTelEl.value = ""; cotEmailEl.value = "";
   cotNotasEl.value = "";
+  setDescuento(0, "");
   if (cotRutMsg)   cotRutMsg.textContent = "";
   if (cotEmailMsg) cotEmailMsg.textContent = "";
   updateCotBtn();
@@ -559,7 +592,9 @@ const COT_PDF_CSS = `
   .avr-pdf tbody tr:nth-child(even) { background: #f6f9f7; }
   .avr-pdf .cot-item-name { font-weight: 700; color: #14261c; }
   .avr-pdf .cot-item-sub { display: block; font-size: 10.5px; color: #7a8a80; margin-top: 1px; }
-  .avr-pdf .cot-totals { margin-left: auto; width: 260px; margin-bottom: 16px; }
+  .avr-pdf .cot-totals .row.desc { color: #b42318; font-weight: 600; gap: 10px; }
+  .avr-pdf .cot-totals .row.desc span:first-child { text-align: left; }
+  .avr-pdf .cot-totals { margin-left: auto; width: 340px; margin-bottom: 16px; }
   .avr-pdf .cot-totals .row { display: flex; justify-content: space-between; font-size: 12px; color: #45564c; padding: 3px 0; }
   .avr-pdf .cot-totals .row.total { font-size: 15px; font-weight: 800; color: #0f5132; border-top: 2px solid #0f5132; padding-top: 6px; margin-top: 4px; }
   .avr-pdf .cot-notes { margin-bottom: 14px; }
@@ -603,10 +638,8 @@ function cotPdfRows(items) {
 function buildCotDocHtml() {
   const items = [...window.cotSelection.values()];
 
-  let total = 0;
-  items.forEach(p => { total += getUnitPrice(p) * (p._cant || 1); });
-  const neto = Math.round(total / 1.19);
-  const iva  = total - neto;
+  const c = cotCalc(items);
+  const { neto, iva, total } = c;
 
   const envio   = (cotEnvioEl?.textContent || "").trim();
   const fecha   = (cotFechaEl?.textContent || "").trim() || ("Fecha: " + formatDateShort(new Date()));
@@ -663,6 +696,8 @@ function buildCotDocHtml() {
       <tbody>${rowsHtml}</tbody>
     </table>
     <div class="cot-totals">
+      ${c.descuento ? `<div class="row"><span>Subtotal</span><span>${fmtCLP(c.subtotal)}</span></div>
+      <div class="row desc"><span>${esc(descLabel(c))}</span><span>\u2212${fmtCLP(c.descuento)}</span></div>` : ""}
       <div class="row"><span>Neto</span><span>${fmtCLP(neto)}</span></div>
       <div class="row"><span>IVA (19%)</span><span>${fmtCLP(iva)}</span></div>
       <div class="row total"><span>TOTAL</span><span>${fmtCLP(total)}</span></div>
@@ -769,10 +804,10 @@ async function shareWA() {
       const of = ofertaItem(p);
       if (of) text += `   ${ofertaTexto(of)}${cant > 1 ? " c/u" : ""}\n`;
     });
-    let subtotal = 0;
-    items.forEach(p => { subtotal += getUnitPrice(p) * (p._cant || 1); });
+    const cw = cotCalc(items);
     const ofertaTxtWA = ofertaCondicionesTexto(items);
-    text += `\n*TOTAL: ${fmtCLP(subtotal)}*\nValidez: 3 días hábiles\n`;
+    if (cw.descuento) text += `\nSubtotal: ${fmtCLP(cw.subtotal)}\n${descLabel(cw)}: \u2212${fmtCLP(cw.descuento)}`;
+    text += `\n*TOTAL: ${fmtCLP(cw.total)}*\nValidez: 3 días hábiles\n`;
     if (ofertaTxtWA) text += `\n_Oferta: ${ofertaTxtWA}_\n`;
     text += `\n📄 Descarga tu cotización en PDF:\n${data.url}`;
 
@@ -858,7 +893,7 @@ async function loadHistorial() {
   historialList.innerHTML = `<p style="color:var(--muted);text-align:center;padding:24px">Cargando…</p>`;
   const { data, error } = await window._sb
     .from("cotizaciones")
-    .select("id,numero,created_at,cliente_nombre,cliente_rut,cliente_telefono,cliente_email,ejecutivo,total,items,notas,estado,reemplaza_a,anulada_por")
+    .select("id,numero,created_at,cliente_nombre,cliente_rut,cliente_telefono,cliente_email,ejecutivo,total,items,notas,descuento_pct,descuento_motivo,estado,reemplaza_a,anulada_por")
     .order("created_at", { ascending: false })
     .limit(200);
   if (error) {
@@ -885,7 +920,7 @@ function filterHistorial() {
 function cargarItemsDesde(row) {
   window.cotSelection.clear();
   _manualCounter = 0;
-  (row.items || []).forEach(item => {
+  (row.items || []).filter(it => it.tipo !== "descuento").forEach(item => {
     const key  = "m_" + (++_manualCounter);
     const inst = item.tipo === "con" ? " · Con instalación"
                : item.tipo === "sin" ? " · Sin instalación" : "";
@@ -925,6 +960,7 @@ async function abrirParaReenviar(row) {
   await openCotModal({ numero: row.numero, fecha: fmtDate(row.created_at) });
   llenarClienteDesde(row);
   if (cotNotasEl) cotNotasEl.value = row.notas || "";
+  setDescuento(Number(row.descuento_pct) || 0, row.descuento_motivo);
 }
 
 // ── Re-cotizar (editar como versión nueva) ────────────────────────────────────
@@ -935,6 +971,7 @@ async function reQuotizar(row) {
   await openCotModal();
   llenarClienteDesde(row);
   if (cotNotasEl) cotNotasEl.value = (row.notas ? row.notas + "\n" : "") + `Reemplaza a: ${row.numero}`;
+  setDescuento(Number(row.descuento_pct) || 0, row.descuento_motivo);
 }
 
 document.getElementById("historialBtn")?.addEventListener("click", () => {
@@ -980,8 +1017,7 @@ cotBtnEmail?.addEventListener("click", async () => {
 
     // 3) Enviar por correo con el PDF adjunto (función Supabase → Resend)
     cotBtnEmail.textContent = "Enviando…";
-    let subtotal = 0;
-    [...window.cotSelection.values()].forEach(p => { subtotal += getUnitPrice(p) * (p._cant || 1); });
+    const subtotal = cotCalc().total;
 
     const { data, error } = await window._sb.functions.invoke("cotizacion-email", {
       body: {
@@ -1017,9 +1053,9 @@ cotBtnCopiar?.addEventListener("click", async () => {
     const of = ofertaItem(p);
     if (of) text += `   ${ofertaTexto(of)}${cant > 1 ? " c/u" : ""}\n`;
   });
-  let subtotal = 0;
-  items.forEach(p => { subtotal += getUnitPrice(p) * (p._cant || 1); });
-  text += `\nTOTAL: ${fmtCLP(subtotal)}\nValidez: 3 días hábiles`;
+  const cc = cotCalc(items);
+  if (cc.descuento) text += `\nSubtotal: ${fmtCLP(cc.subtotal)}\n${descLabel(cc)}: \u2212${fmtCLP(cc.descuento)}`;
+  text += `\nTOTAL: ${fmtCLP(cc.total)}\nValidez: 3 días hábiles`;
   const ofertaTxtCp = ofertaCondicionesTexto(items);
   if (ofertaTxtCp) text += `\n\nOferta: ${ofertaTxtCp}`;
   navigator.clipboard.writeText(text).then(() => {
