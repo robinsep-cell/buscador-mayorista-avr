@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Servicios · AVR</title>
+<link rel="icon" type="image/png" href="./favicon.png?v=fb4">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png?v=fb4">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#f2f5f8;--card:#fff;--fg:#16202b;--muted:#5b6977;--line:#d8dfe6;--accent:#0b5cad;--soft:#e8f0fa;--warn:#9a6200;--warn-bg:#fff2d6}
+@media (prefers-color-scheme:dark){:root{--bg:#0f151b;--card:#17202a;--fg:#e7edf3;--muted:#9aa8b6;--line:#2a3643;--accent:#5aa2ef;--soft:#1b2a3a;--warn:#f2c46b;--warn-bg:#3a2d10;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.45 Inter,system-ui,sans-serif}
+.top{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px max(14px,env(safe-area-inset-left)) 10px max(14px,env(safe-area-inset-right));border-bottom:1px solid var(--line)}
+.fila1{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.fila1 a{color:var(--accent);text-decoration:none;font-weight:600;font-size:14px}
+h1{font-size:1.25rem;margin:0;flex:1}
+#q{width:100%;font:inherit;font-size:16px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--fg)}
+.gama{display:flex;gap:6px;margin-top:10px}
+.gama button{flex:1;font:inherit;font-weight:600;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--fg);cursor:pointer}
+.gama button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.cats{display:flex;gap:6px;overflow-x:auto;margin-top:10px;padding-bottom:2px}
+.cats button{white-space:nowrap;font:inherit;font-size:13px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--fg);cursor:pointer}
+.cats button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--soft)}
+main{padding:12px max(14px,env(safe-area-inset-left)) 40px max(14px,env(safe-area-inset-right));max-width:900px;margin:0 auto;display:grid;gap:10px}
+.cat-t{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin:10px 2px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center}
+.svc{font-weight:600}
+.uni{font-size:13px;color:var(--muted)}
+.precio{font-size:1.25rem;font-weight:700;color:var(--accent);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.precio.gratis{color:var(--fg);font-size:1rem}
+.precio.falta{color:var(--warn);font-size:.9rem}
+.nota{grid-column:1/-1;font-size:13px;color:var(--muted)}
+.nota.warn{color:var(--warn);background:var(--warn-bg);padding:4px 8px;border-radius:6px}
+.acc{grid-column:1/-1;display:flex;gap:8px;justify-content:space-between;align-items:center}
+.socio{font-size:12px;color:var(--muted)}
+.copiar{font:inherit;font-size:13px;font-weight:600;padding:6px 12px;border-radius:8px;border:1px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer}
+.vacio{text-align:center;color:var(--muted);padding:30px}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="fila1"><h1>Servicios</h1><a href="./">← Buscador</a></div>
+  <input id="q" type="search" placeholder="Buscar: lámina, gel, aire, pintura…" autocomplete="off">
+  <div class="gama" role="group" aria-label="Gama del vehículo">
+    <button data-g="normal" aria-pressed="true">Auto normal</button>
+    <button data-g="alta" aria-pressed="false">Alta gama</button>
+  </div>
+  <div class="cats" id="cats"></div>
+</div>
+<main id="lista"><div class="vacio">Cargando servicios…</div></main>
+
+<script>
+const SUPABASE_URL="https://vlhoshlnkmsojeqejzwo.supabase.co";
+const SUPABASE_ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZsaG9zaGxua21zb2plcWVqendvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5Mjk5NzksImV4cCI6MjA5MTUwNTk3OX0.pyQDaG4dpwi_I_7bN6D433xkIE5TBGGFICQ8LP0_etg";
+const $=s=>document.querySelector(s);
+const clp=n=>"$"+Math.round(n).toLocaleString("es-CL");
+let S=[],gama="normal",cat="";
+const norm=s=>String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function render(){
+  const q=norm($("#q").value.trim());
+  const cats=[...new Set(S.map(s=>s.categoria))];
+  $("#cats").innerHTML=['',...cats].map(c=>`<button data-c="${esc(c)}" aria-pressed="${c===cat}">${c?esc(c):"Todos"}</button>`).join("");
+  const vis=S.filter(s=>(s.gama==="todas"||s.gama===gama)&&(!cat||s.categoria===cat)&&(!q||norm(s.categoria+" "+s.servicio+" "+(s.unidad||"")+" "+(s.notas||"")).includes(q)));
+  if(!vis.length){$("#lista").innerHTML='<div class="vacio">No hay servicios con esa búsqueda.</div>';return}
+  let html="",ult="";
+  vis.forEach(s=>{
+    if(s.categoria!==ult){html+=`<div class="cat-t">${esc(s.categoria)}</div>`;ult=s.categoria}
+    const p=s.precio_cliente;
+    const pr=p==null?'<span class="precio falta">Sin precio: consultar</span>':p===0?'<span class="precio gratis">Sin costo</span>':`<span class="precio">${clp(p)}</span>`;
+    const warn=/por validar/i.test(s.notas||"");
+    html+=`<div class="card"><div><div class="svc">${esc(s.servicio)}</div><div class="uni">${esc(s.unidad||"")}${s.gama!=="todas"?" · "+(s.gama==="alta"?"alta gama":"auto normal"):""}</div></div>${pr}
+      ${s.notas?`<div class="nota${warn?" warn":""}">${esc(s.notas)}</div>`:""}
+      <div class="acc"><span class="socio">${esc(s.socio||"")}</span>${p!=null?`<button class="copiar" data-id="${esc(s.id)}">Copiar para WhatsApp</button>`:""}</div></div>`;
+  });
+  $("#lista").innerHTML=html;
+}
+$("#q").addEventListener("input",render);
+document.querySelector(".gama").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;gama=b.dataset.g;document.querySelectorAll(".gama button").forEach(x=>x.setAttribute("aria-pressed",x===b));render()});
+$("#cats").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;cat=b.dataset.c;render()});
+$("#lista").addEventListener("click",async e=>{
+  const b=e.target.closest(".copiar");if(!b)return;
+  const s=S.find(x=>x.id===b.dataset.id);
+  const txt=`${s.servicio}${s.unidad?" ("+s.unidad+")":""}: ${s.precio_cliente===0?"sin costo":clp(s.precio_cliente)}`;
+  try{await navigator.clipboard.writeText(txt);b.textContent="Copiado"}catch{prompt("Copia el texto:",txt)}
+  setTimeout(()=>b.textContent="Copiar para WhatsApp",1500);
+});
+(async()=>{
+  try{
+    const r=await fetch(`${SUPABASE_URL}/rest/v1/servicios_publicos?select=*&order=orden`,{headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${SUPABASE_ANON}`}});
+    if(!r.ok) throw 0; S=await r.json(); render();
+  }catch{$("#lista").innerHTML='<div class="vacio">No se pudieron cargar los servicios. Revisa la conexión.</div>'}
+})();
+</script>
+</body>
+</html>
