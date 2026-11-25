@@ -94,12 +94,12 @@
             <div class="panel-header-right">
               <div class="panel-note">AVR Search</div>
               <button id="calcOpenBtn" class="calc-open-btn" type="button">Calculadora</button>
-              <a href="./servicios.html" class="calc-open-btn" style="text-decoration:none">Servicios</a>
             </div>
           </div>
           <div class="modo-toggle">
             <button id="modoVidrios" class="modo-btn is-active" type="button">🔎 Vidrios</button>
             <button id="modoEspejos" class="modo-btn" type="button">🪞 Espejos</button>
+            <button id="modoServicios" class="modo-btn" type="button">🧰 Servicios</button>
           </div>
           <div class="search-box">
             <input
@@ -174,6 +174,18 @@
           <p class="hint">Elige la <strong>opción</strong> del espejo (Original, Alternativo, con punto ciego, retrovisor completo, pieza…) y agrégala a la cotización.</p>
           <div id="espStatus" class="status"></div>
           <div id="espResults" class="esp-results"></div>
+        </section>
+        <!-- Modo Servicios: láminas, gel, aire, taller. Agrega a la misma cotización -->
+        <section id="svcSection" class="esp-panel" hidden>
+          <div class="search-box">
+            <input id="svcSearch" type="search" placeholder="Buscar servicio: lámina, gel, aire, pintura…" autocomplete="off" />
+          </div>
+          <div class="modo-toggle" id="svcGama">
+            <button class="modo-btn is-active" data-g="normal" type="button">Auto normal</button>
+            <button class="modo-btn" data-g="alta" type="button">Alta gama</button>
+          </div>
+          <div id="svcStatus" class="status"></div>
+          <div id="svcResults" class="esp-results"></div>
         </section>
       </main>
 
@@ -660,7 +672,7 @@
 
     <style>
       .modo-toggle { display: inline-flex; gap: 6px; margin: 0 0 10px; }
-      .modo-btn { border: 1px solid var(--border, #ccc); background: var(--bg, #fff); color: var(--text, #111); border-radius: 999px; padding: 6px 14px; font-size: 0.9rem; font-weight: 600; cursor: pointer; }
+      .modo-btn { display: inline-flex; align-items: center; justify-content: center; line-height: 1.2; border: 1px solid var(--border, #ccc); background: var(--bg, #fff); color: var(--text, #111); border-radius: 999px; padding: 6px 14px; font-size: 0.9rem; font-weight: 600; cursor: pointer; }
       .modo-btn.is-active { background: var(--primary, #111); color: #fff; border-color: var(--primary, #111); }
       .esp-results { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
       .esp-card { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; border: 1px solid var(--border, #ddd); border-radius: 10px; padding: 10px 14px; background: var(--bg, #fff); }
@@ -679,5 +691,6 @@
     <script src="./app.js?v=fb7"></script>
     <script src="./cotizador.js?v=fb14"></script>
     <script src="./espejos-cot.js?v=1"></script>
+    <script src="./servicios-cot.js?v=1"></script>
   </body>
 </html>
