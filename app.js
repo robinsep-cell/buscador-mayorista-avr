@@ -1817,7 +1817,7 @@ async function calcPrices() {
     calcResCon.innerHTML = `<s class="precio-normal">${fmt(finalCon)}</s> ${fmt(window.AVRPromo.precioOferta(finalCon, prOferta))}`
       + ` <span class="oferta-tag">${escapeHtml(window.AVRPromo.etiqueta(prOferta))}</span>`;
   }
-  calcResSolo.textContent = fmt(soloInst);
+  calcResSolo.textContent = soloCliente ? "—" : fmt(soloInst);
   if (calcResCliente) calcResCliente.textContent = r.inst_vidrio_cliente ? fmt(r.inst_vidrio_cliente) : "—";
   if (calcResML) calcResML.textContent = soloCliente ? "—" : fmt(finalML);
 
