@@ -1661,6 +1661,8 @@ const chkCaja      = document.querySelector("#chkCaja");
 const calcResSin   = document.querySelector("#calcResSin");
 const calcResCon   = document.querySelector("#calcResCon");
 const calcResSolo  = document.querySelector("#calcResSolo");
+const calcResCliente = document.querySelector("#calcResCliente");
+const calcValorCliente = document.querySelector("#calcValorCliente");
 const calcStatus   = document.querySelector("#calcStatus");
 
 function setPillState(input) {
@@ -1740,7 +1742,10 @@ async function pedirPreciosV7(args) {
 
 let calcPeticion = 0;
 async function calcPrices() {
-  const costo    = parseFloat(calcCosto.value);
+  const valorCli = parseFloat(calcValorCliente?.value) || 0;
+  const soloCliente = !(parseFloat(calcCosto.value) > 0) && valorCli > 0;
+  // Vidrio del cliente sin costo de compra: la instalación no depende del costo.
+  const costo    = soloCliente ? 1000 : parseFloat(calcCosto.value);
   const producto = calcProducto.value;
 
   const calcResML   = document.getElementById("calcResML");
@@ -1749,6 +1754,7 @@ async function calcPrices() {
     calcResSin.textContent = "—"; calcResCon.textContent = "—";
     calcResSolo.textContent = "—";
     if (calcResML) calcResML.textContent = "—";
+    if (calcResCliente) calcResCliente.textContent = "—";
     calcStatus.textContent = "";
     return;
   }
@@ -1780,6 +1786,7 @@ async function calcPrices() {
     marca: tipoVeh === "premium" ? "BMW" : (tipoVeh === "subaru" ? "SUBARU" : ""),
     encapsulado: !!encapsulada,
     tipo_vehiculo: tipoVeh === "camion" ? "camion" : null,
+    valor_vidrio_cliente: Math.round(parseFloat(calcValorCliente?.value) || 0) || null,
   });
   if (pedido !== calcPeticion) return;   // llegó una respuesta vieja, se descarta
   if (!r) {
@@ -1802,16 +1809,17 @@ async function calcPrices() {
   const finalSinMostrar = finalSin + cajaPedida;
 
   const fmt = n => "$ " + Math.round(n).toLocaleString("es-CL");
-  calcResSin.textContent  = fmt(finalSinMostrar);
-  calcResCon.textContent  = fmt(finalCon);
+  calcResSin.textContent  = soloCliente ? "—" : fmt(finalSinMostrar);
+  calcResCon.textContent  = soloCliente ? "—" : fmt(finalCon);
   // Oferta de parabrisas instalado (si está vigente): normal tachado + precio oferta.
   const prOferta = producto === "Parabrisas" ? window.AVRPromo?.parabrisas() : null;
-  if (prOferta && finalCon > 0) {
+  if (prOferta && finalCon > 0 && !soloCliente) {
     calcResCon.innerHTML = `<s class="precio-normal">${fmt(finalCon)}</s> ${fmt(window.AVRPromo.precioOferta(finalCon, prOferta))}`
       + ` <span class="oferta-tag">${escapeHtml(window.AVRPromo.etiqueta(prOferta))}</span>`;
   }
   calcResSolo.textContent = fmt(soloInst);
-  if (calcResML) calcResML.textContent = fmt(finalML);
+  if (calcResCliente) calcResCliente.textContent = r.inst_vidrio_cliente ? fmt(r.inst_vidrio_cliente) : "—";
+  if (calcResML) calcResML.textContent = soloCliente ? "—" : fmt(finalML);
 
 }
 
@@ -1836,6 +1844,7 @@ calcInfoClose?.addEventListener("click", () => { if (calcInfoBalloon) calcInfoBa
 
 // Inputs → recalcular
 calcCosto.addEventListener("input", calcPrices);
+calcValorCliente?.addEventListener("input", calcPrices);
 calcProducto.addEventListener("change", updateCalcVisibility);
 
 [chkSensor, chkAdas, chkEncapsulada, chkLaminada, chkCaja].forEach(el => {

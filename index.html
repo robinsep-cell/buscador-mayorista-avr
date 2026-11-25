@@ -189,23 +189,22 @@
         <!-- Globo con fórmulas (v7 - 2026-05-21) -->
         <div id="calcInfoBalloon" class="calc-info-balloon" hidden>
           <div class="calc-info-head">
-            <strong>📐 Fórmulas vigentes (v7)</strong>
+            <strong>Fórmulas vigentes</strong>
             <button type="button" id="calcInfoClose" class="calc-info-close" aria-label="Cerrar">×</button>
           </div>
           <div class="calc-info-body">
-            <p><b>Multiplicadores</b></p>
+            <p><b>Sin instalación</b>: costo × 2,5 (con mínimos).</p>
+            <p><b>Con instalación = sin instalación + cargo de instalación (v8, 25-nov-2026)</b></p>
             <ul>
-              <li>Sin instalación = costo × 2,5</li>
-              <li>Con instalación normal = costo × 4</li>
-              <li>Con instalación alta gama / camión / bus = costo × 4,5</li>
-              <li>Parabrisas y lunetas alta gama: además suman +$150.000</li>
+              <li>Parabrisas: normal $70.000 · alta gama $140.000 · camión/bus mín. $133.000</li>
+              <li>Luneta: normal $45.000 · alta gama $90.000</li>
+              <li>Vidrio de puerta: normal $30.000 · alta gama $50.000</li>
+              <li>Aleta: $25.000 / $45.000 · encapsulada $41.000 / $120.000</li>
+              <li>Lateral: $25.000 / $45.000 · encapsulado $70.000 / $120.000</li>
+              <li>Parabrisas y lunetas: sensor +$15.000 / +$25.000 · 1 cámara +$25.000 / +$40.000 · 2 cámaras +$40.000 / +$60.000</li>
+              <li>Alta gama = solo por marca (Audi, BMW, Mercedes, Volvo, Lexus, Land Rover…). Sensor y cámara no la vuelven alta gama.</li>
             </ul>
-            <p><b>Modificadores (suman a "con instalación")</b></p>
-            <ul>
-              <li>Parabrisas: sensor lluvia +$20.000 · 1 cámara +$25.000 · 2 cámaras +$45.000 · ADAS +$30.000</li>
-              <li>Aletas y laterales encapsulados: +$35.000</li>
-              <li>Lunetas y parabrisas: encapsulado NO se cobra aunque tenga X</li>
-            </ul>
+            <p><b>Vidrio que trae el cliente</b>: el mayor entre el doble de la instalación y el 15 % del valor del vidrio, con firma de riesgo de quiebre.</p>
             <p><b>Caja (solo Mercado Libre)</b></p>
             <ul>
               <li>Parabrisas normal $45.000 · alta gama $75.000</li>
@@ -213,16 +212,9 @@
               <li>Puertas, laterales y aletas: NO llevan caja</li>
               <li>Wix: nunca por defecto. Si el cliente la pide, se cotiza aparte.</li>
             </ul>
-            <p><b>Mínimos (precio final = mayor entre fórmula y mínimo)</b></p>
-            <ul>
-              <li>Parabrisas y lunetas: sin inst. $73.460 · con inst. $97.850</li>
-              <li>Puertas: sin inst. $39.870 · con inst. $64.460</li>
-              <li>Aletas y laterales: sin inst. $24.870 · con inst. $48.850</li>
-              <li>Aletas/laterales encapsulados con inst.: $75.850</li>
-              <li>Aletas/laterales alta gama o encapsulado alta gama: $195.900</li>
-            </ul>
+            <p><b>Mínimos sin instalación</b>: parabrisas y lunetas $73.460 · puertas $45.870 · aletas $34.870 · laterales $39.870.</p>
             <p><b>Terminaciones psicológicas</b>: 460, 850 o 870 (no se usa 900).</p>
-            <p class="calc-info-footnote">Última actualización validada por Robinson: 2026-05-21.</p>
+            <p class="calc-info-footnote">Instalación actualizada por Robinson: 2026-11-25.</p>
           </div>
         </div>
 
@@ -260,6 +252,11 @@
                 <option value="Vidrio Lateral">Vidrio Lateral</option>
                 <option value="Luneta Portalón">Luneta Portalón</option>
               </select>
+            </div>
+
+            <div class="calc-field">
+              <label class="calc-label" for="calcValorCliente">Si el cliente trae el vidrio: valor del vidrio (CLP, opcional)</label>
+              <input id="calcValorCliente" class="calc-input" type="number" placeholder="Ej: 1500000" min="0" step="1000" />
             </div>
 
             <div id="calcOptions" class="calc-options-wrap" hidden>
@@ -322,6 +319,11 @@
               <span class="calc-result-label">Solo Instalación</span>
               <span id="calcResSolo" class="calc-result-value">—</span>
             </div>
+            <div class="calc-result-row calc-result-row--main">
+              <span class="calc-result-label">Instalación con vidrio del cliente</span>
+              <span id="calcResCliente" class="calc-result-value">—</span>
+            </div>
+            <p class="calc-status" style="margin:0">Vidrio del cliente: el mayor entre el doble de la instalación y el 15 % del valor del vidrio. El cliente firma que el riesgo de quiebre es suyo.</p>
             <div class="calc-result-row calc-result-row--ml">
               <span class="calc-result-label">MercadoLibre</span>
               <span id="calcResML" class="calc-result-value">—</span>
