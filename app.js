@@ -1144,6 +1144,12 @@ function nameMatchScore(nombre1, nombre2) {
   return kw1.filter(k => kw2.includes(k)).length;
 }
 
+function rangoAnio(a, b, f) {
+  const x = parseInt(a, 10), y = parseInt(b, 10);
+  if (Number.isFinite(x) && Number.isFinite(y)) return f(x, y);
+  return pickField(a, b);
+}
+
 function mergeRows(imp, avr) {
   // Combinar códigos antiguos de ambas hojas (sin duplicados)
   const avrCodigos = avr ? siglasFromCodigoAntiguo(avr.codigoAntiguo) : [];
@@ -1164,8 +1170,9 @@ function mergeRows(imp, avr) {
     textoExtra: [imp?.titulo, avr?.titulo, imp?.grupo, avr?.grupo].filter(Boolean).join(" "),
     marca: pickField(imp?.marca, avr?.marca),
     marcasCompat: pickField(imp?.marcasCompat, avr?.marcasCompat),
-    anioDesde: pickField(imp?.anioDesde, avr?.anioDesde),
-    anioHasta: pickField(imp?.anioHasta, avr?.anioHasta),
+    // Rango más completo de los dos (Robinson 26-nov).
+    anioDesde: rangoAnio(imp?.anioDesde, avr?.anioDesde, Math.min),
+    anioHasta: rangoAnio(imp?.anioHasta, avr?.anioHasta, Math.max),
     color: pickField(imp?.color, avr?.color),
     medida: pickField(imp?.medida, avr?.medida),
     stockImp: imp ? imp.stock : "",
