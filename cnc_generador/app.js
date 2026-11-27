@@ -155,48 +155,6 @@ function zCurve(x, y) {
   return CURVE.x2 * x * x + CURVE.y2 * y * y + CURVE.xy * x * y + CURVE.x * x + CURVE.y * y + CURVE.c;
 }
 
-// --- Ajuste fino del corte: curvatura (%) y profundidad (mm) ---
-// La curva del espejo (CURVE) no cambia. Este ajuste la escala alrededor de la
-// altura promedio del recorrido: 100% = igual que siempre.
-// Bajar el % aplana la curva (las orillas suben, el centro baja); subirlo la acentua.
-// Profundidad positiva = corta mas hondo en todo el recorrido.
-const ADJUST_KEY = "cnc_ajuste_corte_v1";
-const ADJUST_LIMITS = { pctMin: 50, pctMax: 150, depthMin: -3, depthMax: 3 };
-const adjust = { pct: 100, depth: 0 };
-try {
-  const saved = JSON.parse(localStorage.getItem(ADJUST_KEY) || "null");
-  if (saved && Number.isFinite(saved.pct)) adjust.pct = saved.pct;
-  if (saved && Number.isFinite(saved.depth)) adjust.depth = saved.depth;
-} catch (_) {
-  // sin almacenamiento: queda 100% y 0 mm
-}
-
-function saveAdjust() {
-  try {
-    localStorage.setItem(ADJUST_KEY, JSON.stringify(adjust));
-  } catch (_) {
-    // navegador sin almacenamiento: el ajuste vale solo para esta sesion
-  }
-}
-
-function isAdjusted() {
-  return adjust.pct !== 100 || adjust.depth !== 0;
-}
-
-// Funcion de Z para este trabajo. Sin ajuste devuelve zCurve tal cual (archivo identico a antes).
-function makeZFn(paths) {
-  if (!isAdjusted()) return zCurve;
-  const all = paths.flatMap((item) => item.points);
-  const mean = all.reduce((sum, p) => sum + zCurve(p.x, p.y), 0) / all.length;
-  const k = adjust.pct / 100;
-  return (x, y) => mean + k * (zCurve(x, y) - mean) - adjust.depth;
-}
-
-function adjustComment() {
-  // Sin "%" ni "+": el "%" marca inicio/fin de programa en codigo G.
-  return `(AJUSTE CURVATURA ${adjust.pct} PCT PROFUNDIDAD ${adjust.depth.toFixed(2)} MM)`;
-}
-
 function tokenizePath(d) {
   return d.match(/[MmLlHhVvCcZz]|-?\d+(?:\.\d+)?(?:e[-+]?\d+)?/g) || [];
 }
@@ -426,7 +384,7 @@ function fmt(value) {
   return Number(value).toFixed(3);
 }
 
-function makeNc(title, paths, feedValue, zFn = zCurve) {
+function makeNc(title, paths, feedValue) {
   const lines = [
     `O0000(${title})`,
     "(GENERADO POR GENERADOR CNC ESPEJOS - PRUEBA)",
@@ -436,7 +394,6 @@ function makeNc(title, paths, feedValue, zFn = zCurve) {
     "N102 G0 G17 G40 G49 G80 G90",
     "N104 T1 M6",
   ];
-  if (isAdjusted()) lines.splice(4, 0, adjustComment());
   let n = 106;
   const first = paths[0].points[0];
   lines.push(`N${n} G0 G90 G54 X${fmt(first.x)} Y${fmt(first.y)} A0. S3500 M3`);
@@ -451,10 +408,10 @@ function makeNc(title, paths, feedValue, zFn = zCurve) {
     n += 2;
     lines.push(`N${n} Z5.`);
     n += 2;
-    lines.push(`N${n} G1 Z${fmt(zFn(start.x, start.y))} F${Math.round(feedValue)}.`);
+    lines.push(`N${n} G1 Z${fmt(zCurve(start.x, start.y))} F${Math.round(feedValue)}.`);
     n += 2;
     path.slice(1).forEach((p) => {
-      lines.push(`N${n} X${fmt(p.x)} Y${fmt(p.y)} Z${fmt(zFn(p.x, p.y))}`);
+      lines.push(`N${n} X${fmt(p.x)} Y${fmt(p.y)} Z${fmt(zCurve(p.x, p.y))}`);
       n += 2;
     });
     lines.push(`N${n} G0 Z15.`);
@@ -686,12 +643,11 @@ function regenerate() {
     }));
     const mirrorLabel = items.some((item) => item.mirrored) ? "MIXTO" : "NORMAL";
     const paths = makeLayout(transformedItems, sheetW, sheetH, singlePlacement.value);
-    const zFn = makeZFn(paths);
-    const nc = makeNc(`${jobName.value.trim()} ${paths.length} ${mirrorLabel}`.trim(), paths, Number(feed.value), zFn);
+    const nc = makeNc(`${jobName.value.trim()} ${paths.length} ${mirrorLabel}`.trim(), paths, Number(feed.value));
     renderPreview(paths, sheetW, sheetH);
 
     const all = paths.flatMap((item) => item.points);
-    const zValues = all.map((p) => zFn(p.x, p.y));
+    const zValues = all.map((p) => zCurve(p.x, p.y));
     const originalBoxes = state.designs.map((design) => bbox(design.contour));
     const contourLabel = originalBoxes.map((box) => `${box.width.toFixed(2)} x ${box.height.toFixed(2)}`).join(" / ");
     const simplifiedPoints = items.map((item) => item.points.length).join(" / ");
@@ -702,14 +658,12 @@ function regenerate() {
       `<span>Puntos: ${simplifiedPoints}</span>`,
       `<span>Giradas: ${paths.filter((item) => item.rotated).length}</span>`,
       `<span>Z: ${Math.min(...zValues).toFixed(3)} a ${Math.max(...zValues).toFixed(3)}</span>`,
-      `<span class="${isAdjusted() ? "metric-adjusted" : ""}">Ajuste: ${adjust.pct}% / ${adjust.depth.toFixed(2)} mm</span>`,
     ].join("");
 
     ncOutput.value = nc;
     const blob = new Blob([nc], { type: "text/plain;charset=ascii" });
     state.ncUrl = URL.createObjectURL(blob);
-    const adjTag = isAdjusted() ? `_C${adjust.pct}${adjust.depth ? `_P${adjust.depth.toFixed(2)}` : ""}` : "";
-    const safeName = `${jobName.value.trim() || "MODELO"}_${paths.length}_${mirrorLabel}${adjTag}_PRUEBA.NC`.replace(/[^\w.-]+/g, "_");
+    const safeName = `${jobName.value.trim() || "MODELO"}_${paths.length}_${mirrorLabel}_PRUEBA.NC`.replace(/[^\w.-]+/g, "_");
     downloadLink.href = state.ncUrl;
     downloadLink.download = safeName;
     downloadLink.textContent = `Descargar ${safeName}`;
@@ -971,36 +925,5 @@ copies.addEventListener("input", () => {
   buildPieceControls();
   regenerate();
 });
-
-// --- Controles del ajuste de corte ---
-const adjustBox = document.querySelector("#adjustBox");
-const curvPct = document.querySelector("#curvPct");
-const depthMm = document.querySelector("#depthMm");
-
-function renderAdjust() {
-  curvPct.value = adjust.pct;
-  depthMm.value = adjust.depth.toFixed(2);
-  adjustBox.classList.toggle("adjusted", isAdjusted());
-}
-
-function setAdjust(pct, depth) {
-  const p = Math.round(Number(pct));
-  const d = Math.round(Number(depth) * 100) / 100;
-  if (Number.isFinite(p)) adjust.pct = Math.min(ADJUST_LIMITS.pctMax, Math.max(ADJUST_LIMITS.pctMin, p));
-  if (Number.isFinite(d)) adjust.depth = Math.min(ADJUST_LIMITS.depthMax, Math.max(ADJUST_LIMITS.depthMin, d));
-  if (Object.is(adjust.depth, -0)) adjust.depth = 0;
-  saveAdjust();
-  renderAdjust();
-  if (state.designs.length) regenerate();
-}
-
-document.querySelector("#curvDown").addEventListener("click", () => setAdjust(adjust.pct - 1, adjust.depth));
-document.querySelector("#curvUp").addEventListener("click", () => setAdjust(adjust.pct + 1, adjust.depth));
-document.querySelector("#depthDown").addEventListener("click", () => setAdjust(adjust.pct, adjust.depth - 0.05));
-document.querySelector("#depthUp").addEventListener("click", () => setAdjust(adjust.pct, adjust.depth + 0.05));
-document.querySelector("#adjustReset").addEventListener("click", () => setAdjust(100, 0));
-curvPct.addEventListener("change", () => setAdjust(curvPct.value, adjust.depth));
-depthMm.addEventListener("change", () => setAdjust(adjust.pct, depthMm.value));
-renderAdjust();
 
 initAuth();
