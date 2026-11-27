@@ -157,6 +157,16 @@ function ofertaItem(p) {
     const f = p._ofertaFija;
     return f ? { pct: f.pct, normal: f.normal, oferta: p._precioManual || 0, hasta: f.hasta, promo: null } : null;
   }
+  // Oferta por producto de la tienda (misma fuente que web/Valentina): sin y con instalación.
+  const ow = window.ofertaWebDe?.(p);
+  if (ow) {
+    const normalW = p._tipo === "con" ? parsePrice(p.ventaCon) : parsePrice(p.ventaSin);
+    const ofW = p._tipo === "con" ? ow.con : ow.sin;
+    if (normalW && ofW > 0 && ofW < normalW) {
+      return { pct: Math.round((1 - ofW / normalW) * 100), normal: normalW, oferta: ofW, hasta: ow.hasta,
+               promo: null, campana: ow.campana };
+    }
+  }
   if (p._tipo !== "con") return null;
   const pr = window.AVRPromo?.parabrisas();
   const normal = parsePrice(p.ventaCon);
@@ -185,7 +195,9 @@ function ofertaCondicionesTexto(items) {
   // La fecha solo se agrega si las condiciones de la base no la traen ya.
   const anio = String(hastaIso || "").slice(0, 4);
   const conFecha = hasta && !(anio && cond.includes(anio));
-  const base = `\u2212${of.pct}% en parabrisas con instalación (sucursal o domicilio)${conFecha ? `, válida hasta el ${hasta}` : ""}.`;
+  const base = of.campana
+    ? `Oferta ${of.campana}${hasta ? `, válida hasta el ${hasta}` : ""}.`
+    : `\u2212${of.pct}% en parabrisas con instalación (sucursal o domicilio)${conFecha ? `, válida hasta el ${hasta}` : ""}.`;
   return cond ? `${base} ${cond}` : `${base} Sujeto a cupos de instalación disponibles.`;
 }
 

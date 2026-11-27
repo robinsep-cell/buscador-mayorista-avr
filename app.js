@@ -1350,7 +1350,40 @@ function cotAddCellHtml(p) {
 
 // Celda "Venta con instalación". Si hay oferta de parabrisas instalado vigente
 // (promo.js, viene de la base), muestra el precio normal tachado + el de oferta.
+// ── Oferta por producto (27-nov-2026) ─────────────────────────────────────────
+// Sale de la MISMA fuente que la tienda, Invexa y Valentina: vista buscador_avr ← public.ofertas_vigentes
+// (web_productos + web_campanas, migración 0775). Acá no se calcula nada: precio normal, oferta, instalado,
+// campaña y "hasta" vienen hechos. Tiene prioridad sobre el % genérico de promo.js.
+window.OFERTAS_WEB = window.OFERTAS_WEB || new Map(); // CODIGO_ANTIGUO → { sin, con, hasta, campana }
+function ofertaWebDe(p) {
+  const cods = Array.isArray(p?.codigoAntiguo) ? p.codigoAntiguo : [p?.codigoAntiguo];
+  for (const c of cods) {
+    const of = window.OFERTAS_WEB.get(String(c || "").trim().toUpperCase());
+    if (of && (!of.hasta || Date.parse(of.hasta) > Date.now())) return of;
+  }
+  return null;
+}
+window.ofertaWebDe = ofertaWebDe;
+function ofertaWebEtiqueta(of) {
+  const h = window.AVRPromo?.hastaCorto({ hasta: of.hasta }) || "";
+  return `${of.campana || "Oferta"}${h ? ` hasta ${h}` : ""}`;
+}
+function ofertaCellHtml(normal, oferta, of) {
+  return `<td class="price-cell price-cell--oferta">
+        <s class="precio-normal">${formatPrice(normal)}</s>
+        <span class="precio-oferta">${formatPrice(oferta)}</span>
+        <span class="oferta-tag">${escapeHtml(ofertaWebEtiqueta(of))}</span>
+      </td>`;
+}
+function ventaSinCellHtml(p) {
+  const of = ofertaWebDe(p);
+  if (of && of.sin > 0) return ofertaCellHtml(p.ventaSin, of.sin, of);
+  return `<td class="price-cell">${formatPrice(p.ventaSin)}</td>`;
+}
+
 function ventaConCellHtml(p) {
+  const ofw = ofertaWebDe(p);
+  if (ofw && ofw.con > 0) return ofertaCellHtml(p.ventaCon, ofw.con, ofw);
   const pr = window.AVRPromo?.parabrisas();
   const s = String(p.ventaCon ?? "").trim();
   const normal = parseInt(s.replace(/\./g, ""), 10);
@@ -1382,7 +1415,7 @@ function renderRows(items, tokens) {
       <td class="${stockClass(p.stockImp)}">${highlight(p.stockImp || "0", tokens)}</td>
       <td class="${stockClass(p.stockAvr)}">${highlight(p.stockAvr || "0", tokens)}</td>
       <td class="price-cell price-cell--editable">${formatPrice(p.costo)}</td>
-      <td class="price-cell">${formatPrice(p.ventaSin)}</td>
+      ${ventaSinCellHtml(p)}
       ${ventaConCellHtml(p)}
     </tr>`;
   }).join("");
@@ -1449,6 +1482,15 @@ async function fetchVista(vista) {
 
 async function fetchCatalogoAvr() {
   const rows = await fetchVista("buscador_avr");
+  window.OFERTAS_WEB.clear();
+  for (const v of rows) {
+    if (v.codigo_antiguo && (v.precio_oferta > 0 || v.oferta_instalado > 0)) {
+      window.OFERTAS_WEB.set(String(v.codigo_antiguo).trim().toUpperCase(), {
+        sin: Number(v.precio_oferta) || 0, con: Number(v.oferta_instalado) || 0,
+        hasta: v.oferta_hasta || null, campana: v.campana_nombre || null,
+      });
+    }
+  }
   return {
     rows: rows.map(v => filaDesde({
       "Nombre": v.nombre,
