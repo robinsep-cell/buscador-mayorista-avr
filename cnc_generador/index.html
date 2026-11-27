@@ -99,6 +99,26 @@
             <div class="piece-controls-title">Ajustes por pieza</div>
           </div>
 
+          <div id="adjustBox" class="adjust-box">
+            <div class="piece-controls-title">Ajuste del corte</div>
+            <div class="adjust-row">
+              <span class="adjust-label">Curvatura</span>
+              <button id="curvDown" class="step-btn" type="button" aria-label="Bajar curvatura 1%">&minus;</button>
+              <input id="curvPct" type="number" min="50" max="150" step="1" value="100" inputmode="numeric" />
+              <span class="adjust-unit">%</span>
+              <button id="curvUp" class="step-btn" type="button" aria-label="Subir curvatura 1%">+</button>
+            </div>
+            <div class="adjust-row">
+              <span class="adjust-label">Profundidad</span>
+              <button id="depthDown" class="step-btn" type="button" aria-label="Menos profundo 0.05 mm">&minus;</button>
+              <input id="depthMm" type="number" min="-3" max="3" step="0.05" value="0.00" inputmode="decimal" />
+              <span class="adjust-unit">mm</span>
+              <button id="depthUp" class="step-btn" type="button" aria-label="Mas profundo 0.05 mm">+</button>
+            </div>
+            <small class="field-help">Si corta mas fuerte en las orillas y suave al centro, baja la curvatura (99, 98...). Si es al reves, subela. Profundidad positiva corta mas hondo en todo el recorrido. Queda guardado en este computador.</small>
+            <button id="adjustReset" class="secondary-btn adjust-reset" type="button">Volver a 100% y 0 mm</button>
+          </div>
+
           <input id="sheetWidth" type="hidden" value="400" />
           <input id="sheetHeight" type="hidden" value="200" />
 
